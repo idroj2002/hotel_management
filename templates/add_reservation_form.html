@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mt-5">
+            {% if reservation_type == 'hotel' %}
+                Nueva reserva de habitación
+            {% else %}
+                Nueva reserva de restaurante
+            {% endif %}
+        </h1>
+        <form method="post" class="mt-4 form-control">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'reservations_list' reservation_type=reservation_type %}" class="btn btn-secondary">Back to Reservations</a>
+        </form>
+    </div>
+{% endblock %}

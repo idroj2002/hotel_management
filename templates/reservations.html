@@ -34,24 +34,23 @@
             <div class="col-12">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a href="{% url 'reservations' %}?type=room" class="nav-link btn btn-primary">Room Reservations</a>
+                        <a href="{% url 'reservations_list' reservation_type='hotel' %}" class="nav-link btn btn-primary">Room Reservations</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'reservations' %}?type=restaurant" class="nav-link btn btn-primary">Restaurant Reservations</a>
+                        <a href="{% url 'reservations_list' reservation_type='restaurant' %}" class="nav-link btn btn-primary">Restaurant Reservations</a>
                     </li>
                 </ul>
-                <h1 class="mt-5">{{ header }}</h1>
-                {% if selected == False %}
-                    <p class="text-danger">Porfavor seleccione un tipo de reserva</p>
-                {% else %}
-                    <ul class="list-group">
-                        {% for reservation in reservations %}
-                            <li class="list-group-item">{{ reservation }}</li>
-                        {% empty %}
-                            <li class="list-group-item">No se ha encontrado ninguna reserva.</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="mt-5">{{ header }}</h1>
+                    <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Add Reservation</a>
+                </div>
+                <ul class="list-group">
+                    {% for reservation in reservations %}
+                        <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation.id %}"><li class="list-group-item">{{ reservation }}</li></a>
+                    {% empty %}
+                        <li class="list-group-item">No se ha encontrado ninguna reserva.</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
