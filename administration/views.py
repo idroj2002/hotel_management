@@ -19,18 +19,38 @@ def profile(request):
 @login_required
 def reservation_list(request):
     reservation_type = request.GET.get('type')
-    selected = True
-    if reservation_type == 'room':
+    any_selected = True
+    if reservation_type == 'hotel':
         reservations = HotelReservation.objects.all()
         header = 'Reservas de habitación'
     elif reservation_type == 'restaurant':
         reservations = RestaurantReservation.objects.all()
         header = 'Reservas de restaurante'
     else:
-        selected = False
+        any_selected = False
         reservations = []
         header = 'Reservations'
-    return render(request, 'reservations.html', {'selected': selected, 'header': header, 'reservations': reservations})
+    return render(request, 'reservations.html', {'any_selected': any_selected, 'reservation_type': reservation_type,
+                                                 'header': header, 'reservations': reservations})
+
+
+@login_required
+def add_reservation(request):
+    reservation_type = request.GET.get('type')
+    if request.method == 'POST':
+        if reservation_type == 'hotel':
+            form = HotelReservationForm(request.POST)
+        else:
+            form = RestaurantReservationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('note_list')
+    else:
+        if reservation_type == 'hotel':
+            form = HotelReservationForm()
+        else:
+            form = RestaurantReservationForm()
+    return render(request, 'add_reservation_form.html', {'reservation_type': reservation_type, 'form': form})
 
 
 @login_required

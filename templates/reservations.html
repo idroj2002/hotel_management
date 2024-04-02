@@ -34,14 +34,17 @@
             <div class="col-12">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a href="{% url 'reservations' %}?type=room" class="nav-link btn btn-primary">Room Reservations</a>
+                        <a href="{% url 'reservations_list' %}?type=hotel" class="nav-link btn btn-primary">Room Reservations</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'reservations' %}?type=restaurant" class="nav-link btn btn-primary">Restaurant Reservations</a>
+                        <a href="{% url 'reservations_list' %}?type=restaurant" class="nav-link btn btn-primary">Restaurant Reservations</a>
                     </li>
                 </ul>
-                <h1 class="mt-5">{{ header }}</h1>
-                {% if selected == False %}
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="mt-5">{{ header }}</h1>
+                    <a href="{% url 'add_reservation' %}?type={{ reservation_type }}" class="mt-4 btn btn-primary">Add Reservation</a>
+                </div>
+                {% if any_selected == False %}
                     <p class="text-danger">Porfavor seleccione un tipo de reserva</p>
                 {% else %}
                     <ul class="list-group">
