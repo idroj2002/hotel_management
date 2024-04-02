@@ -47,4 +47,4 @@ class RestaurantReservation(models.Model):
     time = models.DateTimeField()
 
     def __str__(self):
-        return f"Restaurant reservation for {self.reservation_name}"
+        return f"Restaurant reservation for {self.name}"

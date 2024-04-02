@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import HotelReservation, RestaurantReservation
-from .forms import LoginForm, HotelReservationForm, RestaurantReservationForm
+from administration.models import HotelReservation, RestaurantReservation
+from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm
 
 
 def home(request):
@@ -26,6 +26,23 @@ def hotel_reservations(request):
 def restaurant_reservations(request):
     reservations = RestaurantReservation.objects.all()
     return render(request, 'restaurant_reservations.html', {'reservations': reservations})
+
+
+@login_required
+def reservation_list(request):
+    reservation_type = request.GET.get('type')
+    selected = True
+    if reservation_type == 'room':
+        reservations = HotelReservation.objects.all()
+        header = 'Reservas de habitación'
+    elif reservation_type == 'restaurant':
+        reservations = RestaurantReservation.objects.all()
+        header = 'Reservas de restaurante'
+    else:
+        selected = False
+        reservations = []
+        header = 'Reservations'
+    return render(request, 'reservations.html', {'selected': selected, 'header': header, 'reservations': reservations})
 
 
 @login_required
