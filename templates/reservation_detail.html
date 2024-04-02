@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalls de la Nota{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>
+            {% if reservation_type == 'hotel' %}
+                Reserva de habitación
+            {% else %}
+                Reserva de restaurante
+            {% endif %}
+        </h1>
+        <hr>
+        <div class="card mt-4">
+            <div class="card-header">
+                Información de reserva:
+            </div>
+            <div class="card-body">
+                <p><strong>ID de reserva / número de reserva:</strong> {{ model.id }}</p>
+                {% if reservation_type == 'hotel' %}
+                    <p><strong>DNI:</strong> {{ model.dni }}</p>
+                    <p><strong>Nombre:</strong> {{ model.first_name }}</p>
+                    <p><strong>Apellidos:</strong> {{ model.last_name }}</p>
+                    <p><strong>Correo:</strong> {{ model.email }}</p>
+                    <p><strong>Teléfono:</strong> {{ model.phone }}</p>
+                    <p><strong>Nacimiento:</strong> {{ model.date_of_birth }}</p>
+                    <p><strong>Tipo de habitación:</strong> {{ model.room_type }}</p>
+                    <p><strong>Número de habitación:</strong> {{ model.room_number }}</p>
+                    <p><strong>Fecha Check-in:</strong> {{ model.check_in_date }}</p>
+                    <p><strong>Fecha Check-out:</strong> {{ model.check_out_date }}</p>
+                    <p><strong>Número de huéspedes:</strong> {{ model.number_of_guests }}</p>
+                    <p><strong>Precio:</strong> ${{ model.price }}</p>
+                {% else %}
+                    <p><strong>Nombre:</strong> {{ model.name }}</p>
+                    <p><strong>Número de habitación:</strong> {{ model.room_number }}</p>
+                    <p><strong>Número de comensales:</strong> {{ model.number_of_people }}</p>
+                    <p><strong>ID de mesa / número de mesa:</strong> {{ model.table_id }}</p>
+                    <p><strong>Hora:</strong> {{ model.time }}</p>
+                {% endif %}
+                <a class="btn btn-primary" href="">Editar</a>
+                <a class="btn btn-danger" href="">Eliminar</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

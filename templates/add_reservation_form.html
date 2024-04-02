@@ -13,7 +13,7 @@
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="{% url 'reservations_list' %}?type={{ reservation_type }}" class="btn btn-secondary">Back to Reservations</a>
+            <a href="{% url 'reservations_list' reservation_type=reservation_type %}" class="btn btn-secondary">Back to Reservations</a>
         </form>
     </div>
 {% endblock %}
