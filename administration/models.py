@@ -40,8 +40,8 @@ class HotelReservation(models.Model):
 
 class RestaurantReservation(models.Model):
     id = models.AutoField(primary_key=True)
-    reservation_name = models.CharField(max_length=100)
-    hotel_room_number = models.IntegerField(blank=True, null=True)
+    name = models.CharField(max_length=100)
+    room_number = models.IntegerField(blank=True, null=True)
     number_of_people = models.IntegerField()
     table_id = models.ForeignKey(Table, on_delete=models.CASCADE)
     time = models.DateTimeField()

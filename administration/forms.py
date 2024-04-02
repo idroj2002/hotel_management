@@ -18,14 +18,14 @@ class SignupForm(UserCreationForm):
 class HotelReservationForm(forms.ModelForm):
     class Meta:
         model = HotelReservation
-        fields = ['dni', 'name', 'surname', 'date_of_birth', 'email', 'phone', 'check_in_date', 'check_out_date',
-                  'num_guests', 'room_type', 'price', 'room_number']
+        fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone', 'check_in_date', 'check_out_date',
+                  'number_of_guests', 'room_type', 'price', 'room_number']
 
 
 class RestaurantReservationForm(forms.ModelForm):
     class Meta:
         model = RestaurantReservation
-        fields = ['name', 'room_number', 'num_people', 'time']
+        fields = ['name', 'room_number', 'number_of_people', 'time']
 
 
 class Room(forms.ModelForm):
@@ -37,4 +37,4 @@ class Room(forms.ModelForm):
 class Table(forms.ModelForm):
     class Meta:
         model = Table
-        fields = ['id', 'capcity', 'occupied']
+        fields = ['id', 'capacity', 'occupied']
