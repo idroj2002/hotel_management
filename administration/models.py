@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Room(models.Model):
     number = models.IntegerField()
     type = models.CharField(max_length=100)
@@ -8,6 +9,7 @@ class Room(models.Model):
     def __str__(self):
         return f"Room {self.number}"
 
+
 class Table(models.Model):
     id = models.AutoField(primary_key=True)
     capacity = models.IntegerField()
@@ -15,6 +17,7 @@ class Table(models.Model):
 
     def __str__(self):
         return f"Table {self.id}"
+
 
 class HotelReservation(models.Model):
     id = models.AutoField(primary_key=True)
@@ -33,6 +36,7 @@ class HotelReservation(models.Model):
 
     def __str__(self):
         return f"Reservation for {self.first_name} {self.last_name}"
+
 
 class RestaurantReservation(models.Model):
     id = models.AutoField(primary_key=True)
