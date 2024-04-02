@@ -17,18 +17,6 @@ def profile(request):
 
 
 @login_required
-def hotel_reservations(request):
-    reservations = HotelReservation.objects.all()
-    return render(request, 'hotel_reservations.html', {'reservations': reservations})
-
-
-@login_required
-def restaurant_reservations(request):
-    reservations = RestaurantReservation.objects.all()
-    return render(request, 'restaurant_reservations.html', {'reservations': reservations})
-
-
-@login_required
 def reservation_list(request):
     reservation_type = request.GET.get('type')
     selected = True
@@ -46,7 +34,7 @@ def reservation_list(request):
 
 
 @login_required
-def edit_HotelReservation(request, reservation_id):
+def edit_hotel_reservation(request, reservation_id):
     reservation = HotelReservation.objects.get(pk=reservation_id)  # Cambia RoomReservation por el modelo correcto
     if request.method == 'POST':
         form = HotelReservationForm(request.POST, instance=reservation)
@@ -59,7 +47,7 @@ def edit_HotelReservation(request, reservation_id):
 
 
 @login_required
-def edit_RestaurantReservation(request, reservation_id):
+def edit_restaurant_reservation(request, reservation_id):
     reservation = RestaurantReservation.objects.get(pk=reservation_id)  # Cambia RoomReservation por el modelo correcto
     if request.method == 'POST':
         form = RestaurantReservationForm(request.POST, instance=reservation)

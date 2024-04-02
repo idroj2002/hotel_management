@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Room, Table, HotelReservation, RestaurantReservation
+from administration.models import Room, Table, HotelReservation, RestaurantReservation
 
 
 # Custom admin classes
