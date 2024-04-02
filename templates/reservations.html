@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    <style>
+        .nav-pills .nav-link {
+            color: black;
+            transition: color 0.2s ease;
+        }
+
+        .nav-pills .nav-link:hover {
+            color: white;
+        }
+
+        .nav-pills .nav-link.btn {
+            border-radius: 20px;
+            background-color: #C0C0C0;
+            transition: background-color 0.2s ease;
+        }
+
+        .nav-pills .nav-link.btn:hover {
+            background-color: blue;
+        }
+
+        .nav-pills .nav-link.btn:focus,
+        .nav-pills .nav-link.btn.active {
+            background-color: darkblue;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a href="{% url 'reservations' %}?type=room" class="nav-link btn btn-primary">Room Reservations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'reservations' %}?type=restaurant" class="nav-link btn btn-primary">Restaurant Reservations</a>
+                    </li>
+                </ul>
+                <h1 class="mt-5">{{ header }}</h1>
+                {% if selected == False %}
+                    <p class="text-danger">Porfavor seleccione un tipo de reserva</p>
+                {% else %}
+                    <ul class="list-group">
+                        {% for reservation in reservations %}
+                            <li class="list-group-item">{{ reservation }}</li>
+                        {% empty %}
+                            <li class="list-group-item">No se ha encontrado ninguna reserva.</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
