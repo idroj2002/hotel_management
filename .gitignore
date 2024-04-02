@@ -3,7 +3,6 @@
 *.pot
 *.pyc
 __pycache__
-hotel_management/__pycache__
 db.sqlite3
 media
 
