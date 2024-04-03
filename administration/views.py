@@ -41,7 +41,7 @@ def add_reservation(request, reservation_type):
             form = RestaurantReservationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('note_list')
+            return redirect('reservations_list',reservation_type=reservation_type)
     else:
         if reservation_type == 'hotel':
             form = HotelReservationForm()

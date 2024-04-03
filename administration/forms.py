@@ -113,7 +113,39 @@ class HotelReservationForm(forms.ModelForm):
 class RestaurantReservationForm(forms.ModelForm):
     class Meta:
         model = RestaurantReservation
-        fields = ['name', 'room_number', 'number_of_people', 'time']
+        fields = ['name', 'room_number', 'number_of_people', 'time', 'table_id']
+
+        widgets = {
+            'name': forms.TextInput(
+                attrs = {
+                    'placeholder': 'Nombre de la reserva',
+                    'class': 'form-control'
+                }
+            ),
+            'room_number': forms.NumberInput(
+                attrs = {
+                    'placeholder': 'Número de habitación',
+                    'class': 'form-control'
+                }
+            ),
+            'number_of_people': forms.NumberInput(
+                attrs = {
+                    'placeholder': 'Número de personas',
+                    'class': 'form-control'
+                }
+            ),
+            'time': forms.DateTimeInput(
+                attrs = {
+                    'value': date.today().strftime('%Y-%m-%d') + '/' + '13:00:00',
+                    'class': 'form-control'
+                }
+            ),
+            'table_id': forms.Select(
+                attrs = {
+                    'class': 'form-select'
+                }
+            ),
+        }
 
 
 class Room(forms.ModelForm):
