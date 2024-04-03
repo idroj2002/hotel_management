@@ -19,11 +19,6 @@ class SignupForm(UserCreationForm):
 class HotelReservationForm(forms.ModelForm):
     class Meta:
         model = HotelReservation
-        ROOM_TYPE_OPTIONS = [
-            ('I', 'Individual'),
-            ('D', 'Doble')
-        ]
-        room_type = forms.ChoiceField(choices = ROOM_TYPE_OPTIONS, label = 'room_type')
         fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone', 'check_in_date', 'check_out_date',
                   'number_of_guests', 'room_type', 'price', 'room_number']
                 
