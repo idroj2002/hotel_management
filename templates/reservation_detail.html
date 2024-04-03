@@ -2,6 +2,15 @@
 
 {% block title %}Detalls de la Nota{% endblock %}
 
+{% block navbar-list %}
+    <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="{% url 'reservations_list' reservation_type='hotel' %}">Reservas de las habitaciones</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'reservations_list' reservation_type='restaurant' %}">Reservas del restaurante</a>
+    </li>
+{% endblock %}
+
 {% block content %}
     <div class="container mt-4">
         <h1>
