@@ -55,3 +55,11 @@ class RestaurantReservation(models.Model):
 
     def __str__(self):
         return f"Restaurant reservation for {self.name}"
+
+
+class CheckIn(models.Model):
+    id = models.OneToOneField(HotelReservation, on_delete=models.CASCADE, primary_key=True)
+    guests_data = models.TextField(max_length=1000)
+
+    def __str__(self):
+        return f"Check-in of reservation {self.id}"

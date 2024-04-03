@@ -23,33 +23,52 @@
         <hr>
         <div class="card mt-4">
             <div class="card-header">
-                Información de reserva:
+                Información de reserva: {{ reservation }}
             </div>
             <div class="card-body">
-                <p><strong>ID de reserva / número de reserva:</strong> {{ model.id }}</p>
+                <p><strong>ID de reserva / número de reserva:</strong> {{ reservation.id }}</p>
                 {% if reservation_type == 'hotel' %}
-                    <p><strong>DNI:</strong> {{ model.dni }}</p>
-                    <p><strong>Nombre:</strong> {{ model.first_name }}</p>
-                    <p><strong>Apellidos:</strong> {{ model.last_name }}</p>
-                    <p><strong>Correo:</strong> {{ model.email }}</p>
-                    <p><strong>Teléfono:</strong> {{ model.phone }}</p>
-                    <p><strong>Nacimiento:</strong> {{ model.date_of_birth }}</p>
-                    <p><strong>Tipo de habitación:</strong> {{ model.room_type }}</p>
-                    <p><strong>Número de habitación:</strong> {{ model.room_number }}</p>
-                    <p><strong>Fecha Check-in:</strong> {{ model.check_in_date }}</p>
-                    <p><strong>Fecha Check-out:</strong> {{ model.check_out_date }}</p>
-                    <p><strong>Número de huéspedes:</strong> {{ model.number_of_guests }}</p>
-                    <p><strong>Precio:</strong> ${{ model.price }}</p>
+                    <p><strong>DNI:</strong> {{ reservation.dni }}</p>
+                    <p><strong>Nombre:</strong> {{ reservation.first_name }}</p>
+                    <p><strong>Apellidos:</strong> {{ reservation.last_name }}</p>
+                    <p><strong>Correo:</strong> {{ reservation.email }}</p>
+                    <p><strong>Teléfono:</strong> {{ reservation.phone }}</p>
+                    <p><strong>Nacimiento:</strong> {{ reservation.date_of_birth }}</p>
+                    <p><strong>Tipo de habitación:</strong> {{ reservation.room_type }}</p>
+                    <p><strong>Número de habitación:</strong> {{ reservation.room_number }}</p>
+                    <p><strong>Fecha Check-in:</strong> {{ reservation.check_in_date }}</p>
+                    <p><strong>Fecha Check-out:</strong> {{ reservation.check_out_date }}</p>
+                    <p><strong>Número de huéspedes:</strong> {{ reservation.number_of_guests }}</p>
+                    <p><strong>Precio:</strong> ${{ reservation.price }}</p>
                 {% else %}
-                    <p><strong>Nombre:</strong> {{ model.name }}</p>
-                    <p><strong>Número de habitación:</strong> {{ model.room_number }}</p>
-                    <p><strong>Número de comensales:</strong> {{ model.number_of_people }}</p>
-                    <p><strong>ID de mesa / número de mesa:</strong> {{ model.table_id }}</p>
-                    <p><strong>Hora:</strong> {{ model.time }}</p>
+                    <p><strong>Nombre:</strong> {{ reservation.name }}</p>
+                    <p><strong>Número de habitación:</strong> {{ reservation.room_number }}</p>
+                    <p><strong>Número de comensales:</strong> {{ reservation.number_of_people }}</p>
+                    <p><strong>ID de mesa / número de mesa:</strong> {{ reservation.table_id }}</p>
+                    <p><strong>Hora:</strong> {{ reservation.time }}</p>
                 {% endif %}
-                <a class="btn btn-primary" href="{% url 'edit_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Editar</a>
-                <a class="btn btn-danger" href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Eliminar</a>
+                {% if check_in == 'No' and reservation_type == 'hotel' %}
+                    <a class="btn btn-primary" href="{% url 'edit_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Eliminar</a>
+                    <a class="btn btn-success" href="{% url 'add_check_in' reservation_type=reservation_type reservation_id=reservation_id %}">Fer Check-IN</a>
+                {% elif reservation_type == 'restaurant' %}
+                    <a class="btn btn-primary" href="{% url 'edit_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Eliminar</a>
+                {% endif %}
             </div>
         </div>
+        {% if check_in != 'No' %}
+            <hr>
+            <div class="card mt-4">
+                <div class="card-header">
+                    Información de check-in: {{ check_in }}
+                </div>
+                <div class="card-body">
+                    <p><strong>Datos del chec-in:</strong> {{ check_in.guests_data }}</p>
+                    <a class="btn btn-primary" href="{% url 'edit_check_in' reservation_type=reservation_type reservation_id=reservation_id %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'delete_check_in' reservation_type=reservation_type reservation_id=reservation_id %}">Eliminar</a>
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
