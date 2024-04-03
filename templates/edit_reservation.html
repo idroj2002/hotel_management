@@ -1,21 +1,21 @@
 {% extends 'reservations.html' %}
 
-{% block title %}Crear reserva{% endblock %}
+{% block title %}Editar reserva{% endblock %}
 
 {% block content %}
     <div class="container">
         <h1 class="mt-5">
             {% if reservation_type == 'hotel' %}
-                Nueva reserva de habitación
+                Editar reserva de habitación
             {% else %}
-                Nueva reserva de restaurante
+                Editar reserva de restaurante
             {% endif %}
         </h1>
         <form method="post" class="mt-4 form-control">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="{% url 'reservations_list' reservation_type=reservation_type %}" class="btn btn-secondary">Back to Reservations</a>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation_id %}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 {% endblock %}

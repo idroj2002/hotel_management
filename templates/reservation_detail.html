@@ -1,6 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'reservations.html' %}
 
-{% block title %}Detalls de la Nota{% endblock %}
+{% block title %}Información de la reserva{% endblock %}
+
+{% block navbar-list %}
+    <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="{% url 'reservations_list' reservation_type='hotel' %}">Reservas de las habitaciones</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'reservations_list' reservation_type='restaurant' %}">Reservas del restaurante</a>
+    </li>
+{% endblock %}
 
 {% block content %}
     <div class="container mt-4">
@@ -38,8 +47,8 @@
                     <p><strong>ID de mesa / número de mesa:</strong> {{ model.table_id }}</p>
                     <p><strong>Hora:</strong> {{ model.time }}</p>
                 {% endif %}
-                <a class="btn btn-primary" href="">Editar</a>
-                <a class="btn btn-danger" href="">Eliminar</a>
+                <a class="btn btn-primary" href="{% url 'edit_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Editar</a>
+                <a class="btn btn-danger" href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Eliminar</a>
             </div>
         </div>
     </div>
