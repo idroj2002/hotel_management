@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from datetime import date, timedelta
-from administration.models import HotelReservation, RestaurantReservation, Room, Table
+from administration.models import HotelReservation, RestaurantReservation, Room, Table, CheckIn
 
 
 class LoginForm(forms.Form):
@@ -158,3 +158,9 @@ class Table(forms.ModelForm):
     class Meta:
         model = Table
         fields = ['id', 'capacity', 'occupied']
+
+
+class CheckInForm(forms.ModelForm):
+    class Meta:
+        model = CheckIn
+        fields = ['guests_data']
