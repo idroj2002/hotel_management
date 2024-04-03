@@ -47,8 +47,8 @@
                     <p><strong>ID de mesa / número de mesa:</strong> {{ model.table_id }}</p>
                     <p><strong>Hora:</strong> {{ model.time }}</p>
                 {% endif %}
-                <a class="btn btn-primary" href="">Editar</a>
-                <a class="btn btn-danger" href="">Eliminar</a>
+                <a class="btn btn-primary" href="{% url 'edit_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Editar</a>
+                <a class="btn btn-danger" href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Eliminar</a>
             </div>
         </div>
     </div>
