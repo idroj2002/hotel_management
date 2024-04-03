@@ -4,11 +4,17 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Room(models.Model):
     number = models.IntegerField()
-    type = models.CharField(max_length=100)
+    ROOM_TYPE_OPTIONS = [
+            ('Ind', 'Individual'),
+            ('Dob', 'Doble'),
+            ('Del', 'Deluxe'),
+            ('Sui', 'Suite'),
+        ]
+    type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS)
     occupied = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Room {self.number}"
+        return f"Room {self.number} ({self.type})"
 
 
 class Table(models.Model):
@@ -17,7 +23,7 @@ class Table(models.Model):
     occupied = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Table {self.id}"
+        return f"Table {self.id} ({self.capacity} people)"
 
 
 class HotelReservation(models.Model):
@@ -37,7 +43,8 @@ class HotelReservation(models.Model):
             ('Del', 'Deluxe'),
             ('Sui', 'Suite'),
         ]
-    room_type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS, null=False)
+    room_type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS, null=False
+    )
     price = models.DecimalField(max_digits=10, decimal_places=2)
     room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
 
@@ -48,7 +55,7 @@ class HotelReservation(models.Model):
 class RestaurantReservation(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    room_number = models.IntegerField(blank=True, null=True)
+    room_number = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True)
     number_of_people = models.IntegerField()
     table_id = models.ForeignKey(Table, on_delete=models.CASCADE)
     time = models.DateTimeField()

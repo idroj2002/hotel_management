@@ -122,10 +122,9 @@ class RestaurantReservationForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
-            'room_number': forms.NumberInput(
+            'room_number': forms.Select(
                 attrs = {
-                    'placeholder': 'Número de habitación',
-                    'class': 'form-control'
+                    'class': 'form-select'
                 }
             ),
             'number_of_people': forms.NumberInput(
