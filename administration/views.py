@@ -4,9 +4,8 @@ from django.db.models import QuerySet
 from administration.models import HotelReservation, RestaurantReservation
 from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm
 
-
 def home(request):
-    return render(request, 'home.html')
+    return redirect('reservations_list', reservation_type='hotel')
 
 
 @login_required
