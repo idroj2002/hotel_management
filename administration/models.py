@@ -62,7 +62,8 @@ class RestaurantReservation(models.Model):
     time = models.DateTimeField()
 
     def __str__(self):
-        return f"ID: {self.id} - Nombre: {self.name} - Hora: {self.time}"
+        formatted_time = self.time.strftime('%d/%m %H:%M')
+        return f"ID: {self.id} - Nombre: {self.name} - Hora: {formatted_time}"
 
 
 class CheckIn(models.Model):
