@@ -14,7 +14,7 @@ class Room(models.Model):
     occupied = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Room {self.number} ({self.type})"
+        return f"Habitación {self.number} ({self.type})"
 
 
 class Table(models.Model):
@@ -23,7 +23,7 @@ class Table(models.Model):
     occupied = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Table {self.id} ({self.capacity} people)"
+        return f"Mesa {self.id} ({self.capacity} people)"
 
 
 class HotelReservation(models.Model):
@@ -49,7 +49,8 @@ class HotelReservation(models.Model):
     room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Reservation for {self.first_name} {self.last_name}"
+        return f"ID: {self.id} - Nombre: {self.first_name} {self.last_name} - Entrada: {self.check_in_date}" \
+               f" - Saldia: {self.check_out_date}"
 
 
 class RestaurantReservation(models.Model):
@@ -61,7 +62,7 @@ class RestaurantReservation(models.Model):
     time = models.DateTimeField()
 
     def __str__(self):
-        return f"Restaurant reservation for {self.name}"
+        return f"ID: {self.id} - Nombre: {self.name} - Hora: {self.time}"
 
 
 class CheckIn(models.Model):
@@ -69,4 +70,4 @@ class CheckIn(models.Model):
     guests_data = models.TextField(max_length=1000)
 
     def __str__(self):
-        return f"Check-in of reservation {self.id}"
+        return f"Check-in of reservation: {self.id}"

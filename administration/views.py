@@ -137,6 +137,6 @@ def delete_check_in(request, reservation_type, reservation_id):
     check_in = get_object_or_404(CheckIn, pk=reservation_id)
     if request.method == 'POST':
         check_in.delete()
-        return redirect('reservations_list', reservation_type=reservation_type)
+        return redirect('reservations_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     return render(request, 'delete_check_in.html', {'reservation_type': reservation_type,
                                                     'reservation_id': reservation_id, 'check_in': check_in})
