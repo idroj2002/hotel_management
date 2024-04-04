@@ -4,11 +4,17 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Room(models.Model):
     number = models.IntegerField()
-    type = models.CharField(max_length=100)
+    ROOM_TYPE_OPTIONS = [
+            ('Ind', 'Individual'),
+            ('Dob', 'Doble'),
+            ('Del', 'Deluxe'),
+            ('Sui', 'Suite'),
+        ]
+    type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS)
     occupied = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Room {self.number}"
+        return f"Habitación {self.number} ({self.type})"
 
 
 class Table(models.Model):
@@ -17,7 +23,7 @@ class Table(models.Model):
     occupied = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Table {self.id}"
+        return f"Mesa {self.id} ({self.capacity} people)"
 
 
 class HotelReservation(models.Model):
@@ -37,21 +43,31 @@ class HotelReservation(models.Model):
             ('Del', 'Deluxe'),
             ('Sui', 'Suite'),
         ]
-    room_type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS, null=False)
+    room_type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS, null=False
+    )
     price = models.DecimalField(max_digits=10, decimal_places=2)
     room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Reservation for {self.first_name} {self.last_name}"
+        return f"ID: {self.id} - Nombre: {self.first_name} {self.last_name} - Entrada: {self.check_in_date}" \
+               f" - Saldia: {self.check_out_date}"
 
 
 class RestaurantReservation(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    room_number = models.IntegerField(blank=True, null=True)
+    room_number = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True)
     number_of_people = models.IntegerField()
     table_id = models.ForeignKey(Table, on_delete=models.CASCADE)
     time = models.DateTimeField()
 
     def __str__(self):
-        return f"Restaurant reservation for {self.name}"
+        return f"ID: {self.id} - Nombre: {self.name} - Hora: {self.time}"
+
+
+class CheckIn(models.Model):
+    id = models.OneToOneField(HotelReservation, on_delete=models.CASCADE, primary_key=True)
+    guests_data = models.TextField(max_length=1000)
+
+    def __str__(self):
+        return f"Check-in of reservation: {self.id}"

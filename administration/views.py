@@ -1,12 +1,12 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet
-from administration.models import HotelReservation, RestaurantReservation
-from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm
-
+from administration.models import HotelReservation, RestaurantReservation, CheckIn
+from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm, CheckInForm
 
 def home(request):
-    return render(request, 'home.html')
+    return redirect('reservations_list', reservation_type='hotel')
 
 
 @login_required
@@ -41,7 +41,7 @@ def add_reservation(request, reservation_type):
             form = RestaurantReservationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('note_list')
+            return redirect('reservations_list',reservation_type=reservation_type)
     else:
         if reservation_type == 'hotel':
             form = HotelReservationForm()
@@ -53,16 +53,23 @@ def add_reservation(request, reservation_type):
 @login_required
 def reservation_detail(request, reservation_type, reservation_id):
     if reservation_type == 'hotel':
-        model = get_object_or_404(HotelReservation, pk=reservation_id)
+        reservation = get_object_or_404(HotelReservation, pk=reservation_id)
     else:
-        model = get_object_or_404(RestaurantReservation, pk=reservation_id)
+        reservation = get_object_or_404(RestaurantReservation, pk=reservation_id)
+    if CheckIn.objects.filter(id=reservation_id).exists():
+        check_in = CheckIn.objects.get(id=reservation_id)
+    else:
+        check_in = 'No'
     return render(request, 'reservation_detail.html', {'reservation_type': reservation_type,
-                                                       'reservation_id': reservation_id, 'model': model})
+                                                       'reservation_id': reservation_id, 'reservation': reservation,
+                                                       'check_in': check_in})
 
 
 @login_required
 def edit_reservation(request, reservation_type, reservation_id):
     if reservation_type == 'hotel':
+        if CheckIn.objects.filter(id=reservation_id).exists():
+            raise PermissionDenied("No se puede borrar una reserva con check-in.")
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
         form_model = HotelReservationForm
     else:
@@ -82,6 +89,8 @@ def edit_reservation(request, reservation_type, reservation_id):
 @login_required
 def delete_reservation(request, reservation_type, reservation_id):
     if reservation_type == 'hotel':
+        if CheckIn.objects.filter(id=reservation_id).exists():
+            raise PermissionDenied("No se puede borrar una reserva con check-in.")
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
     else:
         reservation = get_object_or_404(RestaurantReservation, pk=reservation_id)
@@ -90,3 +99,44 @@ def delete_reservation(request, reservation_type, reservation_id):
         return redirect('reservations_list', reservation_type=reservation_type)
     return render(request, 'delete_reservation.html', {'reservation_type': reservation_type,
                                                        'reservation_id': reservation_id, 'reservation': reservation})
+
+
+def add_check_in(request, reservation_type, reservation_id):
+    if reservation_type == 'restaurant':
+        raise PermissionDenied("No se puede crer un chec-in para una reserva de restaurante.")
+    reservation = get_object_or_404(HotelReservation, pk=reservation_id)
+    if request.method == 'POST':
+        form = CheckInForm(request.POST)
+        if form.is_valid():
+            check_in = form.save(commit=False)
+            check_in.id_id = reservation_id
+            form.save()
+            return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
+    else:
+        form = CheckInForm()
+    return render(request, 'add_check_in_form.html', {'reservation_type': reservation_type,
+                                                      'reservation_id': reservation_id, 'reservation': reservation,
+                                                      'form': form})
+
+
+def edit_check_in(request, reservation_type, reservation_id):
+    check_in = get_object_or_404(CheckIn, pk=reservation_id)
+    if request.method == 'POST':
+        form = CheckInForm(request.POST, instance=check_in)
+        if form.is_valid():
+            form.save()
+            return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
+    else:
+        form = CheckInForm(instance=check_in)
+    return render(request, 'edit_check_in.html', {'reservation_type': reservation_type,
+                                                  'reservation_id': reservation_id, 'form': form})
+
+
+@login_required
+def delete_check_in(request, reservation_type, reservation_id):
+    check_in = get_object_or_404(CheckIn, pk=reservation_id)
+    if request.method == 'POST':
+        check_in.delete()
+        return redirect('reservations_detail', reservation_type=reservation_type, reservation_id=reservation_id)
+    return render(request, 'delete_check_in.html', {'reservation_type': reservation_type,
+                                                    'reservation_id': reservation_id, 'check_in': check_in})

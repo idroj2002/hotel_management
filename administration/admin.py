@@ -1,5 +1,5 @@
 from django.contrib import admin
-from administration.models import Room, Table, HotelReservation, RestaurantReservation
+from administration.models import Room, Table, HotelReservation, RestaurantReservation, CheckIn
 
 
 # Custom admin classes
@@ -18,3 +18,4 @@ admin.site.register(Room, RoomAdmin)
 admin.site.register(Table, TableAdmin)
 admin.site.register(HotelReservation)
 admin.site.register(RestaurantReservation)
+admin.site.register(CheckIn)

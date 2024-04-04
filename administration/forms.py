@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from datetime import date, timedelta
-from administration.models import HotelReservation, RestaurantReservation, Room, Table
+from administration.models import HotelReservation, RestaurantReservation, Room, Table, CheckIn
 
 
 class LoginForm(forms.Form):
@@ -85,7 +85,8 @@ class HotelReservationForm(forms.ModelForm):
             'price': forms.NumberInput(
                 attrs = {
                     'value': 45,
-                    'class': 'form-control'
+                    'class': 'form-control',
+                    'disabled': True
                 }
             ),
             'room_number': forms.Select(
@@ -113,7 +114,38 @@ class HotelReservationForm(forms.ModelForm):
 class RestaurantReservationForm(forms.ModelForm):
     class Meta:
         model = RestaurantReservation
-        fields = ['name', 'room_number', 'number_of_people', 'time']
+        fields = ['name', 'room_number', 'number_of_people', 'time', 'table_id']
+
+        widgets = {
+            'name': forms.TextInput(
+                attrs = {
+                    'placeholder': 'Nombre de la reserva',
+                    'class': 'form-control'
+                }
+            ),
+            'room_number': forms.Select(
+                attrs = {
+                    'class': 'form-select'
+                }
+            ),
+            'number_of_people': forms.NumberInput(
+                attrs = {
+                    'placeholder': 'Número de personas',
+                    'class': 'form-control'
+                }
+            ),
+            'time': forms.DateTimeInput(
+                attrs = {
+                    'value': date.today().strftime('%Y-%m-%d') + '/' + '13:00:00',
+                    'class': 'form-control'
+                }
+            ),
+            'table_id': forms.Select(
+                attrs = {
+                    'class': 'form-select'
+                }
+            ),
+        }
 
 
 class Room(forms.ModelForm):
@@ -126,3 +158,9 @@ class Table(forms.ModelForm):
     class Meta:
         model = Table
         fields = ['id', 'capacity', 'occupied']
+
+
+class CheckInForm(forms.ModelForm):
+    class Meta:
+        model = CheckIn
+        fields = ['guests_data']
