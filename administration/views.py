@@ -14,14 +14,6 @@ def home(request):
 
 
 @login_required
-def profile(request):
-    hotel_reservations = HotelReservation.objects.all()
-    restaurant_reservations = RestaurantReservation.objects.all()
-    return render(request, 'profile.html',
-                  {'hotel_reservations': hotel_reservations, 'restaurant_reservations': restaurant_reservations})
-
-
-@login_required
 def reservation_list(request, reservation_type):
     if not is_receptionist(request.user):
         return render(request, 'not_authorized')
@@ -41,6 +33,9 @@ def reservation_list(request, reservation_type):
 
 @login_required
 def add_reservation(request, reservation_type):
+    if not is_receptionist(request.user):
+        return render(request, 'not_authorized')
+
     if request.method == 'POST':
         if reservation_type == 'hotel':
             form = HotelReservationForm(request.POST)
@@ -59,6 +54,9 @@ def add_reservation(request, reservation_type):
 
 @login_required
 def reservation_detail(request, reservation_type, reservation_id):
+    if not is_receptionist(request.user):
+        return render(request, 'not_authorized')
+
     if reservation_type == 'hotel':
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
     else:
@@ -74,6 +72,9 @@ def reservation_detail(request, reservation_type, reservation_id):
 
 @login_required
 def edit_reservation(request, reservation_type, reservation_id):
+    if not is_receptionist(request.user):
+        return render(request, 'not_authorized')
+
     if reservation_type == 'hotel':
         if CheckIn.objects.filter(id=reservation_id).exists():
             raise PermissionDenied("No se puede borrar una reserva con check-in.")
@@ -95,6 +96,9 @@ def edit_reservation(request, reservation_type, reservation_id):
 
 @login_required
 def delete_reservation(request, reservation_type, reservation_id):
+    if not is_receptionist(request.user):
+        return render(request, 'not_authorized')
+
     if reservation_type == 'hotel':
         if CheckIn.objects.filter(id=reservation_id).exists():
             raise PermissionDenied("No se puede borrar una reserva con check-in.")
@@ -108,7 +112,11 @@ def delete_reservation(request, reservation_type, reservation_id):
                                                        'reservation_id': reservation_id, 'reservation': reservation})
 
 
+@login_required
 def add_check_in(request, reservation_type, reservation_id):
+    if not is_receptionist(request.user):
+        return render(request, 'not_authorized')
+
     if reservation_type == 'restaurant':
         raise PermissionDenied("No se puede crer un chec-in para una reserva de restaurante.")
     reservation = get_object_or_404(HotelReservation, pk=reservation_id)
@@ -126,7 +134,11 @@ def add_check_in(request, reservation_type, reservation_id):
                                                       'form': form})
 
 
+@login_required
 def edit_check_in(request, reservation_type, reservation_id):
+    if not is_receptionist(request.user):
+        return render(request, 'not_authorized')
+
     check_in = get_object_or_404(CheckIn, pk=reservation_id)
     if request.method == 'POST':
         form = CheckInForm(request.POST, instance=check_in)
@@ -141,6 +153,9 @@ def edit_check_in(request, reservation_type, reservation_id):
 
 @login_required
 def delete_check_in(request, reservation_type, reservation_id):
+    if not is_receptionist(request.user):
+        return render(request, 'not_authorized')
+        
     check_in = get_object_or_404(CheckIn, pk=reservation_id)
     if request.method == 'POST':
         check_in.delete()
