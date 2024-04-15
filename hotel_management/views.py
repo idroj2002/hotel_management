@@ -12,7 +12,7 @@ def is_restaurant(user):
 
 def home(request):
     if is_receptionist(request.user):
-        return redirect('reservation_list', reservation_type='hotel')
+        return redirect(reservation_list, reservation_type='hotel')
     elif is_restaurant(request.user):
         return redirect(restaurant_home)
     else:
