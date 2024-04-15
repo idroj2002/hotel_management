@@ -11,7 +11,8 @@ def is_restaurant(user):
 @login_required
 def restaurant_home(request):
     if not is_restaurant(request.user):
-        return render(request, 'not_authorized')
+        from hotel_management.views import home
+        return redirect(home)
     
     reservations = RestaurantReservation.objects.all()
     reservation_type = 'restaurant'
