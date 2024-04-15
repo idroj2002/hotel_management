@@ -1,9 +1,13 @@
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import QuerySet
 from administration.models import HotelReservation, RestaurantReservation, CheckIn
 from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm, CheckInForm
+
+def is_receptionist(user):
+    return user.groups.filter(name='Receptionist').exists()
+
 
 def home(request):
     return redirect('reservations_list', reservation_type='hotel')
@@ -19,6 +23,9 @@ def profile(request):
 
 @login_required
 def reservation_list(request, reservation_type):
+    if not is_receptionist(request.user):
+        return render(request, 'not_authorized')
+    
     if reservation_type == 'hotel':
         reservations = HotelReservation.objects.all()
         header = 'Reservas de habitación'
