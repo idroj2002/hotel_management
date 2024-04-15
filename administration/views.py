@@ -9,10 +9,6 @@ def is_receptionist(user):
     return user.groups.filter(name='Receptionist').exists()
 
 
-def home(request):
-    return redirect('reservations_list', reservation_type='hotel')
-
-
 @login_required
 def reservation_list(request, reservation_type):
     if not is_receptionist(request.user):
@@ -155,7 +151,7 @@ def edit_check_in(request, reservation_type, reservation_id):
 def delete_check_in(request, reservation_type, reservation_id):
     if not is_receptionist(request.user):
         return render(request, 'not_authorized')
-        
+
     check_in = get_object_or_404(CheckIn, pk=reservation_id)
     if request.method == 'POST':
         check_in.delete()
