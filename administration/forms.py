@@ -85,8 +85,7 @@ class HotelReservationForm(forms.ModelForm):
             'price': forms.NumberInput(
                 attrs = {
                     'value': 45,
-                    'class': 'form-control',
-                    'disabled': True
+                    'class': 'form-control'
                 }
             ),
             'room_number': forms.Select(
