@@ -5,6 +5,7 @@ from django.db.models import QuerySet
 from administration.models import HotelReservation, RestaurantReservation, CheckIn
 from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm, CheckInForm
 
+
 def is_receptionist(user):
     return user.groups.filter(name='Receptionist').exists()
 
@@ -12,7 +13,8 @@ def is_receptionist(user):
 @login_required
 def reservation_list(request, reservation_type):
     if not is_receptionist(request.user):
-        return render(request, 'not_authorized')
+        from hotel_management.views import home
+        return redirect(home)
     
     if reservation_type == 'hotel':
         reservations = HotelReservation.objects.all()
@@ -30,7 +32,8 @@ def reservation_list(request, reservation_type):
 @login_required
 def add_reservation(request, reservation_type):
     if not is_receptionist(request.user):
-        return render(request, 'not_authorized')
+        from hotel_management.views import home
+        return redirect(home)
 
     if request.method == 'POST':
         if reservation_type == 'hotel':
@@ -51,7 +54,8 @@ def add_reservation(request, reservation_type):
 @login_required
 def reservation_detail(request, reservation_type, reservation_id):
     if not is_receptionist(request.user):
-        return render(request, 'not_authorized')
+        from hotel_management.views import home
+        return redirect(home)
 
     if reservation_type == 'hotel':
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
@@ -69,7 +73,8 @@ def reservation_detail(request, reservation_type, reservation_id):
 @login_required
 def edit_reservation(request, reservation_type, reservation_id):
     if not is_receptionist(request.user):
-        return render(request, 'not_authorized')
+        from hotel_management.views import home
+        return redirect(home)
 
     if reservation_type == 'hotel':
         if CheckIn.objects.filter(id=reservation_id).exists():
@@ -93,7 +98,8 @@ def edit_reservation(request, reservation_type, reservation_id):
 @login_required
 def delete_reservation(request, reservation_type, reservation_id):
     if not is_receptionist(request.user):
-        return render(request, 'not_authorized')
+        from hotel_management.views import home
+        return redirect(home)
 
     if reservation_type == 'hotel':
         if CheckIn.objects.filter(id=reservation_id).exists():
@@ -111,7 +117,8 @@ def delete_reservation(request, reservation_type, reservation_id):
 @login_required
 def add_check_in(request, reservation_type, reservation_id):
     if not is_receptionist(request.user):
-        return render(request, 'not_authorized')
+        from hotel_management.views import home
+        return redirect(home)
 
     if reservation_type == 'restaurant':
         raise PermissionDenied("No se puede crer un chec-in para una reserva de restaurante.")
@@ -133,7 +140,8 @@ def add_check_in(request, reservation_type, reservation_id):
 @login_required
 def edit_check_in(request, reservation_type, reservation_id):
     if not is_receptionist(request.user):
-        return render(request, 'not_authorized')
+        from hotel_management.views import home
+        return redirect(home)
 
     check_in = get_object_or_404(CheckIn, pk=reservation_id)
     if request.method == 'POST':
@@ -150,7 +158,8 @@ def edit_check_in(request, reservation_type, reservation_id):
 @login_required
 def delete_check_in(request, reservation_type, reservation_id):
     if not is_receptionist(request.user):
-        return render(request, 'not_authorized')
+        from hotel_management.views import home
+        return redirect(home)
 
     check_in = get_object_or_404(CheckIn, pk=reservation_id)
     if request.method == 'POST':
