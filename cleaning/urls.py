@@ -1,8 +1,8 @@
 """
-URL configuration for hotel_management project.
+URL configuration for base project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
+    https://docs.djangoproject.com/en/5.0/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -15,15 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from hotel_management.views import home
-from members.urls import *
-
+from django.urls import path
+from cleaning.views import cleaning_home
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', home, name='home'),
-    path('accounts/', include('members.urls'), name='members'),
-    path('administration/', include('administration.urls'), name='administration'),
-    path('restaurant/', include('restaurant.urls'), name='restaurant'),
-    path('cleaning/', include('cleaning.urls'), name='cleaning'),
+    path('', cleaning_home, name='home'),
 ]
