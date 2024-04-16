@@ -47,13 +47,14 @@
                     <p><strong>ID de mesa / número de mesa:</strong> {{ reservation.table_id }}</p>
                     <p><strong>Hora:</strong> {{ reservation.time }}</p>
                 {% endif %}
+
                 {% if check_in == 'No' and reservation_type == 'hotel' %}
                     <a class="btn btn-primary" href="{% url 'edit_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Editar</a>
-                    <a class="btn btn-danger" href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Eliminar</a>
+                    <a class="btn btn-danger" href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Cancelar</a>
                     <a class="btn btn-success" href="{% url 'add_check_in' reservation_type=reservation_type reservation_id=reservation_id %}">Fer Check-IN</a>
                 {% elif reservation_type == 'restaurant' %}
                     <a class="btn btn-primary" href="{% url 'edit_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Editar</a>
-                    <a class="btn btn-danger" href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Eliminar</a>
+                    <a class="btn btn-danger" href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation_id %}">Cancelar</a>
                 {% endif %}
             </div>
         </div>
@@ -64,9 +65,9 @@
                     Información de check-in: {{ check_in }}
                 </div>
                 <div class="card-body">
-                    <p><strong>Datos del chec-in:</strong> {{ check_in.guests_data }}</p>
+                    <p><strong>Datos del check-in:</strong> {{ check_in.guests_data }}</p>
                     <a class="btn btn-primary" href="{% url 'edit_check_in' reservation_type=reservation_type reservation_id=reservation_id %}">Editar</a>
-                    <a class="btn btn-danger" href="{% url 'delete_check_in' reservation_type=reservation_type reservation_id=reservation_id %}">Eliminar</a>
+                    <a class="btn btn-danger" href="{% url 'delete_check_in' reservation_type=reservation_type reservation_id=reservation_id %}">Cancelar</a>
                 </div>
             </div>
         {% endif %}

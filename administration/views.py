@@ -1,7 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from administration.models import HotelReservation, RestaurantReservation, CheckIn
 from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm, CheckInForm
 
@@ -17,10 +17,10 @@ def reservation_list(request, reservation_type):
         return redirect(home)
     
     if reservation_type == 'hotel':
-        reservations = HotelReservation.objects.all()
+        reservations = HotelReservation.objects.filter(cancelled=False)
         header = 'Reservas de habitación'
     elif reservation_type == 'restaurant':
-        reservations = RestaurantReservation.objects.all()
+        reservations = RestaurantReservation.objects.filter(cancelled=False)
         header = 'Reservas de restaurante'
     else:
         reservations = []
@@ -28,6 +28,24 @@ def reservation_list(request, reservation_type):
     return render(request, 'reservations.html', {'reservation_type': reservation_type,
                                                  'header': header, 'reservations': reservations})
 
+
+@login_required
+def cancelled_reservation_list(request, reservation_type):
+    if not is_receptionist(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+
+    if reservation_type == 'hotel':
+        reservations = HotelReservation.objects.filter(cancelled=True)
+        header = 'Reservas de habitación canceladas'
+    elif reservation_type == 'restaurant':
+        reservations = RestaurantReservation.objects.filter(cancelled=True)
+        header = 'Reservas de restaurante canceladas'
+    else:
+        reservations = []
+        header = 'Reservations'
+    return render(request, 'cancelled_reservations.html', {'reservation_type': reservation_type,
+                                                 'header': header, 'reservations': reservations})
 
 @login_required
 def add_reservation(request, reservation_type):
@@ -108,7 +126,8 @@ def delete_reservation(request, reservation_type, reservation_id):
     else:
         reservation = get_object_or_404(RestaurantReservation, pk=reservation_id)
     if request.method == 'POST':
-        reservation.delete()
+        reservation.cancelled = True
+        reservation.save()
         return redirect('reservations_list', reservation_type=reservation_type)
     return render(request, 'delete_reservation.html', {'reservation_type': reservation_type,
                                                        'reservation_id': reservation_id, 'reservation': reservation})
@@ -163,7 +182,8 @@ def delete_check_in(request, reservation_type, reservation_id):
 
     check_in = get_object_or_404(CheckIn, pk=reservation_id)
     if request.method == 'POST':
-        check_in.delete()
+        check_in.cancelled = True
+        check_in.save()
         return redirect('reservations_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     return render(request, 'delete_check_in.html', {'reservation_type': reservation_type,
                                                     'reservation_id': reservation_id, 'check_in': check_in})

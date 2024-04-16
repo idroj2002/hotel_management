@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Lista de reservas{% endblock %}
+{% block title %}Lista de reservas canceladas{% endblock %}
 
 {% block styles %}
     <style>
@@ -32,7 +32,7 @@
 
 {% block navbar-list %}
     <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'reservations_list' reservation_type='hotel' %}">Reservas de habitaciones</a>
+        <a class="nav-link" aria-current="page" href="{% url 'reservations_list' reservation_type='hotel' %}">Reservas de las habitaciones</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{% url 'reservations_list' reservation_type='restaurant' %}">Reservas del restaurante</a>
