@@ -25,7 +25,7 @@ def reservation_list(request, reservation_type):
     else:
         reservations = []
         header = 'Reservations'
-    return render(request, 'reservations.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/reservations.html', {'reservation_type': reservation_type,
                                                  'header': header, 'reservations': reservations})
 
 
@@ -44,7 +44,7 @@ def cancelled_reservation_list(request, reservation_type):
     else:
         reservations = []
         header = 'Reservations'
-    return render(request, 'cancelled_reservations.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/cancelled_reservations.html', {'reservation_type': reservation_type,
                                                  'header': header, 'reservations': reservations})
 
 @login_required
@@ -66,7 +66,7 @@ def add_reservation(request, reservation_type):
             form = HotelReservationForm()
         else:
             form = RestaurantReservationForm()
-    return render(request, 'add_reservation_form.html', {'reservation_type': reservation_type, 'form': form})
+    return render(request, 'reception/add_reservation_form.html', {'reservation_type': reservation_type, 'form': form})
 
 
 @login_required
@@ -83,7 +83,7 @@ def reservation_detail(request, reservation_type, reservation_id):
         check_in = CheckIn.objects.get(id=reservation_id)
     else:
         check_in = 'No'
-    return render(request, 'reservation_detail.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/reservation_detail.html', {'reservation_type': reservation_type,
                                                        'reservation_id': reservation_id, 'reservation': reservation,
                                                        'check_in': check_in})
 
@@ -109,7 +109,7 @@ def edit_reservation(request, reservation_type, reservation_id):
             return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     else:
         form = form_model(instance=reservation)
-    return render(request, 'edit_reservation.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/edit_reservation.html', {'reservation_type': reservation_type,
                                                      'reservation_id': reservation_id, 'form': form})
 
 
@@ -129,7 +129,7 @@ def delete_reservation(request, reservation_type, reservation_id):
         reservation.cancelled = True
         reservation.save()
         return redirect('reservations_list', reservation_type=reservation_type)
-    return render(request, 'delete_reservation.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/delete_reservation.html', {'reservation_type': reservation_type,
                                                        'reservation_id': reservation_id, 'reservation': reservation})
 
 
@@ -151,7 +151,7 @@ def add_check_in(request, reservation_type, reservation_id):
             return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     else:
         form = CheckInForm()
-    return render(request, 'add_check_in_form.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/add_check_in_form.html', {'reservation_type': reservation_type,
                                                       'reservation_id': reservation_id, 'reservation': reservation,
                                                       'form': form})
 
@@ -170,7 +170,7 @@ def edit_check_in(request, reservation_type, reservation_id):
             return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     else:
         form = CheckInForm(instance=check_in)
-    return render(request, 'edit_check_in.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/edit_check_in.html', {'reservation_type': reservation_type,
                                                   'reservation_id': reservation_id, 'form': form})
 
 
@@ -185,5 +185,5 @@ def delete_check_in(request, reservation_type, reservation_id):
         check_in.cancelled = True
         check_in.save()
         return redirect('reservations_detail', reservation_type=reservation_type, reservation_id=reservation_id)
-    return render(request, 'delete_check_in.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/delete_check_in.html', {'reservation_type': reservation_type,
                                                     'reservation_id': reservation_id, 'check_in': check_in})

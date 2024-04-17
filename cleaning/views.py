@@ -17,4 +17,4 @@ def cleaning_home(request):
     reservations = HotelReservation.objects.all()
     reservation_type = 'restaurant'
     header = 'Reservas de restaurante'
-    return render(request, 'cleaning_home')
+    return render(request, 'cleaning/cleaning_home')
