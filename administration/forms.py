@@ -20,7 +20,7 @@ class HotelReservationForm(forms.ModelForm):
     class Meta:
         model = HotelReservation
         fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone', 'check_in_date', 'check_out_date',
-                  'number_of_guests', 'room_type', 'price', 'room_number']
+                  'number_of_guests', 'room_type', 'price', 'room_number', 'cancelled']
                 
         widgets = {
             'dni': forms.TextInput(
@@ -113,7 +113,7 @@ class HotelReservationForm(forms.ModelForm):
 class RestaurantReservationForm(forms.ModelForm):
     class Meta:
         model = RestaurantReservation
-        fields = ['name', 'room_number', 'number_of_people', 'time', 'table_id']
+        fields = ['name', 'room_number', 'number_of_people', 'time', 'table_id', 'cancelled']
 
         widgets = {
             'name': forms.TextInput(
@@ -162,4 +162,4 @@ class Table(forms.ModelForm):
 class CheckInForm(forms.ModelForm):
     class Meta:
         model = CheckIn
-        fields = ['guests_data']
+        fields = ['guests_data', 'cancelled']
