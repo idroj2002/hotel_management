@@ -1,0 +1,55 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-17 23:05+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: administration/views.py:22
+msgid "Room reservations"
+msgstr "Room reservations"
+
+#: administration/views.py:25 restaurant/views.py:19
+msgid "Restaurant reservations"
+msgstr "Restaurant reservations"
+
+#: administration/views.py:28 administration/views.py:47
+msgid "Reservations"
+msgstr "Reservations"
+
+#: administration/views.py:41
+msgid "Cancelled room reservations"
+msgstr "Cancelled room reservations"
+
+#: administration/views.py:44
+msgid "Cancelled restaurant reservations"
+msgstr "Cancelled restaurant reservations"
+
+#: administration/views.py:100 administration/views.py:125
+msgid "It is not possible to delete a reservation with a check-in associated."
+msgstr "It is not possible to delete a reservation with a check-in associated."
+
+#: administration/views.py:144
+msgid "It is not possible to create a check-in for a restaurant reservation."
+msgstr "It is not possible to create a check-in for a restaurant reservation."
+
+#: hotel_management/settings.py:115
+msgid "English"
+msgstr "English"
+
+#: hotel_management/settings.py:116
+msgid "Spanish"
+msgstr "Spanish"

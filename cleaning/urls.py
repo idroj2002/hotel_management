@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.i18n import i18n_patterns
 from cleaning.views import cleaning_home
+
 urlpatterns = [
     path('', cleaning_home, name='home'),
 ]

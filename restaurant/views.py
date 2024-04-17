@@ -16,6 +16,6 @@ def restaurant_home(request):
     
     reservations = RestaurantReservation.objects.all()
     reservation_type = 'restaurant'
-    header = 'Reservas de restaurante'
+    header = _('Restaurant reservations')
     return render(request, 'reservations.html', {'reservation_type': reservation_type,
                                                  'header': header, 'reservations': reservations})
