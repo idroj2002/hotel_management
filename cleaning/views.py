@@ -33,6 +33,7 @@ def cleaning_home(request):
     
     sorted_rooms = sorted(rooms_with_reservation, key=lambda x: x.number) + sorted(rooms_without_reservation, key=lambda x: x.number)
     sorted_rooms_todo = [room for room in sorted_rooms if(room.state != 'D')]
+    sorted_rooms_done = [room for room in sorted_rooms if(room.state == 'D')]
 
     # Search recommended room
     recommended_room = None
@@ -41,4 +42,9 @@ def cleaning_home(request):
             recommended_room = room
             break
 
-    return render(request, 'cleaning/cleaning_home', {'rooms_todo': sorted_rooms_todo, 'recommended_room': recommended_room})
+    return render(request, 'cleaning/cleaning_home', 
+    {
+        'rooms_todo': sorted_rooms_todo, 
+        'recommended_room': recommended_room,
+        'rooms_done': sorted_rooms_done
+    })

@@ -4,7 +4,8 @@
 
 {% block content %}
 
-<div class="list-group mt-5">
+<h2 class="mt-5">Habitaciones para hacer</h2>
+<div class="list-group mt-3">
 {% for room in rooms_todo %}
     <a href="#" class="list-group-item list-group-item-action 
     {% if room.state == 'P' %} list-group-item-warning {% endif %} 
@@ -14,6 +15,17 @@
         {% if room == recommended_room %} <span> - Recomendada</span> {% endif %}
     </a>
 {% endfor %}
+</div>
+
+<hr>
+
+<h2>Habitaciones limpias</h2>
+<div class="list-group mt-3">
+    {% for room in rooms_done %}
+        <a href="#" class="list-group-item list-group-item-action list-group-item-success">
+            {{ room }}
+        </a>
+    {% endfor %}
 </div>
 
 {% endblock %}
