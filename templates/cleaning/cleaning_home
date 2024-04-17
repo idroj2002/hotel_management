@@ -4,10 +4,16 @@
 
 {% block content %}
 
-<ol>
+<div class="list-group mt-5">
 {% for room in rooms_todo %}
-    <li>{{ room }} - {{ room.state }}</li>
+    <a href="#" class="list-group-item list-group-item-action 
+    {% if room.state == 'P' %} list-group-item-warning {% endif %} 
+    {% if room == recommended_room %} list-group-item-primary {% endif %}">
+        {{ room }}
+        {% if room.state == 'P' %} <span> - En progreso</span> {% endif %}
+        {% if room == recommended_room %} <span> - Recomendada</span> {% endif %}
+    </a>
 {% endfor %}
-</ol>  
+</div>
 
 {% endblock %}
