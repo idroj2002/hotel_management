@@ -3,5 +3,11 @@
 {% block title %}Cleaning{% endblock %}
 
 {% block content %}
-<p>Cleaning</p>
+
+<ol>
+{% for room in rooms_todo %}
+    <li>{{ room }} - {{ room.state }}</li>
+{% endfor %}
+</ol>  
+
 {% endblock %}
