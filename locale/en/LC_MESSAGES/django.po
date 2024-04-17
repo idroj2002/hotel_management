@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-17 23:05+0200\n"
+"POT-Creation-Date: 2024-04-17 23:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,36 +20,64 @@ msgstr ""
 
 #: administration/views.py:22
 msgid "Room reservations"
-msgstr "Room reservations"
+msgstr ""
 
 #: administration/views.py:25 restaurant/views.py:19
 msgid "Restaurant reservations"
-msgstr "Restaurant reservations"
+msgstr ""
 
 #: administration/views.py:28 administration/views.py:47
 msgid "Reservations"
-msgstr "Reservations"
+msgstr ""
 
 #: administration/views.py:41
 msgid "Cancelled room reservations"
-msgstr "Cancelled room reservations"
+msgstr ""
 
 #: administration/views.py:44
 msgid "Cancelled restaurant reservations"
-msgstr "Cancelled restaurant reservations"
+msgstr ""
 
 #: administration/views.py:100 administration/views.py:125
 msgid "It is not possible to delete a reservation with a check-in associated."
-msgstr "It is not possible to delete a reservation with a check-in associated."
+msgstr ""
 
 #: administration/views.py:144
 msgid "It is not possible to create a check-in for a restaurant reservation."
-msgstr "It is not possible to create a check-in for a restaurant reservation."
-
-#: hotel_management/settings.py:115
-msgid "English"
-msgstr "English"
+msgstr ""
 
 #: hotel_management/settings.py:116
+msgid "English"
+msgstr ""
+
+#: hotel_management/settings.py:117
 msgid "Spanish"
-msgstr "Spanish"
+msgstr ""
+
+#: templates/base.html:6
+msgid "Las Palmeras hotel"
+msgstr ""
+
+#: templates/base.html:17
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:26
+msgid "Log out"
+msgstr ""
+
+#: templates/base.html:30
+msgid "Log in"
+msgstr ""
+
+#: templates/base.html:33
+msgid "Sign in"
+msgstr ""
+
+#: templates/reception/add_check_in_form.html:7
+msgid "Reservation check-in:"
+msgstr ""
+
+#: templates/reception/add_check_in_form.html:11
+msgid "Submit"
+msgstr ""
