@@ -1,6 +1,7 @@
 {% extends './administration_base.html' %}
+{% load i18n %}
 
-{% block title %}Lista de reservas canceladas{% endblock %}
+{% block title %}{% trans "List of canceled reservations" %}{% endblock %}
 
 {% block styles %}
     <style>
@@ -30,34 +31,19 @@
     </style>
 {% endblock %}
 
-{% block navbar-list %}
-    <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'reservations_list' reservation_type='hotel' %}">Reservas de las habitaciones</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'reservations_list' reservation_type='restaurant' %}">Reservas del restaurante</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'cancelled_reservations_list' reservation_type='hotel' %}">Reservas de habitaciones canceladas</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'cancelled_reservations_list' reservation_type='restaurant' %}">Reservas del restaurante canceladas</a>
-    </li>
-{% endblock %}
-
 {% block content %}
     <div class="container mt-5">
         <div class="row">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="mt-5">{{ header }}</h1>
-                    <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Add Reservation</a>
+                    <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">{% trans "Add Reservation" %}</a>
                 </div>
                 <ul class="list-group">
                     {% for reservation in reservations %}
                         <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation.id %}"><li class="list-group-item">{{ reservation }}</li></a>
                     {% empty %}
-                        <li class="list-group-item">No se ha encontrado ninguna reserva.</li>
+                        <li class="list-group-item">{% trans "No reservations found" %}.</li>
                     {% endfor %}
                 </ul>
             </div>

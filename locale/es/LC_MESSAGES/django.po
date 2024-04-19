@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-17 23:38+0200\n"
+"POT-Creation-Date: 2024-04-19 16:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: administration/views.py:22
+#: administration/views.py:22 templates/reception/administration_base.html:6
 msgid "Room reservations"
 msgstr "Reservas de habitación"
 
 #: administration/views.py:25 restaurant/views.py:19
+#: templates/reception/administration_base.html:9
 msgid "Restaurant reservations"
 msgstr "Reservas del restaurante"
 
@@ -31,11 +32,11 @@ msgstr "Reservas del restaurante"
 msgid "Reservations"
 msgstr "Reservas"
 
-#: administration/views.py:41
+#: administration/views.py:41 templates/reception/administration_base.html:12
 msgid "Cancelled room reservations"
 msgstr "Reservas de habitación canceladas"
 
-#: administration/views.py:44
+#: administration/views.py:44 templates/reception/administration_base.html:15
 msgid "Cancelled restaurant reservations"
 msgstr "Reservas del restaurante canceladas"
 
@@ -75,10 +76,113 @@ msgstr "Iniciar sesión"
 msgid "Sign in"
 msgstr "Registrarse"
 
+#: templates/reception/add_check_in_form.html:3
+#, fuzzy
+#| msgid "Cancel check-in"
+msgid "Create Check-in"
+msgstr "Cancelar check-in"
+
 #: templates/reception/add_check_in_form.html:7
-msgid "Reservation check-in:"
+#: templates/reception/edit_check_in.html:8
+msgid "Reservation check-in"
 msgstr "Check in de la reserva"
 
 #: templates/reception/add_check_in_form.html:11
+#: templates/reception/add_reservation_form.html:18
+#: templates/reception/edit_check_in.html:12
 msgid "Submit"
 msgstr "Enviar"
+
+#: templates/reception/add_reservation_form.html:4
+#, fuzzy
+#| msgid "Cancel reservation"
+msgid "Create reservation"
+msgstr "Cancelar reserva"
+
+#: templates/reception/add_reservation_form.html:10
+msgid "New room reservation"
+msgstr "Nueva reservas de habitación"
+
+#: templates/reception/add_reservation_form.html:12
+msgid "New restaurant reservation"
+msgstr "Nueva reserva del restaurante"
+
+#: templates/reception/add_reservation_form.html:19
+#: templates/reception/edit_check_in.html:13
+msgid "Back to Reservations"
+msgstr "Volver a reservas"
+
+#: templates/reception/cancelled_reservations.html:4
+#, fuzzy
+#| msgid "Cancel reservation"
+msgid "List of canceled reservations"
+msgstr "Cancelar reserva"
+
+#: templates/reception/cancelled_reservations.html:40
+msgid "Add Reservation"
+msgstr "Añadir reserva"
+
+#: templates/reception/cancelled_reservations.html:46
+msgid "No reservations found"
+msgstr "No se ha encontrado ninguna reserva"
+
+#: templates/reception/delete_check_in.html:4
+msgid "Cancel Check-in"
+msgstr "Cancelar check-in"
+
+#: templates/reception/delete_check_in.html:8
+msgid "Cancel check-in"
+msgstr "Cancelar check-in"
+
+#: templates/reception/delete_check_in.html:11
+msgid "Are you sure that you want to cancel the check-in"
+msgstr "¿Estás seguro que quieres cancelar el check-in"
+
+#: templates/reception/delete_check_in.html:12
+#: templates/reception/delete_reservation.html:12
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: templates/reception/delete_check_in.html:13
+#: templates/reception/delete_reservation.html:13
+#: templates/reception/edit_reservation.html:19
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/reception/delete_reservation.html:4
+#: templates/reception/delete_reservation.html:8
+msgid "Cancel reservation"
+msgstr "Cancelar reserva"
+
+#: templates/reception/delete_reservation.html:11
+msgid "Are you sure that you want to cancel the reservation"
+msgstr "¿Estás seguro que quieres cancelar la reserva"
+
+#: templates/reception/edit_check_in.html:4
+msgid "Edit Check-in"
+msgstr "Editar check-in"
+
+#: templates/reception/edit_reservation.html:4
+msgid "Edit reservation"
+msgstr "Editar reserva"
+
+#: templates/reception/edit_reservation.html:10
+msgid "Edit room reservation"
+msgstr "Editar reserva de habitación"
+
+#: templates/reception/edit_reservation.html:12
+msgid "Edit restaurant reservation"
+msgstr "Editar reserva de restaurante"
+
+#: templates/reception/edit_reservation.html:18
+msgid "Save"
+msgstr "Guardar"
+
+#: templates/reception/reservation_detail.html:4
+msgid "Reservation info"
+msgstr "Información de la reserva"
+
+#, fuzzy
+#~| msgid "Reservation check-in"
+#~ msgid "Reservation check-in:"
+#~ msgstr "Check in de la reserva"

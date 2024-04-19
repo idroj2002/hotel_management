@@ -1,15 +1,16 @@
 {% extends './reservations.html' %}
+{% load i18n %}
 
-{% block title %}Cancelar Chec-in{% endblock %}
+{% block title %}{% trans "Cancel Check-in" %}{% endblock %}
 
 {% block content %}
     <div class="container">
-        <h1 class="mt-5">Cancelar check-in</h1>
+        <h1 class="mt-5">{% trans "Cancel check-in" %}</h1>
         <form method="post" class="mt-4 form-control">
             {% csrf_token %}
-            <p>¿Estás seguro que quieres cancelar el check-in: "{{ check_in }}"?</p>
-            <button type="submit" class="btn btn-danger">Confirmar</button>
-            <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation_id %}" class="btn btn-secondary">Cancelar</a>
+            <p>{% trans "Are you sure that you want to cancel the check-in" %}: "{{ check_in }}"?</p>
+            <button type="submit" class="btn btn-danger">{% trans "Confirm" %}</button>
+            <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation_id %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

@@ -1,21 +1,22 @@
 {% extends './reservations.html' %}
+{% load i18n %}
 
-{% block title %}Editar reserva{% endblock %}
+{% block title %}{% trans "Edit reservation" %}{% endblock %}
 
 {% block content %}
     <div class="container">
         <h1 class="mt-5">
             {% if reservation_type == 'hotel' %}
-                Editar reserva de habitación
+                {% trans "Edit room reservation" %}
             {% else %}
-                Editar reserva de restaurante
+                {% trans "Edit restaurant reservation" %}
             {% endif %}
         </h1>
         <form method="post" class="mt-4 form-control">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation_id %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+            <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation_id %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

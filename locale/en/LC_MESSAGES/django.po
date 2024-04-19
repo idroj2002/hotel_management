@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-17 23:38+0200\n"
+"POT-Creation-Date: 2024-04-19 16:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: administration/views.py:22
+#: administration/views.py:22 templates/reception/administration_base.html:6
 msgid "Room reservations"
 msgstr ""
 
 #: administration/views.py:25 restaurant/views.py:19
+#: templates/reception/administration_base.html:9
 msgid "Restaurant reservations"
 msgstr ""
 
@@ -30,11 +31,11 @@ msgstr ""
 msgid "Reservations"
 msgstr ""
 
-#: administration/views.py:41
+#: administration/views.py:41 templates/reception/administration_base.html:12
 msgid "Cancelled room reservations"
 msgstr ""
 
-#: administration/views.py:44
+#: administration/views.py:44 templates/reception/administration_base.html:15
 msgid "Cancelled restaurant reservations"
 msgstr ""
 
@@ -74,10 +75,102 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
+#: templates/reception/add_check_in_form.html:3
+msgid "Create Check-in"
+msgstr ""
+
 #: templates/reception/add_check_in_form.html:7
-msgid "Reservation check-in:"
+#: templates/reception/edit_check_in.html:8
+msgid "Reservation check-in"
 msgstr ""
 
 #: templates/reception/add_check_in_form.html:11
+#: templates/reception/add_reservation_form.html:18
+#: templates/reception/edit_check_in.html:12
 msgid "Submit"
+msgstr ""
+
+#: templates/reception/add_reservation_form.html:4
+msgid "Create reservation"
+msgstr ""
+
+#: templates/reception/add_reservation_form.html:10
+msgid "New room reservation"
+msgstr ""
+
+#: templates/reception/add_reservation_form.html:12
+msgid "New restaurant reservation"
+msgstr ""
+
+#: templates/reception/add_reservation_form.html:19
+#: templates/reception/edit_check_in.html:13
+msgid "Back to Reservations"
+msgstr ""
+
+#: templates/reception/cancelled_reservations.html:4
+msgid "List of canceled reservations"
+msgstr ""
+
+#: templates/reception/cancelled_reservations.html:40
+msgid "Add Reservation"
+msgstr ""
+
+#: templates/reception/cancelled_reservations.html:46
+msgid "No reservations found"
+msgstr ""
+
+#: templates/reception/delete_check_in.html:4
+msgid "Cancel Check-in"
+msgstr ""
+
+#: templates/reception/delete_check_in.html:8
+msgid "Cancel check-in"
+msgstr ""
+
+#: templates/reception/delete_check_in.html:11
+msgid "Are you sure that you want to cancel the check-in"
+msgstr ""
+
+#: templates/reception/delete_check_in.html:12
+#: templates/reception/delete_reservation.html:12
+msgid "Confirm"
+msgstr ""
+
+#: templates/reception/delete_check_in.html:13
+#: templates/reception/delete_reservation.html:13
+#: templates/reception/edit_reservation.html:19
+msgid "Cancel"
+msgstr ""
+
+#: templates/reception/delete_reservation.html:4
+#: templates/reception/delete_reservation.html:8
+msgid "Cancel reservation"
+msgstr ""
+
+#: templates/reception/delete_reservation.html:11
+msgid "Are you sure that you want to cancel the reservation"
+msgstr ""
+
+#: templates/reception/edit_check_in.html:4
+msgid "Edit Check-in"
+msgstr ""
+
+#: templates/reception/edit_reservation.html:4
+msgid "Edit reservation"
+msgstr ""
+
+#: templates/reception/edit_reservation.html:10
+msgid "Edit room reservation"
+msgstr ""
+
+#: templates/reception/edit_reservation.html:12
+msgid "Edit restaurant reservation"
+msgstr ""
+
+#: templates/reception/edit_reservation.html:18
+msgid "Save"
+msgstr ""
+
+#: templates/reception/reservation_detail.html:4
+msgid "reservation info"
 msgstr ""
