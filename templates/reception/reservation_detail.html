@@ -1,4 +1,4 @@
-{% extends 'reservations.html' %}
+{% extends './reservations.html' %}
 
 {% block title %}Información de la reserva{% endblock %}
 
@@ -68,7 +68,7 @@
                     <a class="btn btn-primary" href="{% url 'edit_check_in' reservation_type=reservation_type reservation_id=reservation_id %}">Editar</a>
                     <a class="btn btn-danger" href="{% url 'delete_check_in' reservation_type=reservation_type reservation_id=reservation_id %}">Eliminar</a>
                 </div>
-            </div>
+            </div>1
         {% endif %}
     </div>
 {% endblock %}

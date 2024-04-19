@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-17 23:38+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: administration/views.py:22
+msgid "Room reservations"
+msgstr ""
+
+#: administration/views.py:25 restaurant/views.py:19
+msgid "Restaurant reservations"
+msgstr ""
+
+#: administration/views.py:28 administration/views.py:47
+msgid "Reservations"
+msgstr ""
+
+#: administration/views.py:41
+msgid "Cancelled room reservations"
+msgstr ""
+
+#: administration/views.py:44
+msgid "Cancelled restaurant reservations"
+msgstr ""
+
+#: administration/views.py:100 administration/views.py:125
+msgid "It is not possible to delete a reservation with a check-in associated."
+msgstr ""
+
+#: administration/views.py:144
+msgid "It is not possible to create a check-in for a restaurant reservation."
+msgstr ""
+
+#: hotel_management/settings.py:116
+msgid "English"
+msgstr ""
+
+#: hotel_management/settings.py:117
+msgid "Spanish"
+msgstr ""
+
+#: templates/base.html:6
+msgid "Las Palmeras hotel"
+msgstr ""
+
+#: templates/base.html:17
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:26
+msgid "Log out"
+msgstr ""
+
+#: templates/base.html:30
+msgid "Log in"
+msgstr ""
+
+#: templates/base.html:33
+msgid "Sign in"
+msgstr ""
+
+#: templates/reception/add_check_in_form.html:7
+msgid "Reservation check-in:"
+msgstr ""
+
+#: templates/reception/add_check_in_form.html:11
+msgid "Submit"
+msgstr ""

@@ -1,0 +1,84 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-17 23:38+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+
+#: administration/views.py:22
+msgid "Room reservations"
+msgstr "Reservas de habitación"
+
+#: administration/views.py:25 restaurant/views.py:19
+msgid "Restaurant reservations"
+msgstr "Reservas del restaurante"
+
+#: administration/views.py:28 administration/views.py:47
+msgid "Reservations"
+msgstr "Reservas"
+
+#: administration/views.py:41
+msgid "Cancelled room reservations"
+msgstr "Reservas de habitación canceladas"
+
+#: administration/views.py:44
+msgid "Cancelled restaurant reservations"
+msgstr "Reservas del restaurante canceladas"
+
+#: administration/views.py:100 administration/views.py:125
+msgid "It is not possible to delete a reservation with a check-in associated."
+msgstr "No se puede borrar una reserva con check-in."
+
+#: administration/views.py:144
+msgid "It is not possible to create a check-in for a restaurant reservation."
+msgstr "No se puede crer un chec-in para una reserva de restaurante."
+
+#: hotel_management/settings.py:116
+msgid "English"
+msgstr "Inglés"
+
+#: hotel_management/settings.py:117
+msgid "Spanish"
+msgstr "Español"
+
+#: templates/base.html:6
+msgid "Las Palmeras hotel"
+msgstr "Hotel Las Palmeras"
+
+#: templates/base.html:17
+msgid "Home"
+msgstr "Inicio"
+
+#: templates/base.html:26
+msgid "Log out"
+msgstr "Cerrar sesión"
+
+#: templates/base.html:30
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+#: templates/base.html:33
+msgid "Sign in"
+msgstr "Registrarse"
+
+#: templates/reception/add_check_in_form.html:7
+msgid "Reservation check-in:"
+msgstr "Check in de la reserva"
+
+#: templates/reception/add_check_in_form.html:11
+msgid "Submit"
+msgstr "Enviar"

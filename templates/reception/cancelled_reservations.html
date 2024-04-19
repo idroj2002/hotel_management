@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+{% extends './administration_base.html' %}
 
-{% block title %}Lista de reservas{% endblock %}
+{% block title %}Lista de reservas canceladas{% endblock %}
 
 {% block styles %}
     <style>
@@ -36,6 +36,12 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{% url 'reservations_list' reservation_type='restaurant' %}">Reservas del restaurante</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'cancelled_reservations_list' reservation_type='hotel' %}">Reservas de habitaciones canceladas</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'cancelled_reservations_list' reservation_type='restaurant' %}">Reservas del restaurante canceladas</a>
     </li>
 {% endblock %}
 

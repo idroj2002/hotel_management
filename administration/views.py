@@ -1,7 +1,8 @@
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
+from django.utils.translation import gettext_lazy as _
 from administration.models import HotelReservation, RestaurantReservation, CheckIn
 from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm, CheckInForm
 
@@ -17,17 +18,35 @@ def reservation_list(request, reservation_type):
         return redirect(home)
     
     if reservation_type == 'hotel':
-        reservations = HotelReservation.objects.all()
-        header = 'Reservas de habitación'
+        reservations = HotelReservation.objects.filter(cancelled=False)
+        header = _('Room reservations')
     elif reservation_type == 'restaurant':
-        reservations = RestaurantReservation.objects.all()
-        header = 'Reservas de restaurante'
+        reservations = RestaurantReservation.objects.filter(cancelled=False)
+        header = _('Restaurant reservations')
     else:
         reservations = []
-        header = 'Reservations'
-    return render(request, 'reservations.html', {'reservation_type': reservation_type,
+        header = _('Reservations')
+    return render(request, 'reception/reservations.html', {'reservation_type': reservation_type,
                                                  'header': header, 'reservations': reservations})
 
+
+@login_required
+def cancelled_reservation_list(request, reservation_type):
+    if not is_receptionist(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+
+    if reservation_type == 'hotel':
+        reservations = HotelReservation.objects.filter(cancelled=True)
+        header = _('Cancelled room reservations')
+    elif reservation_type == 'restaurant':
+        reservations = RestaurantReservation.objects.filter(cancelled=True)
+        header = _('Cancelled restaurant reservations')
+    else:
+        reservations = []
+        header = _('Reservations')
+    return render(request, 'reception/cancelled_reservations.html', {'reservation_type': reservation_type,
+                                                 'header': header, 'reservations': reservations})
 
 @login_required
 def add_reservation(request, reservation_type):
@@ -48,7 +67,7 @@ def add_reservation(request, reservation_type):
             form = HotelReservationForm()
         else:
             form = RestaurantReservationForm()
-    return render(request, 'add_reservation_form.html', {'reservation_type': reservation_type, 'form': form})
+    return render(request, 'reception/add_reservation_form.html', {'reservation_type': reservation_type, 'form': form})
 
 
 @login_required
@@ -65,7 +84,7 @@ def reservation_detail(request, reservation_type, reservation_id):
         check_in = CheckIn.objects.get(id=reservation_id)
     else:
         check_in = 'No'
-    return render(request, 'reservation_detail.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/reservation_detail.html', {'reservation_type': reservation_type,
                                                        'reservation_id': reservation_id, 'reservation': reservation,
                                                        'check_in': check_in})
 
@@ -78,7 +97,7 @@ def edit_reservation(request, reservation_type, reservation_id):
 
     if reservation_type == 'hotel':
         if CheckIn.objects.filter(id=reservation_id).exists():
-            raise PermissionDenied("No se puede borrar una reserva con check-in.")
+            raise PermissionDenied(_("It is not possible to delete a reservation with a check-in associated."))
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
         form_model = HotelReservationForm
     else:
@@ -91,7 +110,7 @@ def edit_reservation(request, reservation_type, reservation_id):
             return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     else:
         form = form_model(instance=reservation)
-    return render(request, 'edit_reservation.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/edit_reservation.html', {'reservation_type': reservation_type,
                                                      'reservation_id': reservation_id, 'form': form})
 
 
@@ -103,14 +122,15 @@ def delete_reservation(request, reservation_type, reservation_id):
 
     if reservation_type == 'hotel':
         if CheckIn.objects.filter(id=reservation_id).exists():
-            raise PermissionDenied("No se puede borrar una reserva con check-in.")
+            raise PermissionDenied(_("It is not possible to delete a reservation with a check-in associated."))
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
     else:
         reservation = get_object_or_404(RestaurantReservation, pk=reservation_id)
     if request.method == 'POST':
-        reservation.delete()
+        reservation.cancelled = True
+        reservation.save()
         return redirect('reservations_list', reservation_type=reservation_type)
-    return render(request, 'delete_reservation.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/delete_reservation.html', {'reservation_type': reservation_type,
                                                        'reservation_id': reservation_id, 'reservation': reservation})
 
 
@@ -121,7 +141,7 @@ def add_check_in(request, reservation_type, reservation_id):
         return redirect(home)
 
     if reservation_type == 'restaurant':
-        raise PermissionDenied("No se puede crer un chec-in para una reserva de restaurante.")
+        raise PermissionDenied(_("It is not possible to create a check-in for a restaurant reservation."))
     reservation = get_object_or_404(HotelReservation, pk=reservation_id)
     if request.method == 'POST':
         form = CheckInForm(request.POST)
@@ -132,7 +152,7 @@ def add_check_in(request, reservation_type, reservation_id):
             return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     else:
         form = CheckInForm()
-    return render(request, 'add_check_in_form.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/add_check_in_form.html', {'reservation_type': reservation_type,
                                                       'reservation_id': reservation_id, 'reservation': reservation,
                                                       'form': form})
 
@@ -151,7 +171,7 @@ def edit_check_in(request, reservation_type, reservation_id):
             return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     else:
         form = CheckInForm(instance=check_in)
-    return render(request, 'edit_check_in.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/edit_check_in.html', {'reservation_type': reservation_type,
                                                   'reservation_id': reservation_id, 'form': form})
 
 
@@ -163,7 +183,8 @@ def delete_check_in(request, reservation_type, reservation_id):
 
     check_in = get_object_or_404(CheckIn, pk=reservation_id)
     if request.method == 'POST':
-        check_in.delete()
+        check_in.cancelled = True
+        check_in.save()
         return redirect('reservations_detail', reservation_type=reservation_type, reservation_id=reservation_id)
-    return render(request, 'delete_check_in.html', {'reservation_type': reservation_type,
+    return render(request, 'reception/delete_check_in.html', {'reservation_type': reservation_type,
                                                     'reservation_id': reservation_id, 'check_in': check_in})

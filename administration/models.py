@@ -11,6 +11,12 @@ class Room(models.Model):
             ('Sui', 'Suite'),
         ]
     type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS)
+    ROOM_STATE_OPTIONS = [
+        ('TD', 'To-do'),
+        ('P', 'In process'),
+        ('D', 'Done'),
+    ]
+    state = models.CharField(max_length=10, choices=ROOM_STATE_OPTIONS)
     occupied = models.BooleanField(default=False)
 
     def __str__(self):
@@ -31,9 +37,9 @@ class HotelReservation(models.Model):
     dni = models.CharField(max_length=20)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField(blank=True)
+    date_of_birth = models.DateField(blank=True, null=True)
     email = models.EmailField()
-    phone = models.CharField(max_length=20, blank=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
     check_in_date = models.DateField()
     check_out_date = models.DateField()
     number_of_guests = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
@@ -46,6 +52,7 @@ class HotelReservation(models.Model):
     room_type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
+    cancelled = models.BooleanField(default=False)
 
     def __str__(self):
         return f"ID: {self.id} - Nombre: {self.first_name} {self.last_name} - Entrada: {self.check_in_date}" \
@@ -59,6 +66,7 @@ class RestaurantReservation(models.Model):
     number_of_people = models.IntegerField()
     table_id = models.ForeignKey(Table, on_delete=models.CASCADE)
     time = models.DateTimeField()
+    cancelled = models.BooleanField(default=False)
 
     def __str__(self):
         formatted_time = self.time.strftime('%d/%m %H:%M')
@@ -69,6 +77,7 @@ class CheckIn(models.Model):
     id = models.OneToOneField(HotelReservation, on_delete=models.CASCADE, primary_key=True)
     guests_data = models.TextField(max_length=1000)
     keys = models.BooleanField(default=False)
+    cancelled = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Check-in of reservation: {self.id}"
