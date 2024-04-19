@@ -49,8 +49,7 @@ class HotelReservation(models.Model):
             ('Del', 'Deluxe'),
             ('Sui', 'Suite'),
         ]
-    room_type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS, null=False
-    )
+    room_type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
     cancelled = models.BooleanField(default=False)
@@ -77,6 +76,7 @@ class RestaurantReservation(models.Model):
 class CheckIn(models.Model):
     id = models.OneToOneField(HotelReservation, on_delete=models.CASCADE, primary_key=True)
     guests_data = models.TextField(max_length=1000)
+    keys = models.BooleanField(default=False)
     cancelled = models.BooleanField(default=False)
 
     def __str__(self):
