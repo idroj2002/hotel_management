@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 from datetime import date, timedelta
 from administration.models import HotelReservation, RestaurantReservation, Room, Table, CheckIn
 
@@ -19,77 +20,78 @@ class SignupForm(UserCreationForm):
 class HotelReservationForm(forms.ModelForm):
     class Meta:
         model = HotelReservation
-        fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone', 'check_in_date', 'check_out_date',
+        fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone', 'check_in_date',
+                  'check_out_date',
                   'number_of_guests', 'room_type', 'price', 'room_number', 'cancelled']
-                
+
         widgets = {
             'dni': forms.TextInput(
-                attrs = {
+                attrs={
                     'placeholder': 'DNI/NIE',
                     'class': 'form-control'
                 }
             ),
             'first_name': forms.TextInput(
-                attrs = {
+                attrs={
                     'placeholder': 'Nombre',
                     'class': 'form-control'
                 }
             ),
             'last_name': forms.TextInput(
-                attrs = {
+                attrs={
                     'placeholder': 'Apellido',
                     'class': 'form-control'
                 }
             ),
             'date_of_birth': forms.DateInput(
-                attrs = {
+                attrs={
                     'placeholder': 'aaaa-mm-dd',
                     'class': 'form-control'
                 }
             ),
             'email': forms.EmailInput(
-                attrs = {
+                attrs={
                     'placeholder': 'Correo electrónico',
                     'class': 'form-control'
                 }
             ),
             'phone': forms.NumberInput(
-                attrs = {
+                attrs={
                     'placeholder': 'Número de teléfono',
                     'class': 'form-control'
                 }
             ),
             'check_in_date': forms.DateInput(
-                attrs = {
+                attrs={
                     'value': date.today() + timedelta(days=1),
                     'class': 'form-control'
                 }
             ),
             'check_out_date': forms.DateInput(
-                attrs = {
+                attrs={
                     'value': date.today() + timedelta(days=2),
                     'class': 'form-control'
                 }
             ),
             'number_of_guests': forms.NumberInput(
-                attrs = {
+                attrs={
                     'placeholder': 'Número de personas',
                     'class': 'form-control'
                 }
             ),
             'room_type': forms.Select(
-                attrs = {
+                attrs={
                     'class': 'form-select'
                 }
             ),
             'price': forms.NumberInput(
-                attrs = {
+                attrs={
                     'value': 45,
                     'class': 'form-control'
                 }
             ),
             'room_number': forms.Select(
-                attrs = {
+                attrs={
                     'class': 'form-select'
                 }
             ),
@@ -117,33 +119,42 @@ class RestaurantReservationForm(forms.ModelForm):
 
         widgets = {
             'name': forms.TextInput(
-                attrs = {
+                attrs={
                     'placeholder': 'Nombre de la reserva',
                     'class': 'form-control'
                 }
             ),
             'room_number': forms.Select(
-                attrs = {
+                attrs={
                     'class': 'form-select'
                 }
             ),
             'number_of_people': forms.NumberInput(
-                attrs = {
+                attrs={
                     'placeholder': 'Número de personas',
                     'class': 'form-control'
                 }
             ),
             'time': forms.DateTimeInput(
-                attrs = {
+                attrs={
                     'value': date.today().strftime('%Y-%m-%d') + '/' + '13:00:00',
                     'class': 'form-control'
                 }
             ),
             'table_id': forms.Select(
-                attrs = {
+                attrs={
                     'class': 'form-select'
                 }
             ),
+        }
+
+        labels = {
+            'name': 'Nombre',
+            'room_number': 'Número de habitación',
+            'number_of_people': 'Número de comensales',
+            'time': 'Turno',
+            'table_id': 'Número de mesa',
+            'cancelled': 'Cancelada',
         }
 
 
@@ -167,9 +178,14 @@ class CheckInForm(forms.ModelForm):
         widgets = {
             'guests_data': forms.Textarea(
                 attrs={
-                    'placeholder': 'Información  del check-in',
+                    'placeholder': _('Información del check-in'),
                     'class': 'form-control'
                 }
             ),
-            'keys': forms.BooleanField(),
+        }
+
+        labels = {
+            'guests_data': 'Información de los huéspedes',
+            'keys': 'Llaves entregadas',
+            'cancelled': 'Cancelada',
         }

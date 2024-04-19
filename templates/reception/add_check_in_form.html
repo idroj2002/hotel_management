@@ -1,10 +1,12 @@
 {% extends './reservations.html' %}
 
+{% load i18n %}
+
 {% block title %}Crear Check-in{% endblock %}
 
 {% block content %}
     <div class="container">
-        <h1 class="mt-5">{% trans "Reservation check-in:" %} {{ reservation }}</h1>
+        <h1 class="mt-5">{% trans "Reservation check-in:" %} {{ reservation. }}</h1>
         <form method="post" class="mt-4 form-control">
             {% csrf_token %}
             {{ form.as_p }}
