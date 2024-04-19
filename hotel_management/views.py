@@ -3,6 +3,7 @@ from administration.views import reservation_list
 from restaurant.views import restaurant_home
 from cleaning.views import cleaning_home
 
+
 def is_receptionist(user):
     return user.groups.filter(name='Receptionist').exists()
 
@@ -23,4 +24,4 @@ def home(request):
     elif is_cleaner(request.user):
         return redirect(cleaning_home)
     else:
-        return render(request, 'not_authorized')
+        return render(request, 'not_authorized.html')

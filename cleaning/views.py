@@ -42,7 +42,7 @@ def cleaning_home(request):
             recommended_room = room
             break
 
-    return render(request, 'cleaning/cleaning_home', 
+    return render(request, 'cleaning/cleaning_home.html',
     {
         'rooms_todo': sorted_rooms_todo, 
         'recommended_room': recommended_room,
