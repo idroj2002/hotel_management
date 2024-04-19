@@ -17,16 +17,50 @@ def reservation_list(request, reservation_type):
         from hotel_management.views import home
         return redirect(home)
 
-    if reservation_type == 'hotel':
-        reservations = HotelReservation.objects.filter(cancelled=False)
-        header = _('Room reservations')
-    elif reservation_type == 'restaurant':
-        reservations = RestaurantReservation.objects.filter(cancelled=False)
-        header = _('Restaurant reservations')
+    if request.method == 'POST':
+        query = ''
+        if reservation_type == 'hotel':
+            query = request.POST.get('query')
+            reservations = []
+            if query:
+                reservations = HotelReservation.objects.filter(
+                    # Aquí puedes agregar los campos en los que deseas buscar coincidencias Puedes usar | (pipe) para
+                    # combinar múltiples filtros, lo que busca resultados que coincidan con cualquiera de los campos
+                    Q(id__icontains=query) |
+                    Q(first_name__icontains=query) |
+                    Q(last_name__icontains=query),
+                    cancelled=False
+                )
+            else:
+                reservations = HotelReservation.objects.filter(cancelled=False)
+            header = _('Room reservations - Search results for') + ' "' + query + '"'
+        elif reservation_type == 'restaurant':
+            query = request.POST.get('query')
+            reservations = []
+            if query:
+                reservations = RestaurantReservation.objects.filter(
+                    Q(id__icontains=query) |
+                    Q(name__icontains=query),
+                    cancelled=False
+                )
+            else:
+                reservations = RestaurantReservation.objects.filter(cancelled=False)
+            header = _('Restaurant reservations - Search results for') + ' "' + query + '"'
+        else:
+            reservations = []
+            header = _('Reservations')
     else:
-        reservations = []
-        header = _('Reservations')
-    return render(request, 'reception/reservations.html', {'reservation_type': reservation_type,
+        query = ''
+        if reservation_type == 'hotel':
+            reservations = HotelReservation.objects.filter(cancelled=False)
+            header = _('Room reservations')
+        elif reservation_type == 'restaurant':
+            reservations = RestaurantReservation.objects.filter(cancelled=False)
+            header = _('Restaurant reservations')
+        else:
+            reservations = []
+            header = _('Reservations')
+    return render(request, 'reception/reservations.html', {'reservation_type': reservation_type, 'query': query,
                                                            'header': header, 'reservations': reservations})
 
 

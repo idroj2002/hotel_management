@@ -34,6 +34,15 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-12">
+                <form method="post" class="input-group">
+                    {% csrf_token %}
+                    <div class="form-outline">
+                        <input type="search" name="query" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="mt-5">{{ header }}</h1>
                     <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Add Reservation</a>
@@ -42,7 +51,11 @@
                     {% for reservation in reservations %}
                         <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation.id %}"><li class="list-group-item">{{ reservation }}</li></a>
                     {% empty %}
-                        <li class="list-group-item">No se ha encontrado ninguna reserva.</li>
+                        {% if query == '' %}
+                        <li class="list-group-item">No reservations found.</li>
+                        {% else %}
+                        <li class="list-group-item">No reservations found that matches the search "{{ query }}".</li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>
