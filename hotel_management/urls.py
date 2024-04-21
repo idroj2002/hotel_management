@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from hotel_management.views import home
 from members.urls import *
+from restaurant.views import *
+from cleaning import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),

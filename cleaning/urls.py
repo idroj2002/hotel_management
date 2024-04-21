@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from cleaning.views import cleaning_home
+
+app_name = 'cleaning'
+
 urlpatterns = [
     path('', cleaning_home, name='home'),
 ]

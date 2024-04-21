@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from restaurant.views import restaurant_home
 
+app_name = 'restaurant'
+
 urlpatterns = [
     path('reservations/', restaurant_home, name='home'),
 ]
