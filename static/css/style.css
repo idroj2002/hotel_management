@@ -1,3 +1,38 @@
+body{
+    background: linear-gradient(90deg, rgb(78, 118, 155) 35%, rgb(158, 208, 223) 100%);
+}
+
+form{
+    width: 60%;
+    background-color: white;
+    padding: 50px;
+    border-radius: 20px;
+
+}
+
+.btn-primary{
+    margin-top: 20px;
+    width: 40%;
+    margin-left: 30%;
+    border: none;
+    border-radius: 50px;
+}
+
+.form div input {
+    color: rgba(0,0,0,.87);
+    border-bottom-color:rgba(0,0,0,.42);
+    box-shadow: none;
+    border: none;
+    border-bottom: 1px solid;
+    border-radius: 4px 4px 0 0;
+}
+h4{
+    font-size: 2rem !important;
+    font-weight: 500;
+}
+.form-label{
+    font-family: 800 !important;
+}
 
 .mainbody {
     padding: 120px;
@@ -26,6 +61,7 @@
     border-radius: 50px;
     text-decoration: none;
     transition: 0.3s background-color;
+    margin: 4px;
 }
 
 .login-button:hover{
@@ -117,4 +153,5 @@
     position: relative;
     z-index: 2;
 }
+
 

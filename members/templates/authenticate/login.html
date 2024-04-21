@@ -2,12 +2,12 @@
 
 {% block content %}
     
-        <h1>Login</h1>
-
-        <form action="" method="POST">
+        
+      <div class="container-fluid">
+        <form class="mx-auto" action="" method="POST">
             {%  csrf_token %}
-
-                <div class="mb-3">
+              <h4 class="text-center">Log In</h4>
+                <div class="mb-3 mt-5">
                   <label for="exampleInputEmail1" class="form-label">Username</label>
                   <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
                 </div>
@@ -16,9 +16,10 @@
                   <input type="password" class="form-control" name="password">
                 </div>
 
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" class="btn btn-primary">
 
 
         </form>
+      </div>
     
 {% endblock %}
