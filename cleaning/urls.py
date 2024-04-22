@@ -17,8 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.i18n import i18n_patterns
-from cleaning.views import cleaning_home
+from cleaning.views import cleaning_home, create_cleaning_data
 
 urlpatterns = [
     path('', cleaning_home, name='home'),
+    path('create-data', create_cleaning_data, name='create-data'),
 ]

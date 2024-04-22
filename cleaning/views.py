@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from administration.models import Room, HotelReservation
+from cleaning.models import Cleaning_data
+from datetime import datetime
 
 # Create your views here.
 
@@ -48,3 +50,35 @@ def cleaning_home(request):
         'recommended_room': recommended_room,
         'rooms_done': sorted_rooms_done
     })
+
+@login_required
+def create_cleaning_data(request):
+    if not is_cleaner(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+
+    current_datetime = datetime.now()
+
+    room_id = request.GET.get('room_id')
+    cleaning_day = current_datetime.date()
+    starting_time = current_datetime.time()
+    end_time = None
+
+    # Set cleaner as the authenticated user
+    cleaner = request.user
+
+    # Create cleaning data instance
+    cleaning_data = Cleaning_data.objects.create(
+        cleaner=cleaner,
+        room_id=room_id,
+        cleaning_day=cleaning_day,
+        starting_time=starting_time,
+        end_time=end_time
+    )
+
+    # Set new room state
+    room = Room.objects.get(id=room_id)
+    room.state = 'P'
+    room.save()
+
+    return redirect(cleaning_home)
