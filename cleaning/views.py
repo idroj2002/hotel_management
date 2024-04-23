@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from administration.models import Room, HotelReservation
 from cleaning.models import Cleaning_data
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def is_cleaner(user):
@@ -23,6 +23,14 @@ def get_cleaning_data(user, room_id):
     return data
 
 
+def was_occupied_less_than_two_hours_ago(room):
+    if room.occupied:
+        current_time = datetime.now()
+        occupied_time = datetime.combine(current_time.date(), room.occupied)
+        time_difference = current_time - occupied_time
+        return time_difference < timedelta(hours=2)
+    else:
+        return False
 
 
 @login_required
@@ -51,6 +59,9 @@ def cleaning_home(request):
     sorted_rooms_todo = [room for room in sorted_rooms if(room.state != 'D')]
     sorted_rooms_done = [room for room in sorted_rooms if(room.state == 'D')]
 
+    sorted_rooms_todo = sorted(sorted_rooms_todo, key=lambda x: was_occupied_less_than_two_hours_ago(x))
+    sorted_rooms_done = sorted(sorted_rooms_done, key=lambda x: was_occupied_less_than_two_hours_ago(x))
+
     # Search recommended room
     recommended_room = None
     for room in sorted_rooms_todo:
@@ -64,6 +75,7 @@ def cleaning_home(request):
         'recommended_room': recommended_room,
         'rooms_done': sorted_rooms_done
     })
+
 
 @login_required
 def create_cleaning_data(request):
@@ -97,6 +109,7 @@ def create_cleaning_data(request):
 
     return redirect(cleaning_home)
 
+
 @login_required
 def mark_as_completed(request):
     if not is_cleaner(request.user):
@@ -127,6 +140,7 @@ def mark_as_completed(request):
         cleaning_data.save()
     return redirect(cleaning_home)
 
+
 @login_required
 def cancel_cleaning(request):
     if not is_cleaner(request.user):
@@ -141,3 +155,20 @@ def cancel_cleaning(request):
 
     get_cleaning_data(request.user, room_id).delete()
     return redirect(cleaning_home)
+
+
+@login_required
+def mark_as_occupied(request):
+    if not is_cleaner(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+    
+    room_id = request.GET.get('room_id')
+
+    room = Room.objects.get(id=room_id)
+    current_time = datetime.now().time()
+    room.occupied = current_time
+    room.save()
+
+    return redirect(cleaning_home)
+    

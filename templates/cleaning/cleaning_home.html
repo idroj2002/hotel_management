@@ -69,7 +69,7 @@
                         <a href="{% url 'cancel-cleaning' %}?room_id={{ room.id }}" class="btn btn-danger">{% trans "Cancel" %}</a>
                     {% elif room.state == 'TD' %}
                         <a href="{% url 'create-data' %}?room_id={{ room.id }}" class="btn btn-primary to-do-button" data-room="{{ room.id }}">{% trans "Mark as doing" %}</a>
-                        <button type="button me-2" class="btn btn-warning">{% trans "Mark as occupied" %}</button>
+                        <a href="{% url 'mark-as-occupied' %}?room_id={{ room.id }}" class="btn btn-warning">{% trans "Mark as occupied" %}</a>
                     {% endif %}
                 </div>
             </div>

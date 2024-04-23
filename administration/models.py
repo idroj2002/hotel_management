@@ -17,7 +17,7 @@ class Room(models.Model):
         ('D', 'Done'),
     ]
     state = models.CharField(max_length=10, choices=ROOM_STATE_OPTIONS)
-    occupied = models.BooleanField(default=False)
+    occupied = models.TimeField(blank=True, null=True)
 
     def __str__(self):
         return f"Habitación {self.number} ({self.type})"
