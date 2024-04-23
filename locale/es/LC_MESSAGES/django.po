@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-20 13:41+0200\n"
+"POT-Creation-Date: 2024-04-23 18:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,40 +25,53 @@ msgstr ""
 msgid "Información del check-in"
 msgstr "Cancelar check-in"
 
-#: administration/views.py:22 templates/reception/administration_base.html:6
+#: administration/views.py:36
+#, fuzzy
+#| msgid "Room reservations"
+msgid "Room reservations - Search results for"
+msgstr "Reservas de habitación"
+
+#: administration/views.py:48
+#, fuzzy
+#| msgid "Restaurant reservations"
+msgid "Restaurant reservations - Search results for"
+msgstr "Reservas del restaurante"
+
+#: administration/views.py:51 administration/views.py:62
+#: administration/views.py:81
+msgid "Reservations"
+msgstr "Reservas"
+
+#: administration/views.py:56 templates/reception/administration_base.html:6
 msgid "Room reservations"
 msgstr "Reservas de habitación"
 
-#: administration/views.py:25 restaurant/views.py:19
+#: administration/views.py:59 restaurant/views.py:19
 #: templates/reception/administration_base.html:9
 msgid "Restaurant reservations"
 msgstr "Reservas del restaurante"
 
-#: administration/views.py:28 administration/views.py:47
-msgid "Reservations"
-msgstr "Reservas"
-
-#: administration/views.py:41 templates/reception/administration_base.html:12
+#: administration/views.py:75 templates/reception/administration_base.html:12
 msgid "Cancelled room reservations"
 msgstr "Reservas de habitación canceladas"
 
-#: administration/views.py:44 templates/reception/administration_base.html:15
+#: administration/views.py:78 templates/reception/administration_base.html:15
 msgid "Cancelled restaurant reservations"
 msgstr "Reservas del restaurante canceladas"
 
-#: administration/views.py:102 administration/views.py:127
+#: administration/views.py:136 administration/views.py:161
 msgid "It is not possible to delete a reservation with a check-in associated."
 msgstr "No se puede borrar una reserva con check-in."
 
-#: administration/views.py:147
+#: administration/views.py:181
 msgid "It is not possible to create a check-in for a restaurant reservation."
 msgstr "No se puede crer un chec-in para una reserva de restaurante."
 
-#: hotel_management/settings.py:116
+#: hotel_management/settings.py:118
 msgid "English"
 msgstr "Inglés"
 
-#: hotel_management/settings.py:117
+#: hotel_management/settings.py:119
 msgid "Spanish"
 msgstr "Español"
 
@@ -91,12 +104,12 @@ msgid "Rooms to be cleaned"
 msgstr "Habitaciones por hacer"
 
 #: templates/cleaning/cleaning_home.html:53
-#: templates/cleaning/cleaning_home.html:87
+#: templates/cleaning/cleaning_home.html:90
 msgid "In progress"
 msgstr "En progreso"
 
 #: templates/cleaning/cleaning_home.html:54
-#: templates/cleaning/cleaning_home.html:88
+#: templates/cleaning/cleaning_home.html:91
 msgid "Recommended"
 msgstr "Recomendado"
 
@@ -109,17 +122,17 @@ msgid "The room is being cleaned by"
 msgstr "La habitación está siendo limpiada por"
 
 #: templates/cleaning/cleaning_home.html:64
-#: templates/cleaning/cleaning_home.html:93
+#: templates/cleaning/cleaning_home.html:96
 msgid "The room has been cleaned by"
 msgstr "La habitación ha sido limpiada por"
 
 #: templates/cleaning/cleaning_home.html:64
-#: templates/cleaning/cleaning_home.html:93
+#: templates/cleaning/cleaning_home.html:96
 msgid "at"
 msgstr "a las"
 
 #: templates/cleaning/cleaning_home.html:64
-#: templates/cleaning/cleaning_home.html:93
+#: templates/cleaning/cleaning_home.html:96
 msgid "on"
 msgstr "el"
 
@@ -128,27 +141,33 @@ msgid "Mark as completed"
 msgstr "Marcar como terminada"
 
 #: templates/cleaning/cleaning_home.html:69
+#: templates/reception/delete_check_in.html:13
+#: templates/reception/delete_reservation.html:13
+#: templates/reception/edit_reservation.html:19
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/cleaning/cleaning_home.html:71
+msgid "Mark as doing"
+msgstr "Hacer habitación"
+
+#: templates/cleaning/cleaning_home.html:72
 msgid "Mark as occupied"
 msgstr "Marcar como ocupada"
 
-#: templates/cleaning/cleaning_home.html:79
+#: templates/cleaning/cleaning_home.html:82
 msgid "Cleaned rooms"
 msgstr "Habitaciones limpias"
 
-#: templates/reception/add_check_in_form.html:4
+#: templates/reception/add_check_in_form.html:5
 msgid "Create Check-in"
 msgstr "Crear check-in"
 
-#: templates/reception/add_check_in_form.html:8
-#: templates/reception/edit_check_in.html:8
-msgid "Reservation check-in"
-msgstr "Check in de la reserva"
-
-#: templates/reception/add_check_in_form.html:16
+#: templates/reception/add_check_in_form.html:9
 msgid "Reservation check-in:"
 msgstr "Check in de la reserva:"
 
-#: templates/reception/add_check_in_form.html:21
+#: templates/reception/add_check_in_form.html:13
 #: templates/reception/add_reservation_form.html:18
 #: templates/reception/edit_check_in.html:12
 msgid "Submit"
@@ -200,12 +219,6 @@ msgstr "¿Estás seguro que quieres cancelar el check-in"
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: templates/reception/delete_check_in.html:13
-#: templates/reception/delete_reservation.html:13
-#: templates/reception/edit_reservation.html:19
-msgid "Cancel"
-msgstr "Cancelar"
-
 #: templates/reception/delete_reservation.html:4
 #: templates/reception/delete_reservation.html:8
 msgid "Cancel reservation"
@@ -218,6 +231,10 @@ msgstr "¿Estás seguro que quieres cancelar la reserva"
 #: templates/reception/edit_check_in.html:4
 msgid "Edit Check-in"
 msgstr "Editar check-in"
+
+#: templates/reception/edit_check_in.html:8
+msgid "Reservation check-in"
+msgstr "Check in de la reserva"
 
 #: templates/reception/edit_reservation.html:4
 msgid "Edit reservation"
