@@ -15,7 +15,7 @@ class TableAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(Room, RoomAdmin)
+admin.site.register(Room)
 admin.site.register(Table, TableAdmin)
 admin.site.register(HotelReservation)
 admin.site.register(RestaurantReservation)

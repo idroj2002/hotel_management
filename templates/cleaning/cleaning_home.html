@@ -65,13 +65,11 @@
                     {% endif %}
 
                     {% if room.state == 'P' %}
-                    <div class="d-flex">
-                        <button type="button me-2" class="btn btn-success">{% trans "Mark as completed" %}</button>
-                        <button type="button me-2" class="btn btn-warning">{% trans "Mark as occupied" %}</button>
-                        <button type="button" class="btn btn-danger ms-auto">{% trans "Cancel" %}</button>
-                        </div>
+                        <a href="{% url 'mark-as-completed' %}?room_id={{ room.id }}" class="btn btn-success">{% trans "Mark as completed" %}</a>
+                        <a href="{% url 'cancel-cleaning' %}?room_id={{ room.id }}" class="btn btn-danger">{% trans "Cancel" %}</a>
                     {% elif room.state == 'TD' %}
                         <a href="{% url 'create-data' %}?room_id={{ room.id }}" class="btn btn-primary to-do-button" data-room="{{ room.id }}">{% trans "Mark as doing" %}</a>
+                        <button type="button me-2" class="btn btn-warning">{% trans "Mark as occupied" %}</button>
                     {% endif %}
                 </div>
             </div>
@@ -102,9 +100,4 @@
     {% endfor %}
 </div>
 
-{% endblock %}
-
-{% block js %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="../../static/js/cleaning_home.js"></script>
 {% endblock %}

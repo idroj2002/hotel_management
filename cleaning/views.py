@@ -1,14 +1,28 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from administration.models import Room, HotelReservation
 from cleaning.models import Cleaning_data
 from datetime import datetime
 
-# Create your views here.
 
 def is_cleaner(user):
     return user.groups.filter(name='Cleaning').exists()
+
+
+def get_cleaning_data(user, room_id):
+    data_list = Cleaning_data.objects.filter(room=room_id, cleaner=user, end_time=None).order_by('cleaning_day', 'starting_time')
+    print(data_list)
+
+    if data_list.count == 0:
+        return None
+    else:
+        data = data_list.first()
+        data_list.exclude(id=data.id).delete()
+    return data
+
+
 
 
 @login_required
@@ -81,4 +95,49 @@ def create_cleaning_data(request):
     room.state = 'P'
     room.save()
 
+    return redirect(cleaning_home)
+
+@login_required
+def mark_as_completed(request):
+    if not is_cleaner(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+    
+    room_id = request.GET.get('room_id')
+
+    room = Room.objects.get(id=room_id)
+    room.state = 'D'
+    room.save()
+
+    cleaning_data = get_cleaning_data(request.user, room_id)
+    current_datetime = datetime.now()
+    if cleaning_data == None:
+        print("Error: Previous data not existing")
+
+        # Create cleaning data instance
+        cleaning_data = Cleaning_data.objects.create(
+            cleaner=request.user,
+            room_id=room_id,
+            cleaning_day=current_datetime.date(),
+            starting_time=current_datetime.time(),
+            end_time=current_datetime.time()
+        )
+    else:
+        cleaning_data.end_time = current_datetime.time()
+        cleaning_data.save()
+    return redirect(cleaning_home)
+
+@login_required
+def cancel_cleaning(request):
+    if not is_cleaner(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+    
+    room_id = request.GET.get('room_id')
+
+    room = Room.objects.get(id=room_id)
+    room.state = 'TD'
+    room.save()
+
+    get_cleaning_data(request.user, room_id).delete()
     return redirect(cleaning_home)
