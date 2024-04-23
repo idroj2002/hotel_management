@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-23 18:03+0200\n"
+"POT-Creation-Date: 2024-04-23 19:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,6 +58,14 @@ msgstr ""
 
 #: administration/views.py:181
 msgid "It is not possible to create a check-in for a restaurant reservation."
+msgstr ""
+
+#: cleaning/views.py:85
+msgid "ERROR: unidentified cleaner"
+msgstr ""
+
+#: cleaning/views.py:92 cleaning/views.py:93 cleaning/views.py:94
+msgid "ERROR: unidentified data"
 msgstr ""
 
 #: hotel_management/settings.py:118

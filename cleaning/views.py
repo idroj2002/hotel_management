@@ -11,9 +11,8 @@ def is_cleaner(user):
     return user.groups.filter(name='Cleaning').exists()
 
 
-def get_cleaning_data(user, room_id):
-    data_list = Cleaning_data.objects.filter(room=room_id, cleaner=user, end_time=None).order_by('cleaning_day', 'starting_time')
-    print(data_list)
+def get_cleaning_data(room_id):
+    data_list = Cleaning_data.objects.filter(room=room_id, end_time=None).order_by('cleaning_day', 'starting_time')
 
     if data_list.count == 0:
         return None
@@ -21,6 +20,15 @@ def get_cleaning_data(user, room_id):
         data = data_list.first()
         data_list.exclude(id=data.id).delete()
     return data
+
+
+def get_last_cleaning_data(room_id):
+    data_list = Cleaning_data.objects.filter(room=room_id).order_by('cleaning_day', 'starting_time')
+
+    if data_list.count == 0:
+        return None
+    else:
+        return data_list.first()
 
 
 def was_occupied_less_than_two_hours_ago(room):
@@ -68,6 +76,26 @@ def cleaning_home(request):
         if room.state == 'TD':
             recommended_room = room
             break
+    
+    # Additional fields
+    for room in sorted_rooms_todo:
+        if room.state == 'P':
+            data = get_cleaning_data(room.id)
+            if data == None:
+                room.cleaner = _("ERROR: unidentified cleaner")
+            else:
+                room.cleaner = data.cleaner
+    
+    for room in sorted_rooms_done:
+        data = get_last_cleaning_data(room.id)
+        if data == None:
+            room.cleaner = _("ERROR: unidentified data")
+            room.date = _("ERROR: unidentified data")
+            room.time = _("ERROR: unidentified data")
+        else:
+            room.cleaner = data.cleaner
+            room.date = data.cleaning_day
+            room.time = data.end_time
 
     return render(request, 'cleaning/cleaning_home.html',
     {
@@ -122,7 +150,7 @@ def mark_as_completed(request):
     room.state = 'D'
     room.save()
 
-    cleaning_data = get_cleaning_data(request.user, room_id)
+    cleaning_data = get_cleaning_data(room_id)
     current_datetime = datetime.now()
     if cleaning_data == None:
         print("Error: Previous data not existing")
@@ -153,7 +181,7 @@ def cancel_cleaning(request):
     room.state = 'TD'
     room.save()
 
-    get_cleaning_data(request.user, room_id).delete()
+    get_cleaning_data(room_id).delete()
     return redirect(cleaning_home)
 
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-23 18:03+0200\n"
+"POT-Creation-Date: 2024-04-23 19:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,22 +20,16 @@ msgstr ""
 "1 : 2;\n"
 
 #: administration/forms.py:181
-#, fuzzy
-#| msgid "Cancel check-in"
-msgid "Información del check-in"
-msgstr "Cancelar check-in"
+msgid "Check-in information"
+msgstr "Información del check-in"
 
 #: administration/views.py:36
-#, fuzzy
-#| msgid "Room reservations"
 msgid "Room reservations - Search results for"
-msgstr "Reservas de habitación"
+msgstr "Reservas de habitación - Resultados de búsqueda por"
 
 #: administration/views.py:48
-#, fuzzy
-#| msgid "Restaurant reservations"
 msgid "Restaurant reservations - Search results for"
-msgstr "Reservas del restaurante"
+msgstr "Reservas del restaurante - Resultados de búsqueda por"
 
 #: administration/views.py:51 administration/views.py:62
 #: administration/views.py:81
@@ -66,6 +60,14 @@ msgstr "No se puede borrar una reserva con check-in."
 #: administration/views.py:181
 msgid "It is not possible to create a check-in for a restaurant reservation."
 msgstr "No se puede crer un chec-in para una reserva de restaurante."
+
+#: cleaning/views.py:85
+msgid "ERROR: unidentified cleaner"
+msgstr "ERROR: limpiador no identificado"
+
+#: cleaning/views.py:92 cleaning/views.py:93 cleaning/views.py:94
+msgid "ERROR: unidentified data"
+msgstr "ERROR: datos no encontrados"
 
 #: hotel_management/settings.py:118
 msgid "English"
