@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet, Q
 from django.template.loader import get_template
 from django.utils.translation import gettext_lazy as _
+from urllib.parse import urlencode, parse_qs
 from administration.models import HotelReservation, RestaurantReservation, CheckIn, Room
 from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm, CheckInForm, \
     AvailabilityCheckForm
@@ -84,6 +85,7 @@ def cancelled_reservation_list(request, reservation_type):
         header = _('Reservations')
     return render(request, 'reception/cancelled_reservations.html', {'reservation_type': reservation_type,
                                                                      'header': header, 'reservations': reservations})
+
 
 @login_required
 def reservation_detail(request, reservation_type, reservation_id):
@@ -208,7 +210,6 @@ def delete_check_in(request, reservation_type, reservation_id):
                                                               'reservation_id': reservation_id, 'check_in': check_in})
 
 
-
 def save_hotel_reservation(reservation_form, check_in_date, check_out_date, room_type):
     reservation = reservation_form.save(commit=False)
     reservation.check_in_date = check_in_date
@@ -216,36 +217,23 @@ def save_hotel_reservation(reservation_form, check_in_date, check_out_date, room
     reservation.room_type = room_type
     reservation.save()
 
-@login_required
-def add_reservation(request, reservation_type):
-    availability_form = AvailabilityCheckForm()
-    return render(request, 'reception/availability_form.html', {'availability_form': availability_form})
 
 @login_required
-def reservation_form(request):
+def add_reservation(request, reservation_type):
     if request.method == 'POST':
         availability_form = AvailabilityCheckForm(request.POST)
         if availability_form.is_valid():
             check_in_date = availability_form.cleaned_data['check_in_date']
             check_out_date = availability_form.cleaned_data['check_out_date']
             room_type = availability_form.cleaned_data['room_type']
-            available_rooms = get_available_rooms(check_in_date, check_out_date, room_type)
-
-            # Renderizar el formulario de reserva con los datos recopilados del formulario de disponibilidad
-            reservation_form = HotelReservationForm(initial={
-                'check_in_date': check_in_date,
-                'check_out_date': check_out_date,
-                'room_type': room_type
-            })
-
-            return render(request, 'reception/add_reservation_form.html', {
-                'availability_form': availability_form,
-                'reservation_form': reservation_form,
-                'available_rooms': available_rooms
-            })
+            data = {'check_in_date': check_in_date, 'check_out_date': check_out_date, 'room_type': room_type}
+            data_string = urlencode(data)
+            redirect_url = '/administration/reservations/complete_reservation/hotel/?{}'.format(data_string)
+            return redirect(redirect_url, reservation_type=reservation_type)
     else:
         availability_form = AvailabilityCheckForm()
     return render(request, 'reception/availability_form.html', {'availability_form': availability_form})
+
 
 def get_available_rooms(check_in_date, check_out_date, room_type):
     overlapping_reservations = HotelReservation.objects.filter(
@@ -256,13 +244,33 @@ def get_available_rooms(check_in_date, check_out_date, room_type):
     available_rooms = all_rooms.exclude(id__in=[room.id for room in occupied_rooms])
     return available_rooms
 
+
 @login_required
-def complete_reservation(request):
+def complete_reservation(request, reservation_type):
+    data_string = request.META['QUERY_STRING']
+    data = parse_qs(data_string)
+    check_in_date = data.get('check_in_date', [''])[0]
+    check_out_date = data.get('check_out_date', [''])[0]
+    room_type = data.get('room_type', [''])[0]
+    available_rooms = get_available_rooms(check_in_date, check_out_date, room_type)
+
     if request.method == 'POST':
+        room_id = request.POST.get('room')
+        room = get_object_or_404(Room, pk=room_id)
         reservation_form = HotelReservationForm(request.POST)
         if reservation_form.is_valid():
-            reservation = reservation_form.save()
-            return redirect('reception/reservation_confirmation.html', reservation_id=reservation.id)
+            reservation = reservation_form.save(commit=False)
+            reservation.room_number = room
+            reservation.save()
+            return render('reception/reservation_confirmation.html')
     else:
-        reservation_form = HotelReservationForm()
-    return render(request, 'reception/add_reservation_form.html', {'reservation_form': reservation_form})
+        reservation_form = HotelReservationForm(initial={
+            'check_in_date': check_in_date,
+            'check_out_date': check_out_date,
+            'room_type': room_type
+        })
+    return render(request, 'reception/add_reservation_form.html', {
+        'reservation_type': reservation_type,
+        'reservation_form': reservation_form,
+        'available_rooms': available_rooms
+    })

@@ -3,23 +3,22 @@
 {% block content %}
 <div class="container">
     <h1 class="mt-5">Add Reservation</h1>
-    {% if available_rooms %}
-        <h2>Available Rooms</h2>
-        <ul class="list-group">
-            {% for room in available_rooms %}
-                <li class="list-group-item">
-                    <a href="{% url 'complete_reservation' room_id=room.id %}">{{ room.number }} - {{ room.type }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No rooms available for the selected dates and type.</p>
-        <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Check other options</a>
-    {% endif %}
-    <form id="reservation-form" method="post" action="{% url 'complete_reservation' %}" class="mt-4">
+    <h2>Available Rooms</h2>
+    <form id="reservation-form" method="post" class="mt-4">
         {% csrf_token %}
-        {{ reservation_form.as_p }}
-        <button type="submit" class="btn btn-primary">Complete Reservation</button>
+        {% if available_rooms %}
+            <label for="room-select">Select a room:</label>
+            <select class="list-group" id="room-select" name="room">
+                {% for room in available_rooms %}
+                    <option class="list-group-item">{{ room.number }}</option>
+                {% endfor %}
+            </select>
+            {{ reservation_form.as_p }}
+            <button type="submit" class="btn btn-primary">Complete Reservation</button>
+        {% else %}
+            <p>No rooms available for the selected dates and type.</p>
+            <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Check other options</a>
+        {% endif %}
     </form>
 </div>
 {% endblock %}

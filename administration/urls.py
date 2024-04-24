@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.i18n import i18n_patterns
 from administration.views import reservation_list, add_reservation, reservation_detail, edit_reservation,\
-    delete_reservation, add_check_in, edit_check_in, delete_check_in, cancelled_reservation_list, reservation_form, complete_reservation
+    delete_reservation, add_check_in, edit_check_in, delete_check_in, cancelled_reservation_list, complete_reservation
 
 urlpatterns = [
     path('reservations/<str:reservation_type>/', reservation_list, name='reservations_list'),
@@ -35,7 +35,8 @@ urlpatterns = [
          name='edit_check_in'),
     path('reservations/delete_check_in/<str:reservation_type>/<int:reservation_id>/', delete_check_in,
          name='delete_check_in'),
-    path('reservations/cancelled_reservations/<str:reservation_type>/', cancelled_reservation_list, name='cancelled_reservations_list'),
-    path('reservations/reservation_form/', reservation_form, name='reservation_form'),
-    path('reservations/complete_reservation/', complete_reservation, name='complete_reservation'),
+    path('reservations/cancelled_reservations/<str:reservation_type>/', cancelled_reservation_list,
+         name='cancelled_reservations_list'),
+    path('reservations/complete_reservation/<str:reservation_type>/',complete_reservation,
+         name='complete_reservation'),
 ]

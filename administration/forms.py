@@ -29,7 +29,7 @@ class HotelReservationForm(forms.ModelForm):
     class Meta:
         model = HotelReservation
         fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone',
-                  'number_of_guests', 'price', 'room_number', 'cancelled']
+                  'number_of_guests', 'price', 'cancelled']
 
         widgets = {
             'dni': forms.TextInput(
@@ -78,11 +78,6 @@ class HotelReservationForm(forms.ModelForm):
                 attrs={
                     'value': 45,
                     'class': 'form-control'
-                }
-            ),
-            'room_number': forms.Select(
-                attrs={
-                    'class': 'form-select'
                 }
             ),
         }
