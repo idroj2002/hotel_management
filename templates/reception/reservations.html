@@ -1,4 +1,4 @@
-{% extends './administration_base.html' %}
+{% extends 'reception/administration_base.html' %}
 
 {% block title %}Lista de reservas{% endblock %}
 
@@ -46,6 +46,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="mt-5">{{ header }}</h1>
                     <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Add Reservation</a>
+
                 </div>
                 <ul class="list-group">
                     {% for reservation in reservations %}

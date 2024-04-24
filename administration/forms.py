@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from datetime import date, timedelta
 from administration.models import HotelReservation, RestaurantReservation, Room, Table, CheckIn
@@ -17,12 +18,18 @@ class SignupForm(UserCreationForm):
         fields = ('username', 'password1', 'password2')
 
 
+class AvailabilityCheckForm(forms.Form):
+    room_type = forms.ChoiceField(
+        choices=[('Ind', 'Individual'), ('Dob', 'Doble'), ('Del', 'Deluxe'), ('Sui', 'Suite')])
+    check_in_date = forms.DateField()
+    check_out_date = forms.DateField()
+
+
 class HotelReservationForm(forms.ModelForm):
     class Meta:
         model = HotelReservation
-        fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone', 'check_in_date',
-                  'check_out_date',
-                  'number_of_guests', 'room_type', 'price', 'room_number', 'cancelled']
+        fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone',
+                  'number_of_guests', 'price', 'room_number', 'cancelled']
 
         widgets = {
             'dni': forms.TextInput(
@@ -61,27 +68,10 @@ class HotelReservationForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
-            'check_in_date': forms.DateInput(
-                attrs={
-                    'value': date.today() + timedelta(days=1),
-                    'class': 'form-control'
-                }
-            ),
-            'check_out_date': forms.DateInput(
-                attrs={
-                    'value': date.today() + timedelta(days=2),
-                    'class': 'form-control'
-                }
-            ),
             'number_of_guests': forms.NumberInput(
                 attrs={
                     'placeholder': 'Número de personas',
                     'class': 'form-control'
-                }
-            ),
-            'room_type': forms.Select(
-                attrs={
-                    'class': 'form-select'
                 }
             ),
             'price': forms.NumberInput(
@@ -96,7 +86,6 @@ class HotelReservationForm(forms.ModelForm):
                 }
             ),
         }
-
         labels = {
             'dni': 'Documento de Identidad',
             'first_name': 'Nombre',
@@ -113,6 +102,9 @@ class HotelReservationForm(forms.ModelForm):
 
 
 class RestaurantReservationForm(forms.ModelForm):
+    check_in_date = forms.DateField(label=_('Check-in Date'))
+    check_out_date = forms.DateField(label=_('Check-out Date'))
+
     class Meta:
         model = RestaurantReservation
         fields = ['name', 'room_number', 'number_of_people', 'time', 'table_id', 'cancelled']

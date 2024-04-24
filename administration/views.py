@@ -1,10 +1,13 @@
 from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet, Q
+from django.template.loader import get_template
 from django.utils.translation import gettext_lazy as _
-from administration.models import HotelReservation, RestaurantReservation, CheckIn
-from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm, CheckInForm
+from administration.models import HotelReservation, RestaurantReservation, CheckIn, Room
+from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm, CheckInForm, \
+    AvailabilityCheckForm
 
 
 def is_receptionist(user):
@@ -81,29 +84,6 @@ def cancelled_reservation_list(request, reservation_type):
         header = _('Reservations')
     return render(request, 'reception/cancelled_reservations.html', {'reservation_type': reservation_type,
                                                                      'header': header, 'reservations': reservations})
-
-
-@login_required
-def add_reservation(request, reservation_type):
-    if not is_receptionist(request.user):
-        from hotel_management.views import home
-        return redirect(home)
-
-    if request.method == 'POST':
-        if reservation_type == 'hotel':
-            form = HotelReservationForm(request.POST)
-        else:
-            form = RestaurantReservationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('reservations_list', reservation_type=reservation_type)
-    else:
-        if reservation_type == 'hotel':
-            form = HotelReservationForm()
-        else:
-            form = RestaurantReservationForm()
-    return render(request, 'reception/add_reservation_form.html', {'reservation_type': reservation_type, 'form': form})
-
 
 @login_required
 def reservation_detail(request, reservation_type, reservation_id):
@@ -226,3 +206,63 @@ def delete_check_in(request, reservation_type, reservation_id):
         return redirect('reservations_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     return render(request, 'reception/delete_check_in.html', {'reservation_type': reservation_type,
                                                               'reservation_id': reservation_id, 'check_in': check_in})
+
+
+
+def save_hotel_reservation(reservation_form, check_in_date, check_out_date, room_type):
+    reservation = reservation_form.save(commit=False)
+    reservation.check_in_date = check_in_date
+    reservation.check_out_date = check_out_date
+    reservation.room_type = room_type
+    reservation.save()
+
+@login_required
+def add_reservation(request, reservation_type):
+    availability_form = AvailabilityCheckForm()
+    return render(request, 'reception/availability_form.html', {'availability_form': availability_form})
+
+@login_required
+def reservation_form(request):
+    if request.method == 'POST':
+        availability_form = AvailabilityCheckForm(request.POST)
+        if availability_form.is_valid():
+            check_in_date = availability_form.cleaned_data['check_in_date']
+            check_out_date = availability_form.cleaned_data['check_out_date']
+            room_type = availability_form.cleaned_data['room_type']
+            available_rooms = get_available_rooms(check_in_date, check_out_date, room_type)
+
+            # Renderizar el formulario de reserva con los datos recopilados del formulario de disponibilidad
+            reservation_form = HotelReservationForm(initial={
+                'check_in_date': check_in_date,
+                'check_out_date': check_out_date,
+                'room_type': room_type
+            })
+
+            return render(request, 'reception/add_reservation_form.html', {
+                'availability_form': availability_form,
+                'reservation_form': reservation_form,
+                'available_rooms': available_rooms
+            })
+    else:
+        availability_form = AvailabilityCheckForm()
+    return render(request, 'reception/availability_form.html', {'availability_form': availability_form})
+
+def get_available_rooms(check_in_date, check_out_date, room_type):
+    overlapping_reservations = HotelReservation.objects.filter(
+        Q(check_in_date__lte=check_out_date) & Q(check_out_date__gte=check_in_date)
+    )
+    occupied_rooms = [reservation.room_number for reservation in overlapping_reservations]
+    all_rooms = Room.objects.filter(type=room_type)
+    available_rooms = all_rooms.exclude(id__in=[room.id for room in occupied_rooms])
+    return available_rooms
+
+@login_required
+def complete_reservation(request):
+    if request.method == 'POST':
+        reservation_form = HotelReservationForm(request.POST)
+        if reservation_form.is_valid():
+            reservation = reservation_form.save()
+            return redirect('reception/reservation_confirmation.html', reservation_id=reservation.id)
+    else:
+        reservation_form = HotelReservationForm()
+    return render(request, 'reception/add_reservation_form.html', {'reservation_form': reservation_form})

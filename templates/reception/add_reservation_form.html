@@ -1,22 +1,25 @@
-{% extends './reservations.html' %}
-{% load i18n %}
-
-{% block title %}{% trans "Create reservation" %}{% endblock %}
-
+{% extends 'reception/administration_base.html' %}
+{% block title %}Add Reservation{% endblock %}
 {% block content %}
-    <div class="container">
-        <h1 class="mt-5">
-            {% if reservation_type == 'hotel' %}
-                {% trans "New room reservation" %}
-            {% else %}
-                {% trans "New restaurant reservation" %}
-            {% endif %}
-        </h1>
-        <form method="post" class="mt-4 form-control">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-            <a href="{% url 'reservations_list' reservation_type=reservation_type %}" class="btn btn-secondary">{% trans "Back to Reservations" %}</a>
-        </form>
-    </div>
+<div class="container">
+    <h1 class="mt-5">Add Reservation</h1>
+    {% if available_rooms %}
+        <h2>Available Rooms</h2>
+        <ul class="list-group">
+            {% for room in available_rooms %}
+                <li class="list-group-item">
+                    <a href="{% url 'complete_reservation' room_id=room.id %}">{{ room.number }} - {{ room.type }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No rooms available for the selected dates and type.</p>
+        <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Check other options</a>
+    {% endif %}
+    <form id="reservation-form" method="post" action="{% url 'complete_reservation' %}" class="mt-4">
+        {% csrf_token %}
+        {{ reservation_form.as_p }}
+        <button type="submit" class="btn btn-primary">Complete Reservation</button>
+    </form>
+</div>
 {% endblock %}

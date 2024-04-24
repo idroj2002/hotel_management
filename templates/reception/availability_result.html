@@ -1,0 +1,16 @@
+{% extends 'reception/administration_base.html' %}
+{% block title %}Available Rooms{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Available Rooms</h1>
+    {% if available_rooms %}
+    <ul>
+        {% for room in available_rooms %}
+        <li><a href="{% url 'reserve_room' room.id %}">{{ room.number }}</a> - {{ room.type }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No rooms available for the selected dates and type.</p>
+    {% endif %}
+</div>
+{% endblock %}

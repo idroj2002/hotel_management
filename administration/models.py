@@ -16,7 +16,7 @@ class Room(models.Model):
         ('P', 'In process'),
         ('D', 'Done'),
     ]
-    state = models.CharField(max_length=10, choices=ROOM_STATE_OPTIONS)
+    state = models.CharField(max_length=10, choices=ROOM_STATE_OPTIONS, default='TD')
     occupied = models.BooleanField(default=False)
 
     def __str__(self):
