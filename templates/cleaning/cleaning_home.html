@@ -1,30 +1,100 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Cleaning{% endblock %}
+{% block title %}{% trans "Cleaning" %}{% endblock %}
+
+{% block styles %}
+    <style>
+        .accordion-body {
+            background-color: #f3f3f3;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #72727236;
+        }
+
+        .accordion-item-warning {
+            background-color: #ffc10736;
+        }
+
+        .accordion-item-warning:not(.collapsed) {
+            background-color: #ffc10785;
+        }
+
+        .accordion-item-primary {
+            background-color: #0e71e236;
+        }
+
+        .accordion-item-primary:not(.collapsed) {
+            background-color: #0e71e262;
+        }
+
+        .accordion-item-success {
+            background-color: #1b8d4736;
+        }
+
+        .accordion-item-success:not(.collapsed) {
+            background-color: #1b8d476e;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
 
-<h2 class="mt-5">Habitaciones para hacer</h2>
-<div class="list-group mt-3">
-{% for room in rooms_todo %}
-    <a href="#" class="list-group-item list-group-item-action 
-    {% if room.state == 'P' %} list-group-item-warning {% endif %} 
-    {% if room == recommended_room %} list-group-item-primary {% endif %}">
-        {{ room }}
-        {% if room.state == 'P' %} <span> - En progreso</span> {% endif %}
-        {% if room == recommended_room %} <span> - Recomendada</span> {% endif %}
-    </a>
-{% endfor %}
+<h2 class="mt-5">{% trans "Rooms to be cleaned" %}</h2>
+
+<div class="accordion accordion-flush" id="accordionFlushTodoRooms">
+    {% for room in rooms_todo %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-{{ room.id }}">
+            <button class="accordion-button collapsed {% if room.state == 'P' %} accordion-item-warning
+            {% elif room == recommended_room %} accordion-item-primary {% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-{{ room.id }}" aria-expanded="false" aria-controls="flush-collapse-{{ room.id }}">
+                {{ room }}
+                {% if room.state == 'P' %} <span>&nbsp- {% trans "In progress" %}</span>
+                {% elif room == recommended_room %} <span>&nbsp- {% trans "Recommended" %}</span> {% endif %}
+            </button>
+            </h2>
+            <div id="flush-collapse-{{ room.id }}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushTodoRooms">
+                <div class="accordion-body">
+                    {% if room.state == 'TD' %}
+                        <p>{% trans "The room needs to be cleaned" %}</p>
+                    {% else %}
+                        <p>{% trans "The room is being cleaned by" %} {{ room.cleaner }}</p>
+                    {% endif %}
+
+                    {% if room.state == 'P' %}
+                        <a href="{% url 'mark-as-completed' %}?room_id={{ room.id }}" class="btn btn-success">{% trans "Mark as completed" %}</a>
+                        <a href="{% url 'cancel-cleaning' %}?room_id={{ room.id }}" class="btn btn-danger">{% trans "Cancel" %}</a>
+                    {% elif room.state == 'TD' %}
+                        <a href="{% url 'create-data' %}?room_id={{ room.id }}" class="btn btn-primary to-do-button" data-room="{{ room.id }}">{% trans "Mark as doing" %}</a>
+                        <a href="{% url 'mark-as-occupied' %}?room_id={{ room.id }}" class="btn btn-warning">{% trans "Mark as occupied" %}</a>
+                    {% endif %}
+                </div>
+            </div>
+      </div>
+    {% endfor %}
 </div>
 
 <hr>
 
-<h2>Habitaciones limpias</h2>
-<div class="list-group mt-3">
+<h2>{% trans "Cleaned rooms" %}</h2>
+
+<div class="accordion accordion-flush" id="accordionFlushCompletedRooms">
     {% for room in rooms_done %}
-        <a href="#" class="list-group-item list-group-item-action list-group-item-success">
-            {{ room }}
-        </a>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-{{ room.id }}">
+            <button class="accordion-button collapsed accordion-item-success" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-{{ room.id }}" aria-expanded="false" aria-controls="flush-collapse-{{ room.id }}">
+                {{ room }}
+                {% if room.state == 'P' %} <span> - {% trans "In progress" %}</span>
+                {% elif room == recommended_room %} <span> - {% trans "Recommended" %}</span> {% endif %}
+            </button>
+            </h2>
+            <div id="flush-collapse-{{ room.id }}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushCompletedRooms">
+                <div class="accordion-body">
+                    <p>{% trans "The room has been cleaned by" %} {{ room.cleaner }} {% trans "at" %} {{ room.time }} {% trans "on" %} {{ room.date }}</p>
+                    </div>
+            </div>
+      </div>
     {% endfor %}
 </div>
 

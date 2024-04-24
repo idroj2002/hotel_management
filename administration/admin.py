@@ -1,5 +1,6 @@
 from django.contrib import admin
 from administration.models import Room, Table, HotelReservation, RestaurantReservation, CheckIn
+from cleaning.models import Cleaning_data
 
 
 # Custom admin classes
@@ -14,8 +15,10 @@ class TableAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(Room, RoomAdmin)
+admin.site.register(Room)
 admin.site.register(Table, TableAdmin)
 admin.site.register(HotelReservation)
 admin.site.register(RestaurantReservation)
 admin.site.register(CheckIn)
+
+admin.site.register(Cleaning_data)
