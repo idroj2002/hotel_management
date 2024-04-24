@@ -237,7 +237,7 @@ def add_reservation(request, reservation_type):
 
 def get_available_rooms(check_in_date, check_out_date, room_type):
     overlapping_reservations = HotelReservation.objects.filter(
-        Q(check_in_date__lte=check_out_date) & Q(check_out_date__gte=check_in_date)
+        Q(check_in_date__lt=check_out_date) & Q(check_out_date__gt=check_in_date)
     )
     occupied_rooms = [reservation.room_number for reservation in overlapping_reservations]
     all_rooms = Room.objects.filter(type=room_type)
@@ -261,14 +261,12 @@ def complete_reservation(request, reservation_type):
         if reservation_form.is_valid():
             reservation = reservation_form.save(commit=False)
             reservation.room_number = room
+            reservation.check_in_date = check_in_date
+            reservation.check_out_date = check_out_date
             reservation.save()
-            return render('reception/reservation_confirmation.html')
+            return render(request, 'reception/reservation_confirmation.html', {'room_id': room.number})
     else:
-        reservation_form = HotelReservationForm(initial={
-            'check_in_date': check_in_date,
-            'check_out_date': check_out_date,
-            'room_type': room_type
-        })
+        reservation_form = HotelReservationForm()
     return render(request, 'reception/add_reservation_form.html', {
         'reservation_type': reservation_type,
         'reservation_form': reservation_form,
