@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-23 19:39+0200\n"
+"POT-Creation-Date: 2024-04-25 22:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,44 +20,46 @@ msgstr ""
 "1 : 2;\n"
 
 #: administration/forms.py:181
-msgid "Check-in information"
-msgstr "Información del check-in"
+#, fuzzy
+#| msgid "Cancel check-in"
+msgid "Información del check-in"
+msgstr "Cancelar check-in"
 
-#: administration/views.py:36
+#: administration/views.py:34
 msgid "Room reservations - Search results for"
 msgstr "Reservas de habitación - Resultados de búsqueda por"
 
-#: administration/views.py:48
+#: administration/views.py:46
 msgid "Restaurant reservations - Search results for"
 msgstr "Reservas del restaurante - Resultados de búsqueda por"
 
-#: administration/views.py:51 administration/views.py:62
-#: administration/views.py:81
+#: administration/views.py:49 administration/views.py:60
+#: administration/views.py:79
 msgid "Reservations"
 msgstr "Reservas"
 
-#: administration/views.py:56 templates/reception/administration_base.html:6
+#: administration/views.py:54 templates/reception/administration_base.html:6
 msgid "Room reservations"
 msgstr "Reservas de habitación"
 
-#: administration/views.py:59 restaurant/views.py:19
+#: administration/views.py:57 restaurant/views.py:21
 #: templates/reception/administration_base.html:9
 msgid "Restaurant reservations"
 msgstr "Reservas del restaurante"
 
-#: administration/views.py:75 templates/reception/administration_base.html:12
+#: administration/views.py:73 templates/reception/administration_base.html:12
 msgid "Cancelled room reservations"
 msgstr "Reservas de habitación canceladas"
 
-#: administration/views.py:78 templates/reception/administration_base.html:15
+#: administration/views.py:76 templates/reception/administration_base.html:15
 msgid "Cancelled restaurant reservations"
 msgstr "Reservas del restaurante canceladas"
 
-#: administration/views.py:136 administration/views.py:161
+#: administration/views.py:134 administration/views.py:159
 msgid "It is not possible to delete a reservation with a check-in associated."
 msgstr "No se puede borrar una reserva con check-in."
 
-#: administration/views.py:181
+#: administration/views.py:179
 msgid "It is not possible to create a check-in for a restaurant reservation."
 msgstr "No se puede crer un chec-in para una reserva de restaurante."
 
@@ -76,6 +78,20 @@ msgstr "Inglés"
 #: hotel_management/settings.py:119
 msgid "Spanish"
 msgstr "Español"
+
+#: super_user/views.py:26
+#, fuzzy
+#| msgid "Room reservations - Search results for"
+msgid "SuperUser - Search results for"
+msgstr "Reservas de habitación - Resultados de búsqueda por"
+
+#: super_user/views.py:30
+msgid "SuperUser"
+msgstr "Super usuario"
+
+#: super_user/views.py:59
+msgid "Invalid group. Please, select a valid group."
+msgstr "Grupo inválido. Por favor, seleccione uno válido."
 
 #: templates/base.html:6
 msgid "Las Palmeras hotel"
@@ -106,12 +122,12 @@ msgid "Rooms to be cleaned"
 msgstr "Habitaciones por hacer"
 
 #: templates/cleaning/cleaning_home.html:53
-#: templates/cleaning/cleaning_home.html:90
+#: templates/cleaning/cleaning_home.html:88
 msgid "In progress"
 msgstr "En progreso"
 
 #: templates/cleaning/cleaning_home.html:54
-#: templates/cleaning/cleaning_home.html:91
+#: templates/cleaning/cleaning_home.html:89
 msgid "Recommended"
 msgstr "Recomendado"
 
@@ -123,43 +139,40 @@ msgstr "La habitación no está hecha"
 msgid "The room is being cleaned by"
 msgstr "La habitación está siendo limpiada por"
 
-#: templates/cleaning/cleaning_home.html:64
-#: templates/cleaning/cleaning_home.html:96
-msgid "The room has been cleaned by"
-msgstr "La habitación ha sido limpiada por"
-
-#: templates/cleaning/cleaning_home.html:64
-#: templates/cleaning/cleaning_home.html:96
-msgid "at"
-msgstr "a las"
-
-#: templates/cleaning/cleaning_home.html:64
-#: templates/cleaning/cleaning_home.html:96
-msgid "on"
-msgstr "el"
-
-#: templates/cleaning/cleaning_home.html:68
+#: templates/cleaning/cleaning_home.html:66
 msgid "Mark as completed"
 msgstr "Marcar como terminada"
 
-#: templates/cleaning/cleaning_home.html:69
+#: templates/cleaning/cleaning_home.html:67
 #: templates/reception/delete_check_in.html:13
 #: templates/reception/delete_reservation.html:13
 #: templates/reception/edit_reservation.html:19
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: templates/cleaning/cleaning_home.html:71
+#: templates/cleaning/cleaning_home.html:69
 msgid "Mark as doing"
 msgstr "Hacer habitación"
 
-#: templates/cleaning/cleaning_home.html:72
+#: templates/cleaning/cleaning_home.html:70
 msgid "Mark as occupied"
 msgstr "Marcar como ocupada"
 
-#: templates/cleaning/cleaning_home.html:82
+#: templates/cleaning/cleaning_home.html:80
 msgid "Cleaned rooms"
 msgstr "Habitaciones limpias"
+
+#: templates/cleaning/cleaning_home.html:94
+msgid "The room has been cleaned by"
+msgstr "La habitación ha sido limpiada por"
+
+#: templates/cleaning/cleaning_home.html:94
+msgid "at"
+msgstr "a las"
+
+#: templates/cleaning/cleaning_home.html:94
+msgid "on"
+msgstr "el"
 
 #: templates/reception/add_check_in_form.html:5
 msgid "Create Check-in"
@@ -257,3 +270,38 @@ msgstr "Guardar"
 #: templates/reception/reservation_detail.html:4
 msgid "Reservation info"
 msgstr "Información de la reserva"
+
+#: templates/super_user/super_user_home.html:11
+msgid "Search"
+msgstr "Buscar"
+
+#: templates/super_user/super_user_home.html:25
+msgid "No users found"
+msgstr "No se ha encontrado ningún usuario"
+
+#: templates/super_user/super_user_home.html:27
+msgid "No users found that matches the search"
+msgstr "Ningún usuario encontrado que coincida con la búsqueda"
+
+#: templates/super_user/user_detail.html:5
+msgid "Assign group to"
+msgstr "Asignar Grupo a"
+
+#: templates/super_user/user_detail.html:6
+msgid "Current group"
+msgstr "Grupo actual"
+
+#: templates/super_user/user_detail.html:18
+msgid "Select group"
+msgstr "Seleccionar grupo"
+
+#: templates/super_user/user_detail.html:24
+msgid "Asign Group"
+msgstr "Asignar Grupo"
+
+#: templates/super_user/user_detail.html:28
+msgid "Clear groups"
+msgstr "Borrar grupos"
+
+#~ msgid "Check-in information"
+#~ msgstr "Información del check-in"

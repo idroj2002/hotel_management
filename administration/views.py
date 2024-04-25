@@ -24,8 +24,6 @@ def reservation_list(request, reservation_type):
             reservations = []
             if query:
                 reservations = HotelReservation.objects.filter(
-                    # Aquí puedes agregar los campos en los que deseas buscar coincidencias Puedes usar | (pipe) para
-                    # combinar múltiples filtros, lo que busca resultados que coincidan con cualquiera de los campos
                     Q(id__icontains=query) |
                     Q(first_name__icontains=query) |
                     Q(last_name__icontains=query),
