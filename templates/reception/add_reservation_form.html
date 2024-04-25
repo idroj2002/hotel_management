@@ -3,18 +3,19 @@
 {% block content %}
 <div class="container">
     <h1 class="mt-5">Add Reservation</h1>
-    <h2>Available Rooms</h2>
+    <h2 class="mt-3">Available Rooms</h2>
     <form id="reservation-form" method="post" class="mt-4">
         {% csrf_token %}
         {% if available_rooms %}
             <label for="room-select">Select a room:</label>
-            <select class="list-group" id="room-select" name="room">
+            <select class="form-select" id="room-select" name="room">
                 {% for room in available_rooms %}
                     <option class="list-group-item">{{ room.number }}</option>
                 {% endfor %}
             </select>
+            <h2 class="mt-3 mb-3">Reservation data</h2>
             {{ reservation_form.as_p }}
-            <button type="submit" class="btn btn-primary">Complete Reservation</button>
+            <button type="submit" class="btn btn-primary mt-3">Complete Reservation</button>
         {% else %}
             <p>No rooms available for the selected dates and type.</p>
             <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Check other options</a>

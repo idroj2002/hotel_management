@@ -20,9 +20,15 @@ class SignupForm(UserCreationForm):
 
 class AvailabilityCheckForm(forms.Form):
     room_type = forms.ChoiceField(
-        choices=[('Ind', 'Individual'), ('Dob', 'Doble'), ('Del', 'Deluxe'), ('Sui', 'Suite')])
-    check_in_date = forms.DateField()
-    check_out_date = forms.DateField()
+        choices=[('Ind', 'Individual'), ('Dob', 'Doble'), ('Del', 'Deluxe'), ('Sui', 'Suite')],
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_room_type'})
+    )
+    check_in_date = forms.DateField(
+        widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'id': 'id_check_in_date'})
+    )
+    check_out_date = forms.DateField(
+        widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'id': 'id_check_out_date'})
+    )
 
 
 class HotelReservationForm(forms.ModelForm):
