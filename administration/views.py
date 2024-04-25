@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet, Q
 from django.utils.translation import gettext_lazy as _
-from administration.models import HotelReservation, RestaurantReservation, CheckIn
-from administration.forms import LoginForm, HotelReservationForm, RestaurantReservationForm, CheckInForm
+from administration.models import HotelReservation, RestaurantReservation, CheckIn, CheckOut
+from administration.forms import HotelReservationForm, RestaurantReservationForm, CheckInForm
 
 
 def is_receptionist(user):
@@ -140,10 +140,14 @@ def reservation_detail(request, reservation_type, reservation_id):
         check_in = CheckIn.objects.get(id=reservation_id)
     else:
         check_in = 'No'
+    if CheckOut.objects.filter(id=reservation_id).exists():
+        check_out = CheckIn.objects.get(id=reservation_id)
+    else:
+        check_out = 'No'
     return render(request, 'reception/reservation_detail.html', {'reservation_type': reservation_type,
                                                                  'reservation_id': reservation_id,
                                                                  'reservation': reservation,
-                                                                 'check_in': check_in})
+                                                                 'check_in': check_in, 'check_out': check_out})
 
 
 @login_required
