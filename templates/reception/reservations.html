@@ -34,57 +34,136 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-12">
-                <div class="d-flex align-items-end">
-                    <form method="post" class="input-group">
-                        {% csrf_token %}
-                        <div class="form-outline">
-                            <input type="search" name="query" class="form-control" placeholder="{% trans 'Search' %}" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                    <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">{% trans "Add Reservation" %}</a>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>
+                        {% if reservation_type == 'hotel' %}
+                            {% trans "Room reservation list" %}
+                        {% else %}
+                            {% trans "Restaurant reservation list" %}
+                        {% endif %}
+                    </h1>
+                    <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> {% trans "Add Reservation" %}
+                    </a>
                 </div>
 
-                {% if query == '-1' %}
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h1 class="mt-5">{% trans "Ceck-Out for today" %}</h1>
-                    </div>
-                    <ul class="list-group">
-                        {% for reservation in check_outs %}
-                            <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation.id %}"><li class="list-group-item">{{ reservation }}</li></a>
-                        {% empty %}
-                            <li class="list-group-item">{% trans "No more check-out today." %}</li>
-                        {% endfor %}
-                    </ul>
+                <form method="post" class="input-group mb-4">
+                    {% csrf_token %}
+                    <input type="search" name="query" class="form-control" placeholder="{% trans 'Search' %}" required>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
 
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h1 class="mt-5">{% trans "Ceck-In for today" %}</h1>
-                    </div>
-                    <ul class="list-group">
-                        {% for reservation in check_ins %}
-                            <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation.id %}"><li class="list-group-item">{{ reservation }}</li></a>
+                {% if query == '-1' and reservation_type == 'hotel' %}
+                    <h1 class="mt-5">{% trans "Check-Out today" %}</h1>
+                    <hr>
+                    <div class="accordion shadow" id="checkOutAccordion">
+                        {% for reservation in check_outs %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="checkOutHeading{{ reservation.id }}">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#checkOutCollapse{{ reservation.id }}" aria-expanded="true" aria-controls="checkOutCollapse{{ reservation.id }}">
+                                        {{ reservation }}
+                                    </button>
+                                </h2>
+                                <div id="checkOutCollapse{{ reservation.id }}" class="accordion-collapse collapse" aria-labelledby="checkOutHeading{{ reservation.id }}" data-bs-parent="#checkOutAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>{% trans "DNI" %}:</strong> {{ reservation.dni }}</p>
+                                        <p><strong>{% trans "Room number" %}:</strong> {{ reservation.room_number }}</p>
+                                        <div class="mt-3">
+                                            <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-primary me-2">
+                                                <i class="fas fa-eye"></i> {% trans "Details" %}
+                                            </a>
+                                            <a href="{% url 'edit_reservation' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-warning me-2">
+                                                <i class="fas fa-edit"></i> {% trans "Edit" %}
+                                            </a>
+                                            <a href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-danger">
+                                                <i class="fas fa-trash-alt"></i> {% trans "Delete" %}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         {% empty %}
-                            <li class="list-group-item">{% trans "No more check-in today." %}</li>
+                            <p>{% trans "No more Check-Out today." %}</p>
                         {% endfor %}
-                    </ul>
+                    </div>
+
+                    <h1 class="mt-5">{% trans "Check-In for today" %}</h1>
+                    <hr>
+                    <div class="accordion shadow" id="checkInAccordion">
+                        {% for reservation in check_ins %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="checkInHeading{{ reservation.id }}">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#checkInCollapse{{ reservation.id }}" aria-expanded="true" aria-controls="checkInCollapse{{ reservation.id }}">
+                                        {{ reservation }}
+                                    </button>
+                                </h2>
+                                <div id="checkInCollapse{{ reservation.id }}" class="accordion-collapse collapse" aria-labelledby="checkInHeading{{ reservation.id }}" data-bs-parent="#checkInAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>{% trans "DNI" %}:</strong> {{ reservation.dni }}</p>
+                                        <p><strong>{% trans "Room number" %}:</strong> {{ reservation.room_number }}</p>
+                                        <div class="mt-3">
+                                            <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-primary me-2">
+                                                <i class="fas fa-eye"></i> {% trans "Details" %}
+                                            </a>
+                                            <a href="{% url 'edit_reservation' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-warning me-2">
+                                                <i class="fas fa-edit"></i> {% trans "Edit" %}
+                                            </a>
+                                            <a href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-danger">
+                                                <i class="fas fa-trash-alt"></i> {% trans "Delete" %}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p>{% trans "No more Chec-In today." %}</p>
+                        {% endfor %}
+                    </div>
                 {% endif %}
 
-                <div class="d-flex justify-content-between align-items-center">
-                    <h1 class="mt-5">{{ header }}</h1>
-                </div>
-                <ul class="list-group">
+                <h1 class="mt-5">{{ header }}</h1>
+                <hr>
+                <div class="accordion shadow" id="reservationAccordion">
                     {% for reservation in reservations %}
-                        <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation.id %}"><li class="list-group-item">{{ reservation }}</li></a>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ reservation.id }}">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ reservation.id }}" aria-expanded="true" aria-controls="collapse{{ reservation.id }}">
+                                    {{ reservation }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ reservation.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ reservation.id }}" data-bs-parent="#checkInAccordion">
+                                <div class="accordion-body">
+                                    {% if reservation_type == 'hotel' %}
+                                        <p><strong>{% trans "DNI" %}:</strong> {{ reservation.dni }}</p>
+                                        <p><strong>{% trans "Room number" %}:</strong> {{ reservation.room_number }}</p>
+                                    {% else %}
+                                        <p><strong>{% trans "Name" %}:</strong> {{ reservation.name }}</p>
+                                        <p><strong>{% trans "People" %}:</strong> {{ reservation.number_of_people }}</p>
+                                    {% endif %}
+                                    <div class="mt-3">
+                                        <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-primary me-2">
+                                            <i class="fas fa-eye"></i> {% trans "Details" %}
+                                        </a>
+                                        <a href="{% url 'edit_reservation' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-warning me-2">
+                                            <i class="fas fa-edit"></i> {% trans "Edit" %}
+                                        </a>
+                                        <a href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt"></i> {% trans "Delete" %}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {% empty %}
                         {% if query == '-1' %}
-                        <li class="list-group-item">{% trans "No reservations found." %}</li>
+                        <p>{% trans "No reservations found." %}</p>
                         {% else %}
-                        <li class="list-group-item">{% trans "No reservations found matching the search" %} "{{ query }}".</li>
+                        <p>{% trans "No reservations found matching the search" %} "{{ query }}".</p>
                         {% endif %}
                     {% endfor %}
-                </ul>
+                </div>
             </div>
         </div>
     </div>

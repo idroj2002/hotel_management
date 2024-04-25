@@ -81,3 +81,13 @@ class CheckIn(models.Model):
 
     def __str__(self):
         return f"Check-in of reservation: {self.id}"
+
+
+class CheckOut(models.Model):
+    id = models.OneToOneField(HotelReservation, on_delete=models.CASCADE, primary_key=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    keys = models.BooleanField(default=False)
+    cancelled = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Check-in of reservation: {self.id}"
