@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-25 13:57+0200\n"
+"POT-Creation-Date: 2024-04-25 20:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,6 @@ msgid "Restaurant reservations - Search results for"
 msgstr ""
 
 #: .\administration\views.py:45 .\administration\views.py:58
-#: .\administration\views.py:78
 msgid "Reservations"
 msgstr ""
 
@@ -45,21 +44,33 @@ msgstr ""
 msgid "Restaurant reservations"
 msgstr ""
 
-#: .\administration\views.py:72
+#: .\administration\views.py:80
+msgid "Cancelled room reservations - Search results for"
+msgstr ""
+
+#: .\administration\views.py:88
+msgid "Cancelled restaurant reservations - Search results for"
+msgstr ""
+
+#: .\administration\views.py:91 .\administration\views.py:101
+msgid "Cancelled reservations"
+msgstr ""
+
+#: .\administration\views.py:95
 #: .\templates\reception\administration_base.html:12
 msgid "Cancelled room reservations"
 msgstr ""
 
-#: .\administration\views.py:75
+#: .\administration\views.py:98
 #: .\templates\reception\administration_base.html:15
 msgid "Cancelled restaurant reservations"
 msgstr ""
 
-#: .\administration\views.py:133 .\administration\views.py:158
+#: .\administration\views.py:157 .\administration\views.py:182
 msgid "It is not possible to delete a reservation with a check-in associated."
 msgstr ""
 
-#: .\administration\views.py:178
+#: .\administration\views.py:202
 msgid "It is not possible to create a check-in for a restaurant reservation."
 msgstr ""
 
@@ -195,13 +206,17 @@ msgstr ""
 msgid "List of canceled reservations"
 msgstr ""
 
-#: .\templates\reception\cancelled_reservations.html:40
-#: .\templates\reception\reservations.html:47
-msgid "Add Reservation"
+#: .\templates\reception\cancelled_reservations.html:42
+#: .\templates\reception\reservations.html:41
+msgid "Search"
 msgstr ""
 
-#: .\templates\reception\cancelled_reservations.html:46
-msgid "No reservations found"
+#: .\templates\reception\cancelled_reservations.html:58
+msgid "No cancelled reservations found."
+msgstr ""
+
+#: .\templates\reception\cancelled_reservations.html:60
+msgid "No cancelled reservations found matching the search"
 msgstr ""
 
 #: .\templates\reception\delete_check_in.html:4
@@ -258,8 +273,8 @@ msgstr ""
 msgid "Reservation info"
 msgstr ""
 
-#: .\templates\reception\reservations.html:41
-msgid "Search"
+#: .\templates\reception\reservations.html:47
+msgid "Add Reservation"
 msgstr ""
 
 #: .\templates\reception\reservations.html:52
@@ -283,5 +298,5 @@ msgid "No reservations found."
 msgstr ""
 
 #: .\templates\reception\reservations.html:84
-msgid "No reservations found that matches the search"
+msgid "No reservations found matching the search"
 msgstr ""

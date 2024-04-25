@@ -67,17 +67,41 @@ def cancelled_reservation_list(request, reservation_type):
         from hotel_management.views import home
         return redirect(home)
 
-    if reservation_type == 'hotel':
-        reservations = HotelReservation.objects.filter(cancelled=True)
-        header = _('Cancelled room reservations')
-    elif reservation_type == 'restaurant':
-        reservations = RestaurantReservation.objects.filter(cancelled=True)
-        header = _('Cancelled restaurant reservations')
+    query = '-1'
+    if request.method == 'POST':
+        if reservation_type == 'hotel':
+            query = request.POST.get('query')
+            reservations = HotelReservation.objects.filter(
+                Q(id__icontains=query) |
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query),
+                cancelled=True
+            )
+            header = _('Cancelled room reservations - Search results for') + ' "' + query + '"'
+        elif reservation_type == 'restaurant':
+            query = request.POST.get('query')
+            reservations = RestaurantReservation.objects.filter(
+                Q(id__icontains=query) |
+                Q(name__icontains=query),
+                cancelled=True
+            )
+            header = _('Cancelled restaurant reservations - Search results for') + ' "' + query + '"'
+        else:
+            reservations = []
+            header = _('Cancelled reservations')
     else:
-        reservations = []
-        header = _('Reservations')
+        if reservation_type == 'hotel':
+            reservations = HotelReservation.objects.filter(cancelled=True)
+            header = _('Cancelled room reservations')
+        elif reservation_type == 'restaurant':
+            reservations = RestaurantReservation.objects.filter(cancelled=True)
+            header = _('Cancelled restaurant reservations')
+        else:
+            reservations = []
+            header = _('Cancelled reservations')
     return render(request, 'reception/cancelled_reservations.html', {'reservation_type': reservation_type,
-                                                                     'header': header, 'reservations': reservations})
+                                                                     'header': header, 'query': query,
+                                                                     'reservations': reservations})
 
 
 @login_required
