@@ -31,6 +31,16 @@ def reservation_list(request, reservation_type):
                 Q(last_name__icontains=query),
                 cancelled=False
             )
+            reservations = []
+            if query:
+                reservations = HotelReservation.objects.filter(
+                    Q(id__icontains=query) |
+                    Q(first_name__icontains=query) |
+                    Q(last_name__icontains=query),
+                    cancelled=False
+                )
+            else:
+                reservations = HotelReservation.objects.filter(cancelled=False)
             header = _('Room reservations - Search results for') + ' "' + query + '"'
         elif reservation_type == 'restaurant':
             query = request.POST.get('query')
