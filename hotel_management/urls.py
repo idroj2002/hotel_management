@@ -27,4 +27,5 @@ urlpatterns = i18n_patterns(
     path('administration/', include('administration.urls'), name='administration'),
     path('restaurant/', include('restaurant.urls'), name='restaurant'),
     path('cleaning/', include('cleaning.urls'), name='cleaning'),
+    path('superuser/', include('super_user.urls'), name='superuser'),
 )
