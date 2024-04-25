@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-25 22:40+0200\n"
+"POT-Creation-Date: 2024-04-26 00:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,41 +25,58 @@ msgstr ""
 msgid "Información del check-in"
 msgstr "Cancelar check-in"
 
-#: administration/views.py:34
+#: administration/views.py:44
 msgid "Room reservations - Search results for"
-msgstr "Reservas de habitación - Resultados de búsqueda por"
+msgstr "Reservas de habitación - Resultados de búsqueda"
 
-#: administration/views.py:46
+#: administration/views.py:52
 msgid "Restaurant reservations - Search results for"
-msgstr "Reservas del restaurante - Resultados de búsqueda por"
+msgstr "Reservas del restaurante - Resultados de búsqueda"
 
-#: administration/views.py:49 administration/views.py:60
-#: administration/views.py:79
+#: administration/views.py:55 administration/views.py:68
 msgid "Reservations"
 msgstr "Reservas"
 
-#: administration/views.py:54 templates/reception/administration_base.html:6
+#: administration/views.py:62 templates/reception/administration_base.html:6
 msgid "Room reservations"
 msgstr "Reservas de habitación"
 
-#: administration/views.py:57 restaurant/views.py:21
+#: administration/views.py:65 restaurant/views.py:21
 #: templates/reception/administration_base.html:9
 msgid "Restaurant reservations"
 msgstr "Reservas del restaurante"
 
-#: administration/views.py:73 templates/reception/administration_base.html:12
+#: administration/views.py:90
+#, fuzzy
+#| msgid "Room reservations - Search results for"
+msgid "Cancelled room reservations - Search results for"
+msgstr "Reservas de habitación - Resultados de búsqueda"
+
+#: administration/views.py:98
+#, fuzzy
+#| msgid "Restaurant reservations - Search results for"
+msgid "Cancelled restaurant reservations - Search results for"
+msgstr "Reservas del restaurante - Resultados de búsqueda"
+
+#: administration/views.py:101 administration/views.py:111
+#, fuzzy
+#| msgid "Cancel reservation"
+msgid "Cancelled reservations"
+msgstr "Cancelar reserva"
+
+#: administration/views.py:105 templates/reception/administration_base.html:12
 msgid "Cancelled room reservations"
 msgstr "Reservas de habitación canceladas"
 
-#: administration/views.py:76 templates/reception/administration_base.html:15
+#: administration/views.py:108 templates/reception/administration_base.html:15
 msgid "Cancelled restaurant reservations"
 msgstr "Reservas del restaurante canceladas"
 
-#: administration/views.py:134 administration/views.py:159
+#: administration/views.py:167 administration/views.py:192
 msgid "It is not possible to delete a reservation with a check-in associated."
 msgstr "No se puede borrar una reserva con check-in."
 
-#: administration/views.py:179
+#: administration/views.py:212
 msgid "It is not possible to create a check-in for a restaurant reservation."
 msgstr "No se puede crer un chec-in para una reserva de restaurante."
 
@@ -80,10 +97,8 @@ msgid "Spanish"
 msgstr "Español"
 
 #: super_user/views.py:26
-#, fuzzy
-#| msgid "Room reservations - Search results for"
 msgid "SuperUser - Search results for"
-msgstr "Reservas de habitación - Resultados de búsqueda por"
+msgstr "Super usuario - Resultados de búsqueda por"
 
 #: super_user/views.py:30
 msgid "SuperUser"
@@ -209,13 +224,20 @@ msgstr "Volver a reservas"
 msgid "List of canceled reservations"
 msgstr "Lista de reservas canceladas"
 
-#: templates/reception/cancelled_reservations.html:40
-msgid "Add Reservation"
-msgstr "Añadir reserva"
+#: templates/reception/cancelled_reservations.html:42
+#: templates/reception/reservations.html:41
+#: templates/super_user/super_user_home.html:11
+msgid "Search"
+msgstr "Buscar"
 
-#: templates/reception/cancelled_reservations.html:46
-msgid "No reservations found"
-msgstr "No se ha encontrado ninguna reserva"
+#: templates/reception/cancelled_reservations.html:58
+msgid "No cancelled reservations found."
+msgstr "No se ha encontrado ninguna reserva cancelada."
+
+#: templates/reception/cancelled_reservations.html:60
+msgid "No cancelled reservations found matching the search"
+msgstr ""
+"No se ha encontrado ninguna reserva cancelada que coincida con la búsqueda"
 
 #: templates/reception/delete_check_in.html:4
 msgid "Cancel Check-in"
@@ -271,9 +293,40 @@ msgstr "Guardar"
 msgid "Reservation info"
 msgstr "Información de la reserva"
 
-#: templates/super_user/super_user_home.html:11
-msgid "Search"
-msgstr "Buscar"
+#: templates/reception/reservations.html:47
+msgid "Add Reservation"
+msgstr "Añadir reserva"
+
+#: templates/reception/reservations.html:52
+msgid "Ceck-Out for today"
+msgstr ""
+
+#: templates/reception/reservations.html:58
+msgid "No more check-out today."
+msgstr ""
+
+#: templates/reception/reservations.html:63
+#, fuzzy
+#| msgid "Check-in information"
+msgid "Ceck-In for today"
+msgstr "Información del check-in"
+
+#: templates/reception/reservations.html:69
+msgid "No more check-in today."
+msgstr ""
+
+#: templates/reception/reservations.html:82
+#, fuzzy
+#| msgid "No cancelled reservations found."
+msgid "No reservations found."
+msgstr "No se ha encontrado ninguna reserva cancelada."
+
+#: templates/reception/reservations.html:84
+#, fuzzy
+#| msgid "No cancelled reservations found matching the search"
+msgid "No reservations found matching the search"
+msgstr ""
+"No se ha encontrado ninguna reserva cancelada que coincida con la búsqueda"
 
 #: templates/super_user/super_user_home.html:25
 msgid "No users found"
@@ -302,6 +355,3 @@ msgstr "Asignar Grupo"
 #: templates/super_user/user_detail.html:28
 msgid "Clear groups"
 msgstr "Borrar grupos"
-
-#~ msgid "Check-in information"
-#~ msgstr "Información del check-in"
