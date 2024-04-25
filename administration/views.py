@@ -1,3 +1,5 @@
+import datetime
+
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -21,42 +23,36 @@ def reservation_list(request, reservation_type):
         from hotel_management.views import home
         return redirect(home)
 
+    query = '-1'
+    check_ins = []
+    check_outs = []
     if request.method == 'POST':
-        query = ''
         if reservation_type == 'hotel':
             query = request.POST.get('query')
-            reservations = []
-            if query:
-                reservations = HotelReservation.objects.filter(
-                    # Aquí puedes agregar los campos en los que deseas buscar coincidencias Puedes usar | (pipe) para
-                    # combinar múltiples filtros, lo que busca resultados que coincidan con cualquiera de los campos
-                    Q(id__icontains=query) |
-                    Q(first_name__icontains=query) |
-                    Q(last_name__icontains=query),
-                    cancelled=False
-                )
-            else:
-                reservations = HotelReservation.objects.filter(cancelled=False)
+            reservations = HotelReservation.objects.filter(
+                Q(id__icontains=query) |
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query),
+                cancelled=False
+            )
             header = _('Room reservations - Search results for') + ' "' + query + '"'
         elif reservation_type == 'restaurant':
             query = request.POST.get('query')
-            reservations = []
-            if query:
-                reservations = RestaurantReservation.objects.filter(
-                    Q(id__icontains=query) |
-                    Q(name__icontains=query),
-                    cancelled=False
-                )
-            else:
-                reservations = RestaurantReservation.objects.filter(cancelled=False)
+            reservations = RestaurantReservation.objects.filter(
+                Q(id__icontains=query) |
+                Q(name__icontains=query),
+                cancelled=False
+            )
             header = _('Restaurant reservations - Search results for') + ' "' + query + '"'
         else:
             reservations = []
             header = _('Reservations')
     else:
-        query = ''
         if reservation_type == 'hotel':
-            reservations = HotelReservation.objects.filter(cancelled=False)
+            today = datetime.datetime.now().date()
+            check_ins = HotelReservation.objects.filter(check_in_date=today, cancelled=False)
+            check_outs = HotelReservation.objects.filter(check_out_date=today, cancelled=False)
+            reservations = HotelReservation.objects.filter(cancelled=False).order_by('-id')
             header = _('Room reservations')
         elif reservation_type == 'restaurant':
             reservations = RestaurantReservation.objects.filter(cancelled=False)
@@ -65,7 +61,8 @@ def reservation_list(request, reservation_type):
             reservations = []
             header = _('Reservations')
     return render(request, 'reception/reservations.html', {'reservation_type': reservation_type, 'query': query,
-                                                           'header': header, 'reservations': reservations})
+                                                           'header': header, 'reservations': reservations,
+                                                           'check_ins': check_ins, 'check_outs': check_outs})
 
 
 @login_required
@@ -74,17 +71,41 @@ def cancelled_reservation_list(request, reservation_type):
         from hotel_management.views import home
         return redirect(home)
 
-    if reservation_type == 'hotel':
-        reservations = HotelReservation.objects.filter(cancelled=True)
-        header = _('Cancelled room reservations')
-    elif reservation_type == 'restaurant':
-        reservations = RestaurantReservation.objects.filter(cancelled=True)
-        header = _('Cancelled restaurant reservations')
+    query = '-1'
+    if request.method == 'POST':
+        if reservation_type == 'hotel':
+            query = request.POST.get('query')
+            reservations = HotelReservation.objects.filter(
+                Q(id__icontains=query) |
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query),
+                cancelled=True
+            )
+            header = _('Cancelled room reservations - Search results for') + ' "' + query + '"'
+        elif reservation_type == 'restaurant':
+            query = request.POST.get('query')
+            reservations = RestaurantReservation.objects.filter(
+                Q(id__icontains=query) |
+                Q(name__icontains=query),
+                cancelled=True
+            )
+            header = _('Cancelled restaurant reservations - Search results for') + ' "' + query + '"'
+        else:
+            reservations = []
+            header = _('Cancelled reservations')
     else:
-        reservations = []
-        header = _('Reservations')
+        if reservation_type == 'hotel':
+            reservations = HotelReservation.objects.filter(cancelled=True)
+            header = _('Cancelled room reservations')
+        elif reservation_type == 'restaurant':
+            reservations = RestaurantReservation.objects.filter(cancelled=True)
+            header = _('Cancelled restaurant reservations')
+        else:
+            reservations = []
+            header = _('Cancelled reservations')
     return render(request, 'reception/cancelled_reservations.html', {'reservation_type': reservation_type,
-                                                                     'header': header, 'reservations': reservations})
+                                                                     'header': header, 'query': query,
+                                                                     'reservations': reservations})
 
 
 @login_required
