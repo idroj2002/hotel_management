@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from datetime import date, timedelta
-from administration.models import HotelReservation, RestaurantReservation, Room, Table, CheckIn
+from administration.models import HotelReservation, RestaurantReservation, Room, Table, CheckIn, CheckOut
 
 
 class LoginForm(forms.Form):
@@ -175,13 +175,28 @@ class CheckInForm(forms.ModelForm):
         fields = ['guests_data', "keys"]
 
         widgets = {
-            'guests_data': forms.Textarea(attrs={'placeholder': 'Información del check-in', 'class': 'form-control'}),
+            'guests_data': forms.Textarea(attrs={'placeholder': 'Introduzca los nombres completos de los huéspedes y '
+                                                                'sus respectivos DNI', 'class': 'form-control'}),
             'keys': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'id_keys'}),
-            'cancelled': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'id_cancelled'}),
         }
 
         labels = {
             'guests_data': 'Información de los huéspedes',
             'keys': 'Llaves entregadas',
-            'cancelled': 'Cancelada',
+        }
+
+
+class CheckOutForm(forms.ModelForm):
+    class Meta:
+        model = CheckOut
+        fields = ['price', "keys"]
+
+        widgets = {
+            'price': forms.TextInput(attrs={'class': 'form-control'}),
+            'keys': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'id_keys'}),
+        }
+
+        labels = {
+            'price': 'Precio total',
+            'keys': 'Llaves recogidas',
         }

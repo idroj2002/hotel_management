@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet, Q
 from django.utils.translation import gettext_lazy as _
 from administration.models import HotelReservation, RestaurantReservation, CheckIn, CheckOut
-from administration.forms import HotelReservationForm, RestaurantReservationForm, CheckInForm
+from administration.forms import HotelReservationForm, RestaurantReservationForm, CheckInForm, CheckOutForm
 
 
 def is_receptionist(user):
@@ -144,18 +144,20 @@ def reservation_detail(request, reservation_type, reservation_id):
 
     check_in = False
     check_out = False
-    editable = True
+    reservation_editable = True
+    check_in_editable = True
     if reservation_type == 'hotel':
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
         today = datetime.datetime.now().date()
         if CheckIn.objects.filter(id=reservation_id).exists():
             check_in = CheckIn.objects.get(id=reservation_id)
-            editable = False
+            reservation_editable = False
         else:
             if reservation.check_in_date <= today:
                 check_in = True
         if CheckOut.objects.filter(id=reservation_id).exists():
-            check_out = CheckIn.objects.get(id=reservation_id)
+            check_out = CheckOut.objects.get(id=reservation_id)
+            check_in_editable = False
         else:
             if check_in is not True and reservation.check_out_date <= today:
                 check_out = True
@@ -164,7 +166,9 @@ def reservation_detail(request, reservation_type, reservation_id):
 
     return render(request, 'reception/reservation_detail.html', {'reservation_type': reservation_type,
                                                                  'reservation_id': reservation_id,
-                                                                 'reservation': reservation, 'editable': editable,
+                                                                 'reservation': reservation,
+                                                                 'reservation_editable': reservation_editable,
+                                                                 'check_in_editable': check_in_editable,
                                                                  'check_in': check_in, 'check_out': check_out})
 
 
@@ -221,8 +225,15 @@ def add_check_in(request, reservation_type, reservation_id):
         return redirect(home)
 
     if reservation_type == 'restaurant':
-        raise PermissionDenied(_("It is not possible to create a check-in for a restaurant reservation."))
+        raise PermissionDenied(_("It is not possible to create a Check-In for a restaurant reservation."))
     reservation = get_object_or_404(HotelReservation, pk=reservation_id)
+    today = datetime.datetime.now().date()
+    if reservation.check_in_date > today:
+        raise PermissionDenied(_("The date for this Check-in has not been reached yet."))
+    if CheckIn.objects.filter(id=reservation_id).exists():
+        raise PermissionDenied(_("Already exists a Check-In for this reservation."))
+    if CheckOut.objects.filter(id=reservation_id).exists():
+        raise PermissionDenied(_("Exists a Check-Out for this reservation so it is closed."))
     if request.method == 'POST':
         form = CheckInForm(request.POST)
         if form.is_valid():
@@ -245,7 +256,10 @@ def edit_check_in(request, reservation_type, reservation_id):
         from hotel_management.views import home
         return redirect(home)
 
+    reservation = get_object_or_404(HotelReservation, pk=reservation_id)
     check_in = get_object_or_404(CheckIn, pk=reservation_id)
+    if CheckOut.objects.filter(id=reservation_id).exists():
+        raise PermissionDenied(_("Exists a Check-Out for this reservation so it is closed."))
     if request.method == 'POST':
         form = CheckInForm(request.POST, instance=check_in)
         if form.is_valid():
@@ -256,7 +270,8 @@ def edit_check_in(request, reservation_type, reservation_id):
     else:
         form = CheckInForm(instance=check_in)
     return render(request, 'reception/edit_check_in.html', {'reservation_type': reservation_type,
-                                                            'reservation_id': reservation_id, 'form': form})
+                                                            'reservation_id': reservation_id,
+                                                            'reservation': reservation, 'form': form})
 
 
 @login_required
@@ -272,3 +287,33 @@ def delete_check_in(request, reservation_type, reservation_id):
         return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     return render(request, 'reception/delete_check_in.html', {'reservation_type': reservation_type,
                                                               'reservation_id': reservation_id, 'check_in': check_in})
+
+
+@login_required
+def add_check_out(request, reservation_type, reservation_id):
+    if not is_receptionist(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+
+    if reservation_type == 'restaurant':
+        raise PermissionDenied(_("It is not possible to create a Check-Out for a restaurant reservation."))
+    reservation = get_object_or_404(HotelReservation, pk=reservation_id)
+    today = datetime.datetime.now().date()
+    if reservation.check_out_date > today:
+        raise PermissionDenied(_("The date for this Check-Out has not been reached yet."))
+    if CheckOut.objects.filter(id=reservation_id).exists():
+        raise PermissionDenied(_("Exists a Check-Out for this reservation so it is closed."))
+    if request.method == 'POST':
+        form = CheckOutForm(request.POST)
+        if form.is_valid():
+            check_out = form.save(commit=False)
+            check_out.id_id = reservation_id
+            check_out.created_by = request.user
+            form.save()
+            return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
+    else:
+        form = CheckOutForm()
+    return render(request, 'reception/add_check_in_form.html', {'reservation_type': reservation_type,
+                                                                'reservation_id': reservation_id,
+                                                                'reservation': reservation,
+                                                                'form': form})
