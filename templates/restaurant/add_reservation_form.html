@@ -1,0 +1,18 @@
+{% extends './reservations.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Create reservation" %}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mt-5">
+            {% trans "New restaurant reservation" %}
+        </h1>
+        <form method="post" class="mt-4 form-control">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">{% trans "Back to Reservations" %}</a>
+        </form>
+    </div>
+{% endblock %}

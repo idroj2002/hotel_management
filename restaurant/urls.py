@@ -17,8 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.i18n import i18n_patterns
-from restaurant.views import restaurant_home
+from restaurant.views import restaurant_home, add_reservation, reservation_detail, edit_reservation, delete_reservation
 
 urlpatterns = [
-    path('reservations/', restaurant_home, name='home'),
+    path('', restaurant_home, name='restaurant_home'),
+    path('reservation_detail/<int:reservation_id>/', reservation_detail, name='reservation_detail'),
+    path('add_reservation/', add_reservation, name='add_reservation'),
+    path('edit_reservation/<int:reservation_id>/', edit_reservation, name='edit_reservation'),
+    path('delete_reservation/<int:reservation_id>/', delete_reservation, name='delete_reservation'),
 ]
