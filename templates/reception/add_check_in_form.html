@@ -2,11 +2,11 @@
 
 {% load i18n %}
 
-{% block title %}{% trans "Create Check-in" %}{% endblock %}
+{% block title %}{% trans "Create Check-In" %}{% endblock %}
 
 {% block content %}
     <div class="container">
-        <h1 class="mt-5">{% trans "Reservation check-in:" %} {{ reservation }}</h1>
+        <h1 class="mt-5">{% block card_header %}{% trans "Reservation Check-In" %}{% endblock %}: {{ reservation }}</h1>
         <hr>
         <div class="card mt-4">
             <div class="card-body shadow">

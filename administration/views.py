@@ -313,7 +313,7 @@ def add_check_out(request, reservation_type, reservation_id):
             return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     else:
         form = CheckOutForm()
-    return render(request, 'reception/add_check_in_form.html', {'reservation_type': reservation_type,
-                                                                'reservation_id': reservation_id,
-                                                                'reservation': reservation,
-                                                                'form': form})
+    return render(request, 'reception/add_check_out_form.html', {'reservation_type': reservation_type,
+                                                                 'reservation_id': reservation_id,
+                                                                 'reservation': reservation,
+                                                                 'form': form})
