@@ -1,7 +1,6 @@
-{% extends './administration_base.html' %}
+{% extends './restaurant_base.html' %}
 {% load i18n %}
-
-{% block title %}{% trans "List of canceled reservations" %}{% endblock %}
+{% block title %}Lista de reservas{% endblock %}
 
 {% block styles %}
     <style>
@@ -35,13 +34,14 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-12">
-                <h1>
-                    {% if reservation_type == 'hotel' %}
-                        {% trans "Cancelled room reservation list" %}
-                    {% else %}
-                        {% trans "Cancelled restaurant reservation list" %}
-                    {% endif %}
-                </h1>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>
+                        {% trans "Restaurant reservation list" %}
+                    </h1>
+                    <a href="{% url 'add_reservation' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> {% trans "Add Reservation" %}
+                    </a>
+                </div>
 
                 <form method="post" class="input-group mb-4">
                     {% csrf_token %}
@@ -51,7 +51,7 @@
                     </button>
                 </form>
 
-                <h1 class="mt-5">{{ header }}</h1>
+                <h1 class="mt-5">{% trans "Restaurant reservations" %}</h1>
                 <hr>
                 <div class="accordion shadow" id="reservationAccordion">
                     {% for reservation in reservations %}
@@ -63,34 +63,27 @@
                             </h2>
                             <div id="collapse{{ reservation.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ reservation.id }}" data-bs-parent="#checkInAccordion">
                                 <div class="accordion-body">
-                                    {% if reservation_type == 'hotel' %}
-                                        <p><strong>{% trans "DNI" %}:</strong> {{ reservation.dni }}</p>
-                                        <p><strong>{% trans "Room number" %}:</strong> {{ reservation.room_number }}</p>
-                                    {% else %}
-                                        <p><strong>{% trans "Name" %}:</strong> {{ reservation.name }}</p>
-                                        <p><strong>{% trans "People" %}:</strong> {{ reservation.number_of_people }}</p>
-                                    {% endif %}
+                                    <p><strong>{% trans "Name" %}:</strong> {{ reservation.name }}</p>
+                                    <p><strong>{% trans "People" %}:</strong> {{ reservation.number_of_people }}</p>
                                     <div class="mt-3">
-                                        <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-primary me-2">
+                                        <a href="{% url 'reservation_detail' reservation_id=reservation.id %}" class="btn btn-primary me-2">
                                             <i class="fas fa-eye"></i> {% trans "Details" %}
                                         </a>
-                                        <!--
-                                        <a href="{% url 'edit_reservation' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-warning me-2">
+                                        <a href="{% url 'edit_reservation' reservation_id=reservation.id %}" class="btn btn-warning me-2">
                                             <i class="fas fa-edit"></i> {% trans "Edit" %}
                                         </a>
-                                        <a href="{% url 'delete_reservation' reservation_type=reservation_type reservation_id=reservation.id %}" class="btn btn-danger">
+                                        <a href="{% url 'delete_reservation' reservation_id=reservation.id %}" class="btn btn-danger">
                                             <i class="fas fa-trash-alt"></i> {% trans "Delete" %}
                                         </a>
-                                        -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     {% empty %}
                         {% if query == '-1' %}
-                        <p>{% trans "No cancelled reservations found." %}</p>
+                        <p>{% trans "No reservations found." %}</p>
                         {% else %}
-                        <p>{% trans "No cancelled reservations found matching the search" %} "{{ query }}".</p>
+                        <p>{% trans "No reservations found matching the search" %} "{{ query }}".</p>
                         {% endif %}
                     {% endfor %}
                 </div>
