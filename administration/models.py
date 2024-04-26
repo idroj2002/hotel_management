@@ -17,7 +17,7 @@ class Room(models.Model):
         ('D', 'Done'),
     ]
     state = models.CharField(max_length=10, choices=ROOM_STATE_OPTIONS)
-    occupied = models.BooleanField(default=False)
+    occupied = models.TimeField(blank=True, null=True)
 
     def __str__(self):
         return f"Habitación {self.number} ({self.type})"
@@ -76,6 +76,16 @@ class RestaurantReservation(models.Model):
 class CheckIn(models.Model):
     id = models.OneToOneField(HotelReservation, on_delete=models.CASCADE, primary_key=True)
     guests_data = models.TextField(max_length=1000)
+    keys = models.BooleanField(default=False)
+    cancelled = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Check-in of reservation: {self.id}"
+
+
+class CheckOut(models.Model):
+    id = models.OneToOneField(HotelReservation, on_delete=models.CASCADE, primary_key=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     keys = models.BooleanField(default=False)
     cancelled = models.BooleanField(default=False)
 

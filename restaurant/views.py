@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import gettext_lazy as _
 from administration.models import RestaurantReservation
+
 
 # Create your views here.
 
@@ -13,7 +15,7 @@ def restaurant_home(request):
     if not is_restaurant(request.user):
         from hotel_management.views import home
         return redirect(home)
-    
+
     reservations = RestaurantReservation.objects.all()
     reservation_type = 'restaurant'
     header = _('Restaurant reservations')

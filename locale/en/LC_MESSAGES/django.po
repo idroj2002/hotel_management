@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-19 16:04+0200\n"
+"POT-Creation-Date: 2024-04-26 01:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,159 +18,419 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: administration/views.py:22 templates/reception/administration_base.html:6
-msgid "Room reservations"
+#: .\administration\forms.py:181
+msgid "Información del check-in"
 msgstr ""
 
-#: administration/views.py:25 restaurant/views.py:19
-#: templates/reception/administration_base.html:9
-msgid "Restaurant reservations"
+#: .\administration\views.py:34
+msgid "Room reservations - Search results for"
 msgstr ""
 
-#: administration/views.py:28 administration/views.py:47
+#: .\administration\views.py:42
+msgid "Restaurant reservations - Search results for"
+msgstr ""
+
+#: .\administration\views.py:45 .\administration\views.py:58
 msgid "Reservations"
 msgstr ""
 
-#: administration/views.py:41 templates/reception/administration_base.html:12
+#: .\administration\views.py:52
+#: .\templates\reception\administration_base.html:6
+msgid "Room reservations"
+msgstr ""
+
+#: .\administration\views.py:55 .\restaurant\views.py:19
+#: .\templates\reception\administration_base.html:9
+msgid "Restaurant reservations"
+msgstr ""
+
+#: .\administration\views.py:80
+msgid "Cancelled room reservations - Search results for"
+msgstr ""
+
+#: .\administration\views.py:88
+msgid "Cancelled restaurant reservations - Search results for"
+msgstr ""
+
+#: .\administration\views.py:91 .\administration\views.py:101
+msgid "Cancelled reservations"
+msgstr ""
+
+#: .\administration\views.py:95
+#: .\templates\reception\administration_base.html:12
 msgid "Cancelled room reservations"
 msgstr ""
 
-#: administration/views.py:44 templates/reception/administration_base.html:15
+#: .\administration\views.py:98
+#: .\templates\reception\administration_base.html:15
 msgid "Cancelled restaurant reservations"
 msgstr ""
 
-#: administration/views.py:100 administration/views.py:125
+#: .\administration\views.py:161 .\administration\views.py:186
 msgid "It is not possible to delete a reservation with a check-in associated."
 msgstr ""
 
-#: administration/views.py:144
+#: .\administration\views.py:206
 msgid "It is not possible to create a check-in for a restaurant reservation."
 msgstr ""
 
-#: hotel_management/settings.py:116
+#: .\cleaning\views.py:85
+msgid "ERROR: unidentified cleaner"
+msgstr ""
+
+#: .\cleaning\views.py:92 .\cleaning\views.py:93 .\cleaning\views.py:94
+msgid "ERROR: unidentified data"
+msgstr ""
+
+#: .\hotel_management\settings.py:118
 msgid "English"
 msgstr ""
 
-#: hotel_management/settings.py:117
+#: .\hotel_management\settings.py:119
 msgid "Spanish"
 msgstr ""
 
-#: templates/base.html:6
+#: .\templates\base.html:6
 msgid "Las Palmeras hotel"
 msgstr ""
 
-#: templates/base.html:17
+#: .\templates\base.html:18
 msgid "Home"
 msgstr ""
 
-#: templates/base.html:26
+#: .\templates\base.html:27
 msgid "Log out"
 msgstr ""
 
-#: templates/base.html:30
+#: .\templates\base.html:31
 msgid "Log in"
 msgstr ""
 
-#: templates/base.html:33
+#: .\templates\base.html:34
 msgid "Sign in"
 msgstr ""
 
-#: templates/reception/add_check_in_form.html:3
-msgid "Create Check-in"
+#: .\templates\cleaning\cleaning_home.html:4
+msgid "Cleaning"
 msgstr ""
 
-#: templates/reception/add_check_in_form.html:7
-#: templates/reception/edit_check_in.html:8
-msgid "Reservation check-in"
+#: .\templates\cleaning\cleaning_home.html:44
+msgid "Rooms to be cleaned"
 msgstr ""
 
-#: templates/reception/add_check_in_form.html:11
-#: templates/reception/add_reservation_form.html:18
-#: templates/reception/edit_check_in.html:12
-msgid "Submit"
+#: .\templates\cleaning\cleaning_home.html:53
+#: .\templates\cleaning\cleaning_home.html:88
+msgid "In progress"
 msgstr ""
 
-#: templates/reception/add_reservation_form.html:4
-msgid "Create reservation"
+#: .\templates\cleaning\cleaning_home.html:54
+#: .\templates\cleaning\cleaning_home.html:89
+msgid "Recommended"
 msgstr ""
 
-#: templates/reception/add_reservation_form.html:10
-msgid "New room reservation"
+#: .\templates\cleaning\cleaning_home.html:60
+msgid "The room needs to be cleaned"
 msgstr ""
 
-#: templates/reception/add_reservation_form.html:12
-msgid "New restaurant reservation"
+#: .\templates\cleaning\cleaning_home.html:62
+msgid "The room is being cleaned by"
 msgstr ""
 
-#: templates/reception/add_reservation_form.html:19
-#: templates/reception/edit_check_in.html:13
-msgid "Back to Reservations"
+#: .\templates\cleaning\cleaning_home.html:66
+msgid "Mark as completed"
 msgstr ""
 
-#: templates/reception/cancelled_reservations.html:4
-msgid "List of canceled reservations"
-msgstr ""
-
-#: templates/reception/cancelled_reservations.html:40
-msgid "Add Reservation"
-msgstr ""
-
-#: templates/reception/cancelled_reservations.html:46
-msgid "No reservations found"
-msgstr ""
-
-#: templates/reception/delete_check_in.html:4
-msgid "Cancel Check-in"
-msgstr ""
-
-#: templates/reception/delete_check_in.html:8
-msgid "Cancel check-in"
-msgstr ""
-
-#: templates/reception/delete_check_in.html:11
-msgid "Are you sure that you want to cancel the check-in"
-msgstr ""
-
-#: templates/reception/delete_check_in.html:12
-#: templates/reception/delete_reservation.html:12
-msgid "Confirm"
-msgstr ""
-
-#: templates/reception/delete_check_in.html:13
-#: templates/reception/delete_reservation.html:13
-#: templates/reception/edit_reservation.html:19
+#: .\templates\cleaning\cleaning_home.html:67
+#: .\templates\reception\delete_check_in.html:13
+#: .\templates\reception\delete_reservation.html:13
+#: .\templates\reception\edit_reservation.html:19
 msgid "Cancel"
 msgstr ""
 
-#: templates/reception/delete_reservation.html:4
-#: templates/reception/delete_reservation.html:8
+#: .\templates\cleaning\cleaning_home.html:69
+msgid "Mark as doing"
+msgstr ""
+
+#: .\templates\cleaning\cleaning_home.html:70
+msgid "Mark as occupied"
+msgstr ""
+
+#: .\templates\cleaning\cleaning_home.html:80
+msgid "Cleaned rooms"
+msgstr ""
+
+#: .\templates\cleaning\cleaning_home.html:94
+msgid "The room has been cleaned by"
+msgstr ""
+
+#: .\templates\cleaning\cleaning_home.html:94
+msgid "at"
+msgstr ""
+
+#: .\templates\cleaning\cleaning_home.html:94
+msgid "on"
+msgstr ""
+
+#: .\templates\reception\add_check_in_form.html:5
+msgid "Create Check-in"
+msgstr ""
+
+#: .\templates\reception\add_check_in_form.html:9
+msgid "Reservation check-in:"
+msgstr ""
+
+#: .\templates\reception\add_check_in_form.html:13
+#: .\templates\reception\add_reservation_form.html:18
+#: .\templates\reception\edit_check_in.html:12
+msgid "Submit"
+msgstr ""
+
+#: .\templates\reception\add_reservation_form.html:4
+msgid "Create reservation"
+msgstr ""
+
+#: .\templates\reception\add_reservation_form.html:10
+msgid "New room reservation"
+msgstr ""
+
+#: .\templates\reception\add_reservation_form.html:12
+msgid "New restaurant reservation"
+msgstr ""
+
+#: .\templates\reception\add_reservation_form.html:19
+#: .\templates\reception\edit_check_in.html:13
+msgid "Back to Reservations"
+msgstr ""
+
+#: .\templates\reception\cancelled_reservations.html:4
+msgid "List of canceled reservations"
+msgstr ""
+
+#: .\templates\reception\cancelled_reservations.html:42
+#: .\templates\reception\reservations.html:52
+msgid "Search"
+msgstr ""
+
+#: .\templates\reception\cancelled_reservations.html:58
+msgid "No cancelled reservations found."
+msgstr ""
+
+#: .\templates\reception\cancelled_reservations.html:60
+msgid "No cancelled reservations found matching the search"
+msgstr ""
+
+#: .\templates\reception\delete_check_in.html:4
+msgid "Cancel Check-in"
+msgstr ""
+
+#: .\templates\reception\delete_check_in.html:8
+msgid "Cancel check-in"
+msgstr ""
+
+#: .\templates\reception\delete_check_in.html:11
+msgid "Are you sure that you want to cancel the check-in"
+msgstr ""
+
+#: .\templates\reception\delete_check_in.html:12
+#: .\templates\reception\delete_reservation.html:12
+msgid "Confirm"
+msgstr ""
+
+#: .\templates\reception\delete_reservation.html:4
+#: .\templates\reception\delete_reservation.html:8
 msgid "Cancel reservation"
 msgstr ""
 
-#: templates/reception/delete_reservation.html:11
+#: .\templates\reception\delete_reservation.html:11
 msgid "Are you sure that you want to cancel the reservation"
 msgstr ""
 
-#: templates/reception/edit_check_in.html:4
+#: .\templates\reception\edit_check_in.html:4
 msgid "Edit Check-in"
 msgstr ""
 
-#: templates/reception/edit_reservation.html:4
+#: .\templates\reception\edit_check_in.html:8
+msgid "Reservation check-in"
+msgstr ""
+
+#: .\templates\reception\edit_reservation.html:4
 msgid "Edit reservation"
 msgstr ""
 
-#: templates/reception/edit_reservation.html:10
+#: .\templates\reception\edit_reservation.html:10
 msgid "Edit room reservation"
 msgstr ""
 
-#: templates/reception/edit_reservation.html:12
+#: .\templates\reception\edit_reservation.html:12
 msgid "Edit restaurant reservation"
 msgstr ""
 
-#: templates/reception/edit_reservation.html:18
+#: .\templates\reception\edit_reservation.html:18
 msgid "Save"
 msgstr ""
 
-#: templates/reception/reservation_detail.html:4
-msgid "reservation info"
+#: .\templates\reception\reservation_detail.html:4
+msgid "Reservation info"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:10
+msgid "Room reservation"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:12
+msgid "Restaurant reservation"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:25
+msgid "DNI:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:26
+#: .\templates\reception\reservation_detail.html:32
+msgid "Name:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:27
+msgid "Last name:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:28
+msgid "Email:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:29
+msgid "Phone:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:30
+msgid "Birth:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:33
+msgid "Table ID / number:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:34
+msgid "Time:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:39
+msgid "Room type:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:40
+#: .\templates\reception\reservation_detail.html:46
+msgid "Room number:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:41
+msgid "Check-In date:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:42
+msgid "Check-Out date:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:43
+msgid "Number of guests:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:44
+msgid "Price:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:47
+msgid "Number of diners:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:54
+#: .\templates\reception\reservation_detail.html:64
+#: .\templates\reception\reservation_detail.html:82
+#: .\templates\reception\reservations.html:78
+#: .\templates\reception\reservations.html:111
+#: .\templates\reception\reservations.html:150
+msgid "Edit"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:57
+#: .\templates\reception\reservation_detail.html:67
+#: .\templates\reception\reservation_detail.html:83
+#: .\templates\reception\reservations.html:81
+#: .\templates\reception\reservations.html:114
+#: .\templates\reception\reservations.html:153
+msgid "Delete"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:60
+msgid "Process Check-IN"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:77
+msgid "Check-In information:"
+msgstr ""
+
+#: .\templates\reception\reservation_detail.html:80
+msgid "Check-In data:"
+msgstr ""
+
+#: .\templates\reception\reservations.html:40
+msgid "Room reservation list"
+msgstr ""
+
+#: .\templates\reception\reservations.html:42
+msgid "Restaurant reservation list"
+msgstr ""
+
+#: .\templates\reception\reservations.html:46
+msgid "Add Reservation"
+msgstr ""
+
+#: .\templates\reception\reservations.html:59
+msgid "Check-Out today"
+msgstr ""
+
+#: .\templates\reception\reservations.html:71
+#: .\templates\reception\reservations.html:104
+#: .\templates\reception\reservations.html:139
+msgid "DNI"
+msgstr ""
+
+#: .\templates\reception\reservations.html:72
+#: .\templates\reception\reservations.html:105
+#: .\templates\reception\reservations.html:140
+msgid "Room number"
+msgstr ""
+
+#: .\templates\reception\reservations.html:75
+#: .\templates\reception\reservations.html:108
+#: .\templates\reception\reservations.html:147
+msgid "Details"
+msgstr ""
+
+#: .\templates\reception\reservations.html:88
+msgid "No more Check-Out today."
+msgstr ""
+
+#: .\templates\reception\reservations.html:92
+msgid "Check-In for today"
+msgstr ""
+
+#: .\templates\reception\reservations.html:121
+msgid "No more Chec-In today."
+msgstr ""
+
+#: .\templates\reception\reservations.html:142
+msgid "Name"
+msgstr ""
+
+#: .\templates\reception\reservations.html:143
+msgid "People"
+msgstr ""
+
+#: .\templates\reception\reservations.html:161
+msgid "No reservations found."
+msgstr ""
+
+#: .\templates\reception\reservations.html:163
+msgid "No reservations found matching the search"
 msgstr ""
