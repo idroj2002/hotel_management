@@ -21,7 +21,7 @@ def login_user(request):
 def logout_user(request):
     messages.success(request, ("You where logged out"))
     logout(request)
-    return(redirect('home'))
+    return(redirect(login_user))
 
 def register_user(request):
     if request.method == "POST":
