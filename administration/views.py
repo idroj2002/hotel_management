@@ -148,21 +148,26 @@ def reservation_detail(request, reservation_type, reservation_id):
     check_in_editable = True
     if reservation_type == 'hotel':
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
-        today = datetime.datetime.now().date()
-        if CheckIn.objects.filter(id=reservation_id).exists():
-            check_in = CheckIn.objects.get(id=reservation_id)
+        if reservation.cancelled:
             reservation_editable = False
         else:
-            if reservation.check_in_date <= today:
-                check_in = True
-        if CheckOut.objects.filter(id=reservation_id).exists():
-            check_out = CheckOut.objects.get(id=reservation_id)
-            check_in_editable = False
-        else:
-            if check_in is not True and reservation.check_out_date <= today:
-                check_out = True
+            today = datetime.datetime.now().date()
+            if CheckIn.objects.filter(id=reservation_id).exists():
+                check_in = CheckIn.objects.get(id=reservation_id)
+                reservation_editable = False
+            else:
+                if reservation.check_in_date <= today:
+                    check_in = True
+            if CheckOut.objects.filter(id=reservation_id).exists():
+                check_out = CheckOut.objects.get(id=reservation_id)
+                check_in_editable = False
+            else:
+                if check_in is not True and reservation.check_out_date <= today:
+                    check_out = True
     else:
         reservation = get_object_or_404(RestaurantReservation, pk=reservation_id)
+        if reservation.cancelled:
+            reservation_editable = False
 
     return render(request, 'reception/reservation_detail.html', {'reservation_type': reservation_type,
                                                                  'reservation_id': reservation_id,
@@ -180,12 +185,15 @@ def edit_reservation(request, reservation_type, reservation_id):
 
     if reservation_type == 'hotel':
         if CheckIn.objects.filter(id=reservation_id).exists():
-            raise PermissionDenied(_("It is not possible to delete a reservation with a check-in associated."))
+            raise PermissionDenied(_("It is not possible to edit a reservation with a check-in associated."))
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
+
         form_model = HotelReservationForm
     else:
         reservation = get_object_or_404(RestaurantReservation, pk=reservation_id)
         form_model = RestaurantReservationForm
+    if reservation.cancelled:
+        raise PermissionDenied(_("It is not possible to edit a cancelled reservation."))
     if request.method == 'POST':
         form = form_model(request.POST, instance=reservation)
         if form.is_valid():
@@ -209,6 +217,8 @@ def delete_reservation(request, reservation_type, reservation_id):
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
     else:
         reservation = get_object_or_404(RestaurantReservation, pk=reservation_id)
+    if reservation.cancelled:
+        raise PermissionDenied(_("It is not possible to edit a cancelled reservation."))
     if request.method == 'POST':
         reservation.cancelled = True
         reservation.save()
@@ -227,6 +237,8 @@ def add_check_in(request, reservation_type, reservation_id):
     if reservation_type == 'restaurant':
         raise PermissionDenied(_("It is not possible to create a Check-In for a restaurant reservation."))
     reservation = get_object_or_404(HotelReservation, pk=reservation_id)
+    if reservation.cancelled:
+        raise PermissionDenied(_("It is not possible to add a check-in for a cancelled reservation."))
     today = datetime.datetime.now().date()
     if reservation.check_in_date > today:
         raise PermissionDenied(_("The date for this Check-in has not been reached yet."))
