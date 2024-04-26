@@ -1,0 +1,40 @@
+{% extends './reservations.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Reservation info" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>
+        {% trans "Restaurant reservation" %}
+    </h1>
+    <hr>
+    <div class="card mt-4 shadow">
+        <div class="card-header bg-light border-bottom">
+            <h5 class="mb-0">{% trans "Reservation information" %}: {{ reservation }}</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>{% trans "Reservation ID / number" %}:</strong> {{ reservation.id }}</p>
+                    <p><strong>{% trans "Name:" %}</strong> {{ reservation.name }}</p>
+                    <p><strong>{% trans "Table ID / number:" %}</strong> {{ reservation.table_id }}</p>
+                    <p><strong>{% trans "Time:" %}</strong> {{ reservation.time }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>{% trans "Room number:" %}</strong> {{ reservation.room_number }}</p>
+                    <p><strong>{% trans "Number of diners:" %}</strong> {{ reservation.number_of_people }}</p>
+                </div>
+            </div>
+            <div class="mt-3">
+                <a class="btn btn-primary me-2" href="{% url 'edit_reservation' reservation_id=reservation.id %}">
+                    <i class="fas fa-edit"></i> {% trans "Edit" %}
+                </a>
+                <a class="btn btn-danger" href="{% url 'delete_reservation' reservation_id=reservation.id %}">
+                    <i class="fas fa-trash-alt"></i> {% trans "Delete" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
