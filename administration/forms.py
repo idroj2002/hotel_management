@@ -172,15 +172,12 @@ class Table(forms.ModelForm):
 class CheckInForm(forms.ModelForm):
     class Meta:
         model = CheckIn
-        fields = ['guests_data', "keys", "cancelled"]
+        fields = ['guests_data', "keys"]
 
         widgets = {
-            'guests_data': forms.Textarea(
-                attrs={
-                    'placeholder': 'Información del check-in',
-                    'class': 'form-control'
-                }
-            ),
+            'guests_data': forms.Textarea(attrs={'placeholder': 'Información del check-in', 'class': 'form-control'}),
+            'keys': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'id_keys'}),
+            'cancelled': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'id_cancelled'}),
         }
 
         labels = {

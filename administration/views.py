@@ -142,21 +142,29 @@ def reservation_detail(request, reservation_type, reservation_id):
         from hotel_management.views import home
         return redirect(home)
 
+    check_in = False
+    check_out = False
+    editable = True
     if reservation_type == 'hotel':
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
+        today = datetime.datetime.now().date()
+        if CheckIn.objects.filter(id=reservation_id).exists():
+            check_in = CheckIn.objects.get(id=reservation_id)
+            editable = False
+        else:
+            if reservation.check_in_date <= today:
+                check_in = True
+        if CheckOut.objects.filter(id=reservation_id).exists():
+            check_out = CheckIn.objects.get(id=reservation_id)
+        else:
+            if check_in is not True and reservation.check_out_date <= today:
+                check_out = True
     else:
         reservation = get_object_or_404(RestaurantReservation, pk=reservation_id)
-    if CheckIn.objects.filter(id=reservation_id).exists():
-        check_in = CheckIn.objects.get(id=reservation_id)
-    else:
-        check_in = 'No'
-    if CheckOut.objects.filter(id=reservation_id).exists():
-        check_out = CheckIn.objects.get(id=reservation_id)
-    else:
-        check_out = 'No'
+
     return render(request, 'reception/reservation_detail.html', {'reservation_type': reservation_type,
                                                                  'reservation_id': reservation_id,
-                                                                 'reservation': reservation,
+                                                                 'reservation': reservation, 'editable': editable,
                                                                  'check_in': check_in, 'check_out': check_out})
 
 
@@ -220,6 +228,7 @@ def add_check_in(request, reservation_type, reservation_id):
         if form.is_valid():
             check_in = form.save(commit=False)
             check_in.id_id = reservation_id
+            check_in.created_by = request.user
             form.save()
             return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     else:
@@ -240,6 +249,8 @@ def edit_check_in(request, reservation_type, reservation_id):
     if request.method == 'POST':
         form = CheckInForm(request.POST, instance=check_in)
         if form.is_valid():
+            check_in = form.save(commit=False)
+            check_in.created_by = request.user
             form.save()
             return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     else:
@@ -258,6 +269,6 @@ def delete_check_in(request, reservation_type, reservation_id):
     if request.method == 'POST':
         check_in.cancelled = True
         check_in.save()
-        return redirect('reservations_detail', reservation_type=reservation_type, reservation_id=reservation_id)
+        return redirect('reservation_detail', reservation_type=reservation_type, reservation_id=reservation_id)
     return render(request, 'reception/delete_check_in.html', {'reservation_type': reservation_type,
                                                               'reservation_id': reservation_id, 'check_in': check_in})

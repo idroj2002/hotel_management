@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -77,6 +78,7 @@ class CheckIn(models.Model):
     id = models.OneToOneField(HotelReservation, on_delete=models.CASCADE, primary_key=True)
     guests_data = models.TextField(max_length=1000)
     keys = models.BooleanField(default=False)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     cancelled = models.BooleanField(default=False)
 
     def __str__(self):
