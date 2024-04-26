@@ -19,7 +19,13 @@
                 </div>
                 <ul class="list-group">
                     {% for user in users %}
-                        <a href="{% url 'user_detail' user.id %}"><li class="list-group-item">{{ user }}</li></a>
+                        <a href="{% url 'user_detail' user.id %}"><li class="list-group-item">
+                            {% if user.is_superuser %}
+                                <b>{{ user }}</b>
+                            {% else %}
+                                {{ user }}
+                            {% endif %}
+                        </li></a>
                     {% empty %}
                         {% if query == '' %}
                         <li class="list-group-item">{% trans "No users found" %}</li>
