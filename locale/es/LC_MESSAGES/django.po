@@ -328,11 +328,11 @@ msgstr "Número de habitación:"
 
 #: .\templates\reception\reservation_detail.html:41
 msgid "Check-In date:"
-msgstr "Fecha del Ceck-In:"
+msgstr "Fecha del Check-In:"
 
 #: .\templates\reception\reservation_detail.html:42
 msgid "Check-Out date:"
-msgstr "Fecha del Ceck-Out:"
+msgstr "Fecha del Check-Out:"
 
 #: .\templates\reception\reservation_detail.html:43
 msgid "Number of guests:"
