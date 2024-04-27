@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.db.models import QuerySet, Q
 from django.utils.translation import gettext_lazy as _
 from administration.models import RestaurantReservation
 from administration.forms import RestaurantReservationForm
@@ -17,8 +18,40 @@ def restaurant_home(request):
         from hotel_management.views import home
         return redirect(home)
 
-    reservations = RestaurantReservation.objects.all()
+    query = '-1'
+    query = request.POST.get('query')
+    if query:
+        reservations = RestaurantReservation.objects.filter(
+            Q(id__icontains=query) |
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query),
+            cancelled=False
+        )
+    else:
+        reservations = RestaurantReservation.objects.filter(cancelled=False)
     return render(request, 'restaurant/reservations.html', {'reservations': reservations})
+
+
+@login_required
+def cancelled_reservation_list(request):
+    if not is_restaurant(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+
+    query = '-1'
+    if request.method == 'POST':
+        query = request.POST.get('query')
+        reservations = RestaurantReservation.objects.filter(
+            Q(id__icontains=query) |
+            Q(name__icontains=query),
+            cancelled=True
+        )
+        header = _('Cancelled restaurant reservations - Search results for') + ' "' + query + '"'
+    else:
+        reservations = RestaurantReservation.objects.filter(cancelled=True)
+        header = _('Cancelled restaurant reservations')
+    return render(request, 'restaurant/cancelled_reservations.html', {'query': query,
+                                                                     'reservations': reservations})
 
 
 @login_required
