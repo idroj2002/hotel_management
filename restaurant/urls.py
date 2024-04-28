@@ -19,6 +19,8 @@ from django.urls import path
 from django.conf.urls.i18n import i18n_patterns
 from restaurant.views import restaurant_home, add_reservation, reservation_detail, edit_reservation, delete_reservation, cancelled_reservation_list
 
+app_name = 'restaurant'
+
 urlpatterns = [
     path('', restaurant_home, name='restaurant_home'),
     path('reservation_detail/<int:reservation_id>/', reservation_detail, name='reservation_detail'),
