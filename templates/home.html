@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block navbar-list %}
+{% if is_receptionist %}
+<li class="nav-item">
+    <a class="nav-link mx-lg-2" href="{% url 'reservations_list' reservation_type='hotel' %}">Recepción</a>
+</li>
+{% endif %}
+{% if is_restaurant %}
+<li class="nav-item">
+    <a class="nav-link mx-lg-2" href="{% url 'restaurant:home' %}">Restaurante</a>
+</li>
+{% endif %}
+{% if is_cleaner %}
+<li class="nav-item">
+    <a class="nav-link mx-lg-2" href="{% url 'cleaning:home'%}">Limpieza</a>
+</li>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+    <section class="hero-section">
+        <div class="container d-flex align-items-center justify-content-center fs-1 text-white flex-column">
+            <h1>Hotel Las Palmeras</h1>
+            <h2>Inicio</h2>
+        </div>
+    </section>
+{% endblock %}
