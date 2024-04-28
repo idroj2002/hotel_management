@@ -18,6 +18,11 @@
     <a class="nav-link mx-lg-2" href="{% url 'cleaning:home'%}">Limpieza</a>
 </li>
 {% endif %}
+{% if is_cleaner %}
+<li class="nav-item">
+    <a class="nav-link mx-lg-2" href="{% url 'superuser' %}">Administrador</a>
+</li>
+{% endif %}
 {% endblock %}
 
 {% block content %}

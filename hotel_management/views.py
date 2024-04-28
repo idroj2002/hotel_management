@@ -18,13 +18,9 @@ def is_cleaner(user):
 
 
 def home(request):
-    if request.user.is_superuser:
-        return redirect(superuser_home)
-    elif is_receptionist(request.user):
-        return redirect(reservation_list, reservation_type='hotel')
-    elif is_restaurant(request.user):
-        return redirect(restaurant_home)
-    elif is_cleaner(request.user):
-        return redirect(cleaning_home)
-    else:
-        return render(request, 'not_authorized.html')
+    is_superuser = request.user.is_superuser
+    is_receptionistuser = is_receptionist(request.user)
+    is_restaurantuser = is_restaurant(request.user)
+    is_cleaneruser = is_cleaner(request.user)
+    return render(request, 'home.html', {'is_receptionist':is_receptionistuser, 'is_restaurant':is_restaurantuser, is_cleaneruser:'is_cleaner', is_superuser:'is_superuser'})
+
