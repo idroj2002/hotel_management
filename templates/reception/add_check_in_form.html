@@ -1,0 +1,26 @@
+{% extends './reservations.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Create Check-In" %}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mt-5">{% block card_header %}{% trans "Reservation Check-In" %}{% endblock %}: {{ reservation }}</h1>
+        <hr>
+        <div class="card mt-4">
+            <div class="card-body shadow">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary me-2 mt-3">
+                        <i class="fas fa-check"></i> {% trans "Submit" %}
+                    </button>
+                    <a class="btn btn-secondary mt-3" href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation_id %}">
+                        <i class="fas fa-arrow-left"></i> {% trans "Back to Reservations" %}
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,7 +1,0 @@
-{% extends 'base.html' %}
-
-{% block title %}Cleaning{% endblock %}
-
-{% block content %}
-<p>Cleaning</p>
-{% endblock %}

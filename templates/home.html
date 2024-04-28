@@ -10,12 +10,17 @@
 {% endif %}
 {% if is_restaurant %}
 <li class="nav-item">
-    <a class="nav-link mx-lg-2" href="{% url 'restaurant:home' %}">Restaurante</a>
+    <a class="nav-link mx-lg-2" href="{% url 'restaurant:restaurant_home' %}">Restaurante</a>
 </li>
 {% endif %}
 {% if is_cleaner %}
 <li class="nav-item">
-    <a class="nav-link mx-lg-2" href="{% url 'cleaning:home'%}">Limpieza</a>
+    <a class="nav-link mx-lg-2" href="{% url 'cleaning:cleaning_home'%}">Limpieza</a>
+</li>
+{% endif %}
+{% if is_superuser %}
+<li class="nav-item">
+    <a class="nav-link mx-lg-2" href="{% url 'superuser:superuser_home' %}">Administrador</a>
 </li>
 {% endif %}
 {% endblock %}

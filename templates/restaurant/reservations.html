@@ -1,0 +1,93 @@
+{% extends './restaurant_base.html' %}
+{% load i18n %}
+{% block title %}Lista de reservas{% endblock %}
+
+{% block styles %}
+    <style>
+        .nav-pills .nav-link {
+            color: black;
+            transition: color 0.2s ease;
+        }
+
+        .nav-pills .nav-link:hover {
+            color: white;
+        }
+
+        .nav-pills .nav-link.btn {
+            border-radius: 20px;
+            background-color: #C0C0C0;
+            transition: background-color 0.2s ease;
+        }
+
+        .nav-pills .nav-link.btn:hover {
+            background-color: blue;
+        }
+
+        .nav-pills .nav-link.btn:focus,
+        .nav-pills .nav-link.btn.active {
+            background-color: darkblue;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>
+                        {% trans "Restaurant reservation list" %}
+                    </h1>
+                    <a href="{% url 'add_reservation' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> {% trans "Add Reservation" %}
+                    </a>
+                </div>
+
+                <form method="post" class="input-group mb-4">
+                    {% csrf_token %}
+                    <input type="search" name="query" class="form-control" placeholder="{% trans 'Search' %}" required>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+
+                <h1 class="mt-5">{% trans "Restaurant reservations" %}</h1>
+                <hr>
+                <div class="accordion shadow" id="reservationAccordion">
+                    {% for reservation in reservations %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ reservation.id }}">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ reservation.id }}" aria-expanded="true" aria-controls="collapse{{ reservation.id }}">
+                                    {{ reservation }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ reservation.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ reservation.id }}" data-bs-parent="#checkInAccordion">
+                                <div class="accordion-body">
+                                    <p><strong>{% trans "Name" %}:</strong> {{ reservation.name }}</p>
+                                    <p><strong>{% trans "People" %}:</strong> {{ reservation.number_of_people }}</p>
+                                    <div class="mt-3">
+                                        <a href="{% url 'reservation_detail' reservation_id=reservation.id %}" class="btn btn-primary me-2">
+                                            <i class="fas fa-eye"></i> {% trans "Details" %}
+                                        </a>
+                                        <a href="{% url 'edit_reservation' reservation_id=reservation.id %}" class="btn btn-warning me-2">
+                                            <i class="fas fa-edit"></i> {% trans "Edit" %}
+                                        </a>
+                                        <a href="{% url 'delete_reservation' reservation_id=reservation.id %}" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt"></i> {% trans "Delete" %}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        {% if query == '-1' %}
+                        <p>{% trans "No reservations found." %}</p>
+                        {% else %}
+                        <p>{% trans "No reservations found matching the search" %} "{{ query }}".</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
