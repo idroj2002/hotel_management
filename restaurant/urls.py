@@ -21,8 +21,6 @@ from restaurant.views import restaurant_home, add_reservation, reservation_detai
 
 app_name = 'restaurant'
 
-app_name = 'restaurant'
-
 urlpatterns = [
     path('', restaurant_home, name='restaurant_home'),
     path('reservation_detail/<int:reservation_id>/', reservation_detail, name='reservation_detail'),

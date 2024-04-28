@@ -22,5 +22,5 @@ def home(request):
     is_receptionistuser = is_receptionist(request.user)
     is_restaurantuser = is_restaurant(request.user)
     is_cleaneruser = is_cleaner(request.user)
-    return render(request, 'home.html', {'is_receptionist':is_receptionistuser, 'is_restaurant':is_restaurantuser, is_cleaneruser:'is_cleaner', is_superuser:'is_superuser'})
+    return render(request, 'home.html', {'is_receptionist':is_receptionistuser, 'is_restaurant':is_restaurantuser, 'is_cleaner':is_cleaneruser, 'is_superuser':is_superuser})
 
