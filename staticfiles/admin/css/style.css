@@ -110,7 +110,7 @@ h4{
 }
 
 .hero-section {
-    background-image: url(/static/images/Alanda.jpg);
+    background-image: url(/staticfiles/admin/img/Alanda.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
