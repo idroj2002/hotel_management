@@ -18,7 +18,7 @@
     <a class="nav-link mx-lg-2" href="{% url 'cleaning:cleaning_home'%}">Limpieza</a>
 </li>
 {% endif %}
-{% if is_cleaner %}
+{% if is_superuser %}
 <li class="nav-item">
     <a class="nav-link mx-lg-2" href="{% url 'superuser' %}">Administrador</a>
 </li>
