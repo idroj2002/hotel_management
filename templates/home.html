@@ -20,7 +20,7 @@
 {% endif %}
 {% if is_superuser %}
 <li class="nav-item">
-    <a class="nav-link mx-lg-2" href="{% url 'superuser' %}">Administrador</a>
+    <a class="nav-link mx-lg-2" href="{% url 'superuser:superuser_home' %}">Administrador</a>
 </li>
 {% endif %}
 {% endblock %}
