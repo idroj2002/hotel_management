@@ -9,30 +9,52 @@
   <form id="availability-form" method="post" class="mt-4">
     {% csrf_token %}
 
-    <div class="form-group row mb-3">
-      <label for="id_check_in_date" class="col-sm-2 col-form-label">Check-In Date</label>
-      <div class="col-sm-10">
-        {{ availability_form.check_in_date }}
-      </div>
-    </div>
+    {% if reservation_type == 'hotel' %}
+        <div class="form-group row mb-3">
+          <label for="id_check_in_date" class="col-sm-2 col-form-label">Check-In Date</label>
+          <div class="col-sm-10">
+            {{ availability_form.check_in_date }}
+          </div>
+        </div>
 
-    <div class="form-group row mb-3">
-      <label for="id_check_out_date" class="col-sm-2 col-form-label">Check-Out Date</label>
-      <div class="col-sm-10">
-        {{ availability_form.check_out_date }}
-      </div>
-    </div>
+        <div class="form-group row mb-3">
+          <label for="id_check_out_date" class="col-sm-2 col-form-label">Check-Out Date</label>
+          <div class="col-sm-10">
+            {{ availability_form.check_out_date }}
+          </div>
+        </div>
 
-    <div class="form-group row mb-3">
-      <label for="id_room_type" class="col-sm-2 col-form-label">Room Type</label>
-      <div class="col-sm-10">
-        {{ availability_form.room_type }}
-      </div>
-    </div>
+        <div class="form-group row mb-3">
+          <label for="id_room_type" class="col-sm-2 col-form-label">Room Type</label>
+          <div class="col-sm-10">
+            {{ availability_form.room_type }}
+          </div>
+        </div>
+    {% else %}
+        <div class="form-group row mb-3">
+          <label for="id_date" class="col-sm-2 col-form-label">Date</label>
+          <div class="col-sm-10">
+            {{ availability_form.date }}
+          </div>
+        </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Check Availability</button>
+        <div class="form-group row mb-3">
+          <label for="id_time" class="col-sm-2 col-form-label">Time</label>
+          <div class="col-sm-10">
+            {{ availability_form.time }}
+          </div>
+        </div>
+
+        <div class="form-group row mb-3">
+          <label for="id_number_of_people" class="col-sm-2 col-form-label">Number of People</label>
+          <div class="col-sm-10">
+            {{ availability_form.number_of_people }}
+          </div>
+        </div>
+        {% endif %}
+
+         <a href="{% url 'complete_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Check Availability</a>
   </form>
-
 </div>
 
 <head>

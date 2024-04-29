@@ -18,7 +18,7 @@ class SignupForm(UserCreationForm):
         fields = ('username', 'password1', 'password2')
 
 
-class AvailabilityCheckForm(forms.Form):
+class AvailabilityHotelCheckForm(forms.Form):
     room_type = forms.ChoiceField(
         choices=[('Ind', 'Individual'), ('Dob', 'Doble'), ('Del', 'Deluxe'), ('Sui', 'Suite')],
         widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_room_type'})
@@ -29,7 +29,24 @@ class AvailabilityCheckForm(forms.Form):
     check_out_date = forms.DateField(
         widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'id': 'id_check_out_date'})
     )
-
+class AvailabilityRestaurantCheckForm(forms.Form):
+    number_of_people = forms.IntegerField(label="Número de Personas")
+    date = forms.DateField(
+        label="Fecha",
+        widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'id': 'id_date'})
+    )
+    time = forms.ChoiceField(
+        label="Turno",
+        choices=[
+            ('breakfast_1', 'Desayuno - Primer Turno'),
+            ('breakfast_2', 'Desayuno - Segundo Turno'),
+            ('lunch_1', 'Comida - Primer Turno'),
+            ('lunch_2', 'Comida - Segundo Turno'),
+            ('dinner_1', 'Cena - Primer Turno'),
+            ('dinner_2', 'Cena - Segundo Turno'),
+        ],
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_time'})
+    )
 
 class HotelReservationForm(forms.ModelForm):
     class Meta:
@@ -122,18 +139,6 @@ class RestaurantReservationForm(forms.ModelForm):
                     'class': 'form-select'
                 }
             ),
-            'number_of_people': forms.NumberInput(
-                attrs={
-                    'placeholder': 'Número de personas',
-                    'class': 'form-control'
-                }
-            ),
-            'time': forms.DateTimeInput(
-                attrs={
-                    'value': date.today().strftime('%Y-%m-%d') + '/' + '13:00:00',
-                    'class': 'form-control'
-                }
-            ),
             'table_id': forms.Select(
                 attrs={
                     'class': 'form-select'
@@ -145,6 +150,7 @@ class RestaurantReservationForm(forms.ModelForm):
             'name': 'Nombre',
             'room_number': 'Número de habitación',
             'number_of_people': 'Número de comensales',
+            'date': 'Fecha',
             'time': 'Turno',
             'table_id': 'Número de mesa',
             'cancelled': 'Cancelada',

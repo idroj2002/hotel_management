@@ -37,6 +37,6 @@ urlpatterns = [
          name='delete_check_in'),
     path('reservations/cancelled_reservations/<str:reservation_type>/', cancelled_reservation_list,
          name='cancelled_reservations_list'),
-    path('reservations/complete_reservation/<str:reservation_type>/',complete_reservation,
+    path('reservations/complete_reservation/<str:reservation_type>/', complete_reservation,
          name='complete_reservation'),
 ]
