@@ -1,21 +1,32 @@
-body{
-    background: linear-gradient(90deg, rgb(78, 118, 155) 35%, rgb(158, 208, 223) 100%);
-}
 
-form{
+.login{
     width: 60%;
-    background-color: white;
+    background-color:  white;
     padding: 50px;
     border-radius: 20px;
 
 }
 
-.btn-primary{
+.background-container{
+    width: 100%;
+    min-height: 100vh;
+    padding: 5%;
+    background-image: linear-gradient(rgba(0,8,51,0.9), rgba(0,8,51,0.9), url('/staticfiles/img/Palm_Forest.jpg'));
+    background-position: center;
+    background-size: cover;
+}
+
+.login .btn-primary{
     margin-top: 20px;
     width: 40%;
     margin-left: 30%;
     border: none;
     border-radius: 50px;
+}
+
+.search-btn{
+    width: 10%;
+    border: none;
 }
 
 .form div input {
@@ -110,7 +121,7 @@ h4{
 }
 
 .hero-section {
-    background-image: url(/staticfiles/admin/img/Alanda.jpg);
+    background-image: url('/staticfiles/img/Alanda.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
