@@ -1,0 +1,167 @@
+
+.login{
+    width: 60%;
+    background-color:  white;
+    padding: 50px;
+    border-radius: 20px;
+
+}
+
+.background-container{
+    width: 100%;
+    min-height: 100vh;
+    padding: 5%;
+    background-image: linear-gradient(rgba(0,8,51,0.9), rgba(0,8,51,0.9), url('/staticfiles/admin/img/Palm_Forest.jpg'));
+    background-position: center;
+    background-size: cover;
+}
+
+.login .btn-primary{
+    margin-top: 20px;
+    width: 40%;
+    margin-left: 30%;
+    border: none;
+    border-radius: 50px;
+}
+
+.search-btn{
+    width: 10%;
+    border: none;
+}
+
+.form div input {
+    color: rgba(0,0,0,.87);
+    border-bottom-color:rgba(0,0,0,.42);
+    box-shadow: none;
+    border: none;
+    border-bottom: 1px solid;
+    border-radius: 4px 4px 0 0;
+}
+h4{
+    font-size: 2rem !important;
+    font-weight: 500;
+}
+.form-label{
+    font-family: 800 !important;
+}
+
+.mainbody {
+    padding: 120px;
+}
+
+.navbar {
+    background-color: #eaeae4;
+    height: 80px;
+    margin: 20px;
+    border-radius: 16px;
+    padding: 0.5rem;
+}
+
+.navbar-brand {
+    font-weight: 500;
+    color: #009970;
+    font-size: 24px;
+    transition: 0.3s color;
+}
+
+.login-button {
+    background-color: #009700;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: 0.3s background-color;
+    margin: 4px;
+}
+
+.login-button:hover{
+    background-color: #00b300;
+}
+
+.navbar-toggler{
+    border: none;
+    font-size: 1.25rem;
+
+}
+
+.navbar-toggler:focus, .btn-close:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.nav-link {
+    color: #666777;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #000;
+}
+
+@media  (min-width: 991px){
+    .nav-link::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        height: 2px;
+        background-color: #009970;
+        visibility: hidden;
+        transition: 0.3s ease-in-out;
+    }
+
+    .nav-link:hover::before, .nav-link.active::before {
+        width: 100%;
+        visibility: visible;
+    }
+}
+
+.hero-section {
+    background-image: url('/staticfiles/admin/img/Alanda.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.hero-section::before {
+    background-color: rgba(0, 0, 0, 0.6);
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.hero-section .container {
+    height: 100vh;
+    z-index: 1;
+    position: relative;
+}
+
+.hero-section h1{
+    font-size: 1.5em;
+}
+
+.hero-section h2 {
+    font-size: 1.2em;
+}
+
+.container .alert {
+    position: relative;
+    z-index: 2;
+}
+
