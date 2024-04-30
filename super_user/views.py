@@ -26,7 +26,7 @@ def superuser_home(request):
         header = _('SuperUser - Search results for') + ' "' + query + '"'
     else:
         query = ''
-        users = User.objects.filter(groups__name__in=GROUPS_NAMES).distinct
+        users = User.objects.filter(groups__name__in=GROUPS_NAMES).distinct()
         header = _('SuperUser')
 
     return render(request, 'super_user/super_user_home.html', {'query': query,
