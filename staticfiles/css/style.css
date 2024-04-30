@@ -11,7 +11,7 @@
     width: 100%;
     min-height: 100vh;
     padding: 5%;
-    background-image: linear-gradient(rgba(0,8,51,0.9), rgba(0,8,51,0.9), url('/staticfiles/img/Palm_Forest.jpg'));
+    background-image: linear-gradient(rgba(0,8,51,0.9), rgba(0,8,51,0.9), url('/staticfiles/admin/img/Palm_Forest.jpg'));
     background-position: center;
     background-size: cover;
 }
@@ -121,7 +121,7 @@ h4{
 }
 
 .hero-section {
-    background-image: url('/staticfiles/img/Alanda.jpg');
+    background-image: url('/staticfiles/admin/img/Alanda.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

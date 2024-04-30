@@ -1,0 +1,31 @@
+.accordion-body {
+    background-color: #f3f3f3;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #72727236;
+}
+
+.accordion-item-warning {
+    background-color: #ffc10736;
+}
+
+.accordion-item-warning:not(.collapsed) {
+    background-color: #ffc10785;
+}
+
+.accordion-item-primary {
+    background-color: #0e71e236;
+}
+
+.accordion-item-primary:not(.collapsed) {
+    background-color: #0e71e262;
+}
+
+.accordion-item-success {
+    background-color: #1b8d4736;
+}
+
+.accordion-item-success:not(.collapsed) {
+    background-color: #1b8d476e;
+}
