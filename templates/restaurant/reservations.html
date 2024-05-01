@@ -1,35 +1,12 @@
 {% extends './restaurant_base.html' %}
 {% load i18n %}
-{% block title %}Lista de reservas{% endblock %}
-
-{% block styles %}
-    <style>
-        .nav-pills .nav-link {
-            color: black;
-            transition: color 0.2s ease;
-        }
-
-        .nav-pills .nav-link:hover {
-            color: white;
-        }
-
-        .nav-pills .nav-link.btn {
-            border-radius: 20px;
-            background-color: #C0C0C0;
-            transition: background-color 0.2s ease;
-        }
-
-        .nav-pills .nav-link.btn:hover {
-            background-color: blue;
-        }
-
-        .nav-pills .nav-link.btn:focus,
-        .nav-pills .nav-link.btn.active {
-            background-color: darkblue;
-        }
-    </style>
-{% endblock %}
 {% load static %}
+
+{% block title %}Lista de reservas{% endblock %}
+{% block style %}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <div class="container-fluid mt-5">
         <div class="row">
@@ -43,10 +20,10 @@
                     </a>
                 </div>
 
-                <form method="post" class="input-group mb-4">
+                <form method="post" class="search-bar align-items-center">
                     {% csrf_token %}
-                    <input type="search" name="query" class="form-control" placeholder="{% trans 'Search' %}" required>
-                    <button type="submit" class="btn btn-primary search-btn">
+                    <input type="search" name="query" placeholder="{% trans 'Search' %}" required>
+                    <button type="submit">
                         <img src="{% static 'img/search-icon.png' %}" alt="search" width="40" height="30">
                     </button>
                 </form>
