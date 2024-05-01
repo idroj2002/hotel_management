@@ -8,6 +8,7 @@ db.sqlite3
 .idea/
 administration/migrations/
 cleaning/migrations/
+restaurant/migrations/
 media
 
 # Backup files # 
