@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block navbar-list %}
+    <li class="nav-item">
+        <a class="nav-link mx-lg-2" href="{% url 'restaurant_home' %}">{% trans "Restaurant reservations" %}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link mx-lg-2" href="{% url 'cancelled_reservations_list' %}">{% trans "Cancelled restaurant reservations" %}</a>
+    </li>
+{% endblock %}

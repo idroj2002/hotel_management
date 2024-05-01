@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from datetime import date, timedelta
-from administration.models import HotelReservation, RestaurantReservation, Room, Table, CheckIn
+from administration.models import HotelReservation, RestaurantReservation, Room, Table, CheckIn, CheckOut
 
 
 class LoginForm(forms.Form):
@@ -172,19 +172,31 @@ class Table(forms.ModelForm):
 class CheckInForm(forms.ModelForm):
     class Meta:
         model = CheckIn
-        fields = ['guests_data', "keys", "cancelled"]
+        fields = ['guests_data', "keys"]
 
         widgets = {
-            'guests_data': forms.Textarea(
-                attrs={
-                    'placeholder': _('Información del check-in'),
-                    'class': 'form-control'
-                }
-            ),
+            'guests_data': forms.Textarea(attrs={'placeholder': 'Introduzca los nombres completos de los huéspedes y '
+                                                                'sus respectivos DNI', 'class': 'form-control'}),
+            'keys': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'id_keys'}),
         }
 
         labels = {
             'guests_data': 'Información de los huéspedes',
             'keys': 'Llaves entregadas',
-            'cancelled': 'Cancelada',
+        }
+
+
+class CheckOutForm(forms.ModelForm):
+    class Meta:
+        model = CheckOut
+        fields = ['price', "keys"]
+
+        widgets = {
+            'price': forms.TextInput(attrs={'class': 'form-control'}),
+            'keys': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'id_keys'}),
+        }
+
+        labels = {
+            'price': 'Precio total',
+            'keys': 'Llaves recogidas',
         }

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from administration.models import Room, HotelReservation
+from administration.models import Room, HotelReservation, CheckOut
 from cleaning.models import Cleaning_data
 from datetime import datetime, timedelta
 
@@ -50,9 +50,10 @@ def cleaning_home(request):
     reservations = HotelReservation.objects.all()
     rooms = Room.objects.all()
 
-    # Get the reservetions relatad to today
+    # Get the reservetions and check-outs relatad to today
     current_date = timezone.now().date()
     reservations = HotelReservation.objects.filter(check_in_date__gte=current_date)
+    check_outs = CheckOut.objects.filter()
 
     # Sort rooms by priority (more priority if exist a check-in)
     rooms_with_reservation = []

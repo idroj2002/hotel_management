@@ -9,16 +9,19 @@
       </div>
     {% endif %}
 
-        <h1>Register</h1>
-
-        <form action="{% url 'register' %}" method="POST">
+        
+    <div class="container-fluid">
+        <form action="{% url 'register' %}" method="POST" class="mx-auto login">
+            
             {%  csrf_token %}
-
+            <h4 class="text-center">Register</h4>
+            <br><br>
             {{ form.as_p }}
             <br><br>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" class="btn btn-primary">
 
 
         </form>
+    </div>
     
 {% endblock %}
