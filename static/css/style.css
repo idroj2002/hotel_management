@@ -1,9 +1,27 @@
 .login{
     width: 60%;
-    background-color:  white;
+    background-color: rgba(255, 255, 255, 0.4);
     padding: 50px;
     border-radius: 20px;
+    
+}
+.login .form-control{
+    color: black;
+    background-color: white;
+}
+.form-control{
+    background-color: rgba(255, 255, 255, 0.4);
+    color: white;
+    border: rgba(255, 255, 255, 0.4);
+}
 
+.form-control input{
+    background-color: white;
+    color: #666666;
+}
+
+.form-control input::placeholder{
+    color: #666666;
 }
 
 body{
@@ -25,10 +43,11 @@ body{
         right: 0;
         bottom: 0;
         left: 0;
+        z-index: -1;
     }
 }
 
-body div{
+div{
     z-index: 1;
 }
 
