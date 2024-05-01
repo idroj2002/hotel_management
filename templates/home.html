@@ -1,26 +1,27 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}Inicio{% endblock %}
 
 {% block navbar-list %}
 {% if is_receptionist %}
 <li class="nav-item">
-    <a class="nav-link mx-lg-2" href="{% url 'reservations_list' reservation_type='hotel' %}">Recepción</a>
+    <a class="nav-link mx-lg-2" href="{% url 'reservations_list' reservation_type='hotel' %}">{% trans "Reception" %}</a>
 </li>
 {% endif %}
 {% if is_restaurant %}
 <li class="nav-item">
-    <a class="nav-link mx-lg-2" href="{% url 'restaurant_home' %}">Restaurante</a>
+    <a class="nav-link mx-lg-2" href="{% url 'restaurant_home' %}">{% trans "Restaurant" %}</a>
 </li>
 {% endif %}
 {% if is_cleaner %}
 <li class="nav-item">
-    <a class="nav-link mx-lg-2" href="{% url 'cleaning_home'%}">Limpieza</a>
+    <a class="nav-link mx-lg-2" href="{% url 'cleaning_home'%}">{% trans "Cleaning" %}</a>
 </li>
 {% endif %}
 {% if is_superuser %}
 <li class="nav-item">
-    <a class="nav-link mx-lg-2" href="{% url 'superuser_home' %}">Administrador</a>
+    <a class="nav-link mx-lg-2" href="{% url 'superuser_home' %}">{% trans "Administration" %}</a>
 </li>
 {% endif %}
 {% endblock %}
