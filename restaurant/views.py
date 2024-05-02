@@ -1,9 +1,12 @@
+import json
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet, Q
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, time
-from restaurant.models import RestaurantBill, RestaurantItem
+from django.http import HttpResponse
+from restaurant.models import RestaurantBill, RestaurantItem, ShoppingCart
 from administration.models import RestaurantReservation
 from administration.forms import RestaurantReservationForm
 
@@ -152,6 +155,34 @@ def edit_bill(request, reservation_id):
         return redirect(home)
 
     items = RestaurantItem.objects.all()
-    return render(request, 'restaurant/bill_detail.html', {'items': items})
+    return render(request, 'restaurant/bill_detail.html', {'items': items, 'reservation_id': reservation_id})
 
 
+@login_required
+def add_to_cart(request):
+    if not is_restaurant(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+        
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        item_id = data.get('item_id')
+        quantity = data.get('quantity')
+        reservation_id = data.get('reservation_id')
+
+        bill, created = RestaurantBill.objects.get_or_create(reservation_id=reservation_id)
+
+        try:
+            quantity = int(quantity)
+        except ValueError:
+            return HttpResponse(_("The specified values aren't a valid format"), status=400)
+
+        shoppingCart = ShoppingCart.objects.create(
+            bill=bill,
+            item_id=item_id,
+            quantity=quantity
+        )
+        return HttpResponse('Instancia creada exitosamente', status=201)
+    else:
+        return HttpResponse('Método no permitido', status=405)
