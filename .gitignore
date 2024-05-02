@@ -9,6 +9,7 @@ db.sqlite3
 administration/migrations/
 cleaning/migrations/
 restaurant/migrations/
+static/
 media
 
 # Backup files # 
