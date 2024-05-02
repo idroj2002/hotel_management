@@ -128,18 +128,18 @@ def bill_list(request):
     afternoon_start = time(12, 0, 0) 
     night_start = time(18, 0, 0)
 
-    next_bills = RestaurantReservation.objects.filter(time__date__gte=current_time.date())
+    next_bills = RestaurantReservation.objects.filter(date__gte=current_time.date())
 
-    today_bills = next_bills.filter(time__date=current_time.date())
+    today_bills = next_bills.filter(date=current_time.date())
 
     if current_time.time() > morning_start and current_time.time() < afternoon_start:
-        bills = today_bills.filter(time__time__gte=morning_start, time__time__lt=afternoon_start).order_by('-time')
+        bills = (today_bills.filter(time="breackfast_1") | today_bills.filter(time="breackfast_2")).order_by('-time')
         shift = _('Morning shift')
     elif current_time.time() > afternoon_start and current_time.time() < night_start:
-        bills = today_bills.filter(time__time__gte=afternoon_start, time__time__lt=night_start).order_by('-time')
+        bills = (today_bills.filter(time="lunch_1") | today_bills.filter(time="lunch_2")).order_by('-time')
         shift = _('Afternoon shift')
     else:
-        bills = (today_bills.filter(time__time__gte=night_start) | today_bills.filter(time__time__lt=morning_start)).order_by('-time')
+        bills = (today_bills.filter(time="dinner_1") | today_bills.filter(time="dinner_2")).order_by('-time')
         shift = _('Night shift')
     
     bills_ids = bills.values('id')
