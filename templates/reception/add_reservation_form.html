@@ -1,22 +1,48 @@
-{% extends './reservations.html' %}
-{% load i18n %}
+{% extends 'reception/administration_base.html' %}
 
-{% block title %}{% trans "Create reservation" %}{% endblock %}
+{% block title %}Add Reservation{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="mt-5">
-            {% if reservation_type == 'hotel' %}
-                {% trans "New room reservation" %}
-            {% else %}
-                {% trans "New restaurant reservation" %}
-            {% endif %}
-        </h1>
-        <form method="post" class="mt-4 form-control">
+<div class="container">
+    <h1 class="mt-5">Add Reservation</h1>
+    {% if reservation_type == 'hotel' %}
+        <h2 class="mt-3">Available Rooms</h2>
+        <form id="reservation-form" method="post" class="mt-4">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-            <a href="{% url 'reservations_list' reservation_type=reservation_type %}" class="btn btn-secondary">{% trans "Back to Reservations" %}</a>
+            {% if available_rooms %}
+                <label for="room-select">Select a room:</label>
+                <select class="form-select" id="room-select" name="room">
+                    {% for room in available_rooms %}
+                        <option class="list-group-item">{{ room.number }}</option>
+                    {% endfor %}
+                </select>
+                <h2 class="mt-3 mb-3">Reservation data</h2>
+                {{ reservation_form.as_p }}
+                <button type="submit" class="btn btn-primary mt-3">Complete Reservation</button>
+            {% else %}
+                <p>No rooms available for the selected dates and type.</p>
+                <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Check other options</a>
+            {% endif %}
         </form>
-    </div>
+    {% else %}
+        <h2 class="mt-3">Available Tables</h2>
+        <form id="reservation-form" method="post" class="mt-4">
+            {% csrf_token %}
+            {% if available_tables %}
+                <label for="table-select">Select a table:</label>
+                <select class="form-select" id="table-select" name="table">
+                    {% for table in available_tables %}
+                        <option class="list-group-item" value="{{ table.id }}">{{ table.id }} - {{  table.capacity }}</option>
+                    {% endfor %}
+                </select>
+                <h2 class="mt-3 mb-3">Reservation data</h2>
+                {{ reservation_form.as_p }}
+                <button type="submit" class="btn btn-primary mt-3">Complete Reservation</button>
+            {% else %}
+                <p>No tables available for the selected date, time, and number of people.</p>
+                <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Check other options</a>
+            {% endif %}
+        </form>
+    {% endif %}
+</div>
 {% endblock %}
