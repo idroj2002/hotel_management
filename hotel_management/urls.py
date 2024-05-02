@@ -15,6 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
 from hotel_management.views import home
@@ -30,4 +32,4 @@ urlpatterns = i18n_patterns(
     path('restaurant/', include('restaurant.urls'), name='restaurant'),
     path('cleaning/', include('cleaning.urls'), name='cleaning'),
     path('superuser/', include('super_user.urls'), name='superuser'),
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

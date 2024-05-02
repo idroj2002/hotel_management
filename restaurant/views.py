@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet, Q
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, time
-from restaurant.models import RestaurantBill
+from restaurant.models import RestaurantBill, RestaurantItem
 from administration.models import RestaurantReservation
 from administration.forms import RestaurantReservationForm
 
@@ -151,6 +151,7 @@ def edit_bill(request, reservation_id):
         from hotel_management.views import home
         return redirect(home)
 
-    return render(request, 'restaurant/bill_detail.html')
+    items = RestaurantItem.objects.all()
+    return render(request, 'restaurant/bill_detail.html', {'items': items})
 
 
