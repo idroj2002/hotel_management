@@ -170,7 +170,6 @@ def edit_reservation(request, reservation_type, reservation_id):
         if CheckIn.objects.filter(id=reservation_id).exists():
             raise PermissionDenied(_("It is not possible to edit a reservation with a check-in associated."))
         reservation = get_object_or_404(HotelReservation, pk=reservation_id)
-
         form_model = HotelReservationForm
     else:
         reservation = get_object_or_404(RestaurantReservation, pk=reservation_id)

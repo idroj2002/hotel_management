@@ -79,7 +79,7 @@ class HotelReservationForm(forms.ModelForm):
             'date_of_birth': forms.DateInput(
                 attrs={
                     'placeholder': 'aaaa-mm-dd',
-                    'class': 'form-control'
+                    'class': 'form-control datepicker'
                 }
             ),
             'email': forms.EmailInput(
