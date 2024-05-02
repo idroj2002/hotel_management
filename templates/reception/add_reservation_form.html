@@ -32,7 +32,7 @@
                 <label for="table-select">Select a table:</label>
                 <select class="form-select" id="table-select" name="table">
                     {% for table in available_tables %}
-                        <option class="list-group-item">{{ table.number }}</option>
+                        <option class="list-group-item" value="{{ table.id }}">{{ table.id }} - {{  table.capacity }}</option>
                     {% endfor %}
                 </select>
                 <h2 class="mt-3 mb-3">Reservation data</h2>

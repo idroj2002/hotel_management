@@ -34,26 +34,6 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-12">
-                <div class="d-flex align-items-end">
-                    <form method="post" class="input-group">
-                        {% csrf_token %}
-                        <div class="form-outline">
-                            <input type="search" name="query" class="form-control" placeholder="{% trans 'Search' %}" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                    <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">{% trans "Add Reservation" %}</a>
-                </div>
-
-                {% if query == '-1' and reservation_type == 'hotel' %}
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h1 class="mt-5">{% trans "Ceck-Out for today" %}</h1>
-                    </div>
-                    <ul class="list-group">
-                        {% for reservation in check_outs %}
-                            <a href="{% url 'reservation_detail' reservation_type=reservation_type reservation_id=reservation.id %}"><li class="list-group-item">{{ reservation }}</li></a>
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h1>
                         {% if reservation_type == 'hotel' %}

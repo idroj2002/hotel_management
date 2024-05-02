@@ -8,11 +8,11 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Room(models.Model):
     number = models.IntegerField()
     ROOM_TYPE_OPTIONS = [
-            ('Ind', 'Individual'),
-            ('Dob', 'Doble'),
-            ('Del', 'Deluxe'),
-            ('Sui', 'Suite'),
-        ]
+        ('Ind', 'Individual'),
+        ('Dob', 'Doble'),
+        ('Del', 'Deluxe'),
+        ('Sui', 'Suite'),
+    ]
     type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS)
     ROOM_STATE_OPTIONS = [
         ('TD', 'To-do'),
@@ -47,11 +47,11 @@ class HotelReservation(models.Model):
     check_out_date = models.DateField()
     number_of_guests = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     ROOM_TYPE_OPTIONS = [
-            ('Ind', 'Individual'),
-            ('Dob', 'Doble'),
-            ('Del', 'Deluxe'),
-            ('Sui', 'Suite'),
-        ]
+        ('Ind', 'Individual'),
+        ('Dob', 'Doble'),
+        ('Del', 'Deluxe'),
+        ('Sui', 'Suite'),
+    ]
     room_type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
@@ -82,7 +82,7 @@ class RestaurantReservation(models.Model):
     cancelled = models.BooleanField(default=False)
 
     def __str__(self):
-        formatted_time = self.time.strftime('%d/%m %H:%M')
+        # formatted_time = self.time.strftime('%d/%m %H:%M')
         return f"ID: {self.id} - Nombre: {self.name} - Fecha: {self.date} - Turno: {self.time}"
 
 

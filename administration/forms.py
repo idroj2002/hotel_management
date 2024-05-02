@@ -29,6 +29,8 @@ class AvailabilityHotelCheckForm(forms.Form):
     check_out_date = forms.DateField(
         widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'id': 'id_check_out_date'})
     )
+
+
 class AvailabilityRestaurantCheckForm(forms.Form):
     number_of_people = forms.IntegerField(label="Número de Personas")
     date = forms.DateField(
@@ -48,11 +50,12 @@ class AvailabilityRestaurantCheckForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_time'})
     )
 
+
 class HotelReservationForm(forms.ModelForm):
     class Meta:
         model = HotelReservation
         fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone',
-                  'number_of_guests', 'price', 'cancelled']
+                  'number_of_guests', 'price']
 
         widgets = {
             'dni': forms.TextInput(
@@ -120,12 +123,9 @@ class HotelReservationForm(forms.ModelForm):
 
 
 class RestaurantReservationForm(forms.ModelForm):
-    check_in_date = forms.DateField(label=_('Check-in Date'))
-    check_out_date = forms.DateField(label=_('Check-out Date'))
-
     class Meta:
         model = RestaurantReservation
-        fields = ['name', 'room_number', 'number_of_people', 'time', 'table_id', 'cancelled']
+        fields = ['name', 'room_number']
 
         widgets = {
             'name': forms.TextInput(
@@ -135,11 +135,6 @@ class RestaurantReservationForm(forms.ModelForm):
                 }
             ),
             'room_number': forms.Select(
-                attrs={
-                    'class': 'form-select'
-                }
-            ),
-            'table_id': forms.Select(
                 attrs={
                     'class': 'form-select'
                 }
