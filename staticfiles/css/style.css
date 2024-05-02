@@ -7,14 +7,7 @@
 
 }
 
-.background-container{
-    width: 100%;
-    min-height: 100vh;
-    padding: 5%;
-    background-image: linear-gradient(rgba(0,8,51,0.9), rgba(0,8,51,0.9), url('/staticfiles/admin/img/Palm_Forest.jpg'));
-    background-position: center;
-    background-size: cover;
-}
+
 
 .login .btn-primary{
     margin-top: 20px;
@@ -22,11 +15,6 @@
     margin-left: 30%;
     border: none;
     border-radius: 50px;
-}
-
-.search-btn{
-    width: 10%;
-    border: none;
 }
 
 .form div input {
@@ -165,3 +153,31 @@ h4{
     z-index: 2;
 }
 
+.search-bar{
+    align-items: center;
+    width: 100%;
+    background-color: rgba(200, 200, 200, 0.2);
+    display: flex;
+    border-radius: 60px;
+    padding: 10px 15px 10px 25px;
+}
+
+.search-bar input{
+    background: transparent;
+    border: 0;
+    flex: 1;
+    outline: null;
+    font-size: 20px;
+    color: #cac7ff;
+}
+.search-bar button{
+    border: 0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background: #00b300;
+}
+.search-bar button img{
+    position: relative;
+    right: 7px;
+}
