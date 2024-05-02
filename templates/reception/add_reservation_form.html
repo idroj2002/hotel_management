@@ -1,22 +1,67 @@
-{% extends './reservations.html' %}
+{% extends 'reception/administration_base.html' %}
 {% load i18n %}
+{% load static %}
 
-{% block title %}{% trans "Create reservation" %}{% endblock %}
+{% block title %}Add Reservation{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="mt-5">
-            {% if reservation_type == 'hotel' %}
-                {% trans "New room reservation" %}
-            {% else %}
-                {% trans "New restaurant reservation" %}
-            {% endif %}
-        </h1>
-        <form method="post" class="mt-4 form-control">
+<div class="container">
+    <h1 class="mt-5">Add Reservation</h1>
+    {% if reservation_type == 'hotel' %}
+        <h2 class="mt-3">Available Rooms</h2>
+        <form id="reservation-form" method="post" class="mt-4">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-            <a href="{% url 'reservations_list' reservation_type=reservation_type %}" class="btn btn-secondary">{% trans "Back to Reservations" %}</a>
+            {% if available_rooms %}
+                <label for="room-select">Select a room:</label>
+                <select class="form-select" id="room-select" name="room">
+                    {% for room in available_rooms %}
+                        <option class="list-group-item" value="{{ room.number }}">{{ room }}</option>
+                    {% endfor %}
+                </select>
+                <h2 class="mt-3 mb-3">Reservation data</h2>
+                {{ reservation_form.as_p }}
+                <button type="submit" class="btn btn-primary mt-3">Complete Reservation</button>
+            {% else %}
+                <p>No rooms available for the selected dates and type.</p>
+                <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Check other options</a>
+            {% endif %}
         </form>
-    </div>
+    {% else %}
+        <h2 class="mt-3">Available Tables</h2>
+        <form id="reservation-form" method="post" class="mt-4">
+            {% csrf_token %}
+            {% if available_tables %}
+                <label for="table-select">Select a table:</label>
+                <select class="form-select" id="table-select" name="table">
+                    {% for table in available_tables %}
+                        <option class="list-group-item" value="{{ table.id }}">{{ table }}</option>
+                    {% endfor %}
+                </select>
+                <h2 class="mt-3 mb-3">Reservation data</h2>
+                {{ reservation_form.as_p }}
+                <button type="submit" class="btn btn-primary mt-3">Complete Reservation</button>
+            {% else %}
+                <p>No tables available for the selected date, time, and number of people.</p>
+                <a href="{% url 'add_reservation' reservation_type=reservation_type %}" class="mt-4 btn btn-primary">Check other options</a>
+            {% endif %}
+        </form>
+    {% endif %}
+</div>
+
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha584-gYcCR2aQzbUhT2tlr3BsXvR0JmW/sNclUyZ4aJzgtQAxkpik0yYCLPXv8ONnOnj0" crossorigin="anonymous">
+</head>
+
+<script>
+$(document).ready(function() {
+  $('.datepicker').datepicker({
+    format: 'yyyy-mm-dd', // Ajusta el formato según sea necesario (por ejemplo, 'dd/mm/yyyy')
+    autoclose: true
+  });
+});
+</script>
+
 {% endblock %}

@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from datetime import date, timedelta
 from administration.models import HotelReservation, RestaurantReservation, Room, Table, CheckIn, CheckOut
 
@@ -16,12 +18,44 @@ class SignupForm(UserCreationForm):
         fields = ('username', 'password1', 'password2')
 
 
+class AvailabilityHotelCheckForm(forms.Form):
+    room_type = forms.ChoiceField(
+        choices=[('Ind', 'Individual'), ('Dob', 'Doble'), ('Del', 'Deluxe'), ('Sui', 'Suite')],
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_room_type'})
+    )
+    check_in_date = forms.DateField(
+        widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'id': 'id_check_in_date'})
+    )
+    check_out_date = forms.DateField(
+        widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'id': 'id_check_out_date'})
+    )
+
+
+class AvailabilityRestaurantCheckForm(forms.Form):
+    number_of_people = forms.IntegerField(label="Número de Personas")
+    date = forms.DateField(
+        label="Fecha",
+        widget=forms.DateInput(attrs={'class': 'form-control datepicker', 'id': 'id_date'})
+    )
+    time = forms.ChoiceField(
+        label="Turno",
+        choices=[
+            ('breakfast_1', 'Desayuno - Primer Turno'),
+            ('breakfast_2', 'Desayuno - Segundo Turno'),
+            ('lunch_1', 'Comida - Primer Turno'),
+            ('lunch_2', 'Comida - Segundo Turno'),
+            ('dinner_1', 'Cena - Primer Turno'),
+            ('dinner_2', 'Cena - Segundo Turno'),
+        ],
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_time'})
+    )
+
+
 class HotelReservationForm(forms.ModelForm):
     class Meta:
         model = HotelReservation
-        fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone', 'check_in_date',
-                  'check_out_date',
-                  'number_of_guests', 'room_type', 'price', 'room_number', 'cancelled']
+        fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone',
+                  'number_of_guests', 'price']
 
         widgets = {
             'dni': forms.TextInput(
@@ -45,7 +79,7 @@ class HotelReservationForm(forms.ModelForm):
             'date_of_birth': forms.DateInput(
                 attrs={
                     'placeholder': 'aaaa-mm-dd',
-                    'class': 'form-control'
+                    'class': 'form-control datepicker'
                 }
             ),
             'email': forms.EmailInput(
@@ -60,27 +94,10 @@ class HotelReservationForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
-            'check_in_date': forms.DateInput(
-                attrs={
-                    'value': date.today() + timedelta(days=1),
-                    'class': 'form-control'
-                }
-            ),
-            'check_out_date': forms.DateInput(
-                attrs={
-                    'value': date.today() + timedelta(days=2),
-                    'class': 'form-control'
-                }
-            ),
             'number_of_guests': forms.NumberInput(
                 attrs={
                     'placeholder': 'Número de personas',
                     'class': 'form-control'
-                }
-            ),
-            'room_type': forms.Select(
-                attrs={
-                    'class': 'form-select'
                 }
             ),
             'price': forms.NumberInput(
@@ -89,13 +106,7 @@ class HotelReservationForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
-            'room_number': forms.Select(
-                attrs={
-                    'class': 'form-select'
-                }
-            ),
         }
-
         labels = {
             'dni': 'Documento de Identidad',
             'first_name': 'Nombre',
@@ -114,7 +125,7 @@ class HotelReservationForm(forms.ModelForm):
 class RestaurantReservationForm(forms.ModelForm):
     class Meta:
         model = RestaurantReservation
-        fields = ['name', 'room_number', 'number_of_people', 'time', 'table_id', 'cancelled']
+        fields = ['name', 'room_number']
 
         widgets = {
             'name': forms.TextInput(
@@ -128,29 +139,13 @@ class RestaurantReservationForm(forms.ModelForm):
                     'class': 'form-select'
                 }
             ),
-            'number_of_people': forms.NumberInput(
-                attrs={
-                    'placeholder': 'Número de personas',
-                    'class': 'form-control'
-                }
-            ),
-            'time': forms.DateTimeInput(
-                attrs={
-                    'value': date.today().strftime('%Y-%m-%d') + '/' + '13:00:00',
-                    'class': 'form-control'
-                }
-            ),
-            'table_id': forms.Select(
-                attrs={
-                    'class': 'form-select'
-                }
-            ),
         }
 
         labels = {
             'name': 'Nombre',
             'room_number': 'Número de habitación',
             'number_of_people': 'Número de comensales',
+            'date': 'Fecha',
             'time': 'Turno',
             'table_id': 'Número de mesa',
             'cancelled': 'Cancelada',
