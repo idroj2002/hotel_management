@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet, Q
 from django.utils.translation import gettext_lazy as _
+from datetime import datetime, time
+from restaurant.models import RestaurantBill
 from administration.models import RestaurantReservation
 from administration.forms import RestaurantReservationForm
 
-
-# Create your views here.
 
 def is_restaurant(user):
     return user.groups.filter(name='Restaurant').exists()
@@ -110,3 +110,47 @@ def delete_reservation(request, reservation_id):
         reservation.save()
         return redirect('restaurant_home')
     return render(request, 'restaurant/delete_reservation.html', {'reservation': reservation})
+
+
+@login_required
+def bill_list(request):
+    if not is_restaurant(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+    
+    current_time = datetime.now()
+
+    # Define restaurant shifts
+    morning_start = time(5, 0, 0)
+    afternoon_start = time(12, 0, 0) 
+    night_start = time(18, 0, 0)
+
+    next_bills = RestaurantReservation.objects.filter(time__date__gte=current_time.date())
+
+    today_bills = next_bills.filter(time__date=current_time.date())
+
+    if current_time.time() > morning_start and current_time.time() < afternoon_start:
+        bills = today_bills.filter(time__time__gte=morning_start, time__time__lt=afternoon_start).order_by('-time')
+        shift = _('Morning shift')
+    elif current_time.time() > afternoon_start and current_time.time() < night_start:
+        bills = today_bills.filter(time__time__gte=afternoon_start, time__time__lt=night_start).order_by('-time')
+        shift = _('Afternoon shift')
+    else:
+        bills = (today_bills.filter(time__time__gte=night_start) | today_bills.filter(time__time__lt=morning_start)).order_by('-time')
+        shift = _('Night shift')
+    
+    bills_ids = bills.values('id')
+    other_bills = next_bills.exclude(id__in=bills_ids)
+
+    return render(request, 'restaurant/bills_list.html', {'bills': bills, 'other_bills': other_bills, 'shift': shift})
+
+
+@login_required
+def edit_bill(request, reservation_id):
+    if not is_restaurant(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+
+    return render(request, 'restaurant/bill_detail.html')
+
+

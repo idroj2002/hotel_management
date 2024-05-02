@@ -9,6 +9,7 @@ class RestaurantItem(models.Model):
 class RestaurantBill(models.Model):
     id = models.AutoField(primary_key=True)
     reservation = models.ForeignKey(RestaurantReservation, on_delete=models.CASCADE)
+    paid = models.BooleanField(default=False)
     
 class ShoppingCart(models.Model):
     id = models.AutoField(primary_key=True)
