@@ -1,0 +1,16 @@
+{% extends 'reception/administration_base.html' %}
+
+{% block title %}Reservation Confirmation{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Reservation Confirmation</h1>
+    {% if reservation_type == 'hotel' %}
+        <p>Thank you for your reservation. Room ID: {{ room_id }}</p>
+
+    {% else %}
+        <p>Thank you for your reservation. Table ID: {{ table_id }}</p>
+
+    {% endif %}
+</div>
+{% endblock %}

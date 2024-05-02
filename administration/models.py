@@ -1,3 +1,5 @@
+from django.utils import timezone
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -6,18 +8,18 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Room(models.Model):
     number = models.IntegerField()
     ROOM_TYPE_OPTIONS = [
-            ('Ind', 'Individual'),
-            ('Dob', 'Doble'),
-            ('Del', 'Deluxe'),
-            ('Sui', 'Suite'),
-        ]
+        ('Ind', 'Individual'),
+        ('Dob', 'Doble'),
+        ('Del', 'Deluxe'),
+        ('Sui', 'Suite'),
+    ]
     type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS)
     ROOM_STATE_OPTIONS = [
         ('TD', 'To-do'),
         ('P', 'In process'),
         ('D', 'Done'),
     ]
-    state = models.CharField(max_length=10, choices=ROOM_STATE_OPTIONS)
+    state = models.CharField(max_length=10, choices=ROOM_STATE_OPTIONS, default='TD')
     occupied = models.TimeField(blank=True, null=True)
 
     def __str__(self):
@@ -45,11 +47,11 @@ class HotelReservation(models.Model):
     check_out_date = models.DateField()
     number_of_guests = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     ROOM_TYPE_OPTIONS = [
-            ('Ind', 'Individual'),
-            ('Dob', 'Doble'),
-            ('Del', 'Deluxe'),
-            ('Sui', 'Suite'),
-        ]
+        ('Ind', 'Individual'),
+        ('Dob', 'Doble'),
+        ('Del', 'Deluxe'),
+        ('Sui', 'Suite'),
+    ]
     room_type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
@@ -66,12 +68,22 @@ class RestaurantReservation(models.Model):
     room_number = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True)
     number_of_people = models.IntegerField()
     table_id = models.ForeignKey(Table, on_delete=models.CASCADE)
-    time = models.DateTimeField()
+    date = models.DateField(default=timezone.now)
+    TURN_CHOICES = [
+        ('breakfast_1', 'Desayuno - Primer Turno'),
+        ('breakfast_2', 'Desayuno - Segundo Turno'),
+        ('lunch_1', 'Comida - Primer Turno'),
+        ('lunch_2', 'Comida - Segundo Turno'),
+        ('dinner_1', 'Cena - Primer Turno'),
+        ('dinner_2', 'Cena - Segundo Turno'),
+    ]
+
+    time = models.CharField(choices=TURN_CHOICES, max_length=20)
     cancelled = models.BooleanField(default=False)
 
     def __str__(self):
-        formatted_time = self.time.strftime('%d/%m %H:%M')
-        return f"ID: {self.id} - Nombre: {self.name} - Hora: {formatted_time}"
+        # formatted_time = self.time.strftime('%d/%m %H:%M')
+        return f"ID: {self.id} - Nombre: {self.name} - Fecha: {self.date} - Turno: {self.time}"
 
 
 class CheckIn(models.Model):

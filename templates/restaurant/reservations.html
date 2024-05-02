@@ -4,6 +4,31 @@
 
 {% block title %}Lista de reservas{% endblock %}
 
+{% block styles %}
+    <style>
+        .nav-pills .nav-link {
+            color: black;
+            transition: color 0.2s ease;
+        }
+
+        .nav-pills .nav-link:hover {
+            color: white;
+        }
+
+        .nav-pills .nav-link.btn {
+            border-radius: 20px;
+            background-color: #C0C0C0;
+            transition: background-color 0.2s ease;
+        }
+
+        .nav-pills .nav-link.btn:focus,
+        .nav-pills .nav-link.btn.active {
+            background-color: darkblue;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}Lista de reservas{% endblock %}
 {% block content %}
     <div class="container-fluid mt-5">
         <div class="row">
