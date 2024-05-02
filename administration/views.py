@@ -2,7 +2,8 @@ import datetime
 
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet, Q
 from django.template.loader import get_template
@@ -313,14 +314,6 @@ def add_check_out(request, reservation_type, reservation_id):
                                                                  'form': form})
 
 
-def save_hotel_reservation(reservation_form, check_in_date, check_out_date, room_type):
-    reservation = reservation_form.save(commit=False)
-    reservation.check_in_date = check_in_date
-    reservation.check_out_date = check_out_date
-    reservation.room_type = room_type
-    reservation.save()
-
-
 @login_required
 def add_reservation(request, reservation_type):
     if not is_receptionist(request.user):
@@ -387,16 +380,22 @@ def complete_reservation(request, reservation_type):
         check_out_date = data.get('check_out_date', [''])[0]
         room_type = data.get('room_type', [''])[0]
         available_rooms = get_available_rooms(check_in_date, check_out_date, room_type)
+        available_tables = []
     else:
         number_of_people = data.get('number_of_people', [''])[0]
         date = data.get('date', [''])[0]
         time = data.get('time', [''])[0]
         available_tables = get_available_tables(number_of_people, date, time)
+        available_rooms = []
 
     if request.method == 'POST':
         if reservation_type == 'hotel':
             room_id = request.POST.get('room')
             room = get_object_or_404(Room, pk=room_id)
+            new_available_rooms = get_available_rooms(check_in_date, check_out_date, room_type)
+            if room not in new_available_rooms:
+                messages.error(request, 'The room you choose has been reserved')
+                return redirect(add_reservation, reservation_type=reservation_type)
             reservation_form = HotelReservationForm(request.POST)
             if reservation_form.is_valid():
                 reservation = reservation_form.save(commit=False)
@@ -420,15 +419,11 @@ def complete_reservation(request, reservation_type):
     else:
         if reservation_type == 'hotel':
             reservation_form = HotelReservationForm()
-            return render(request, 'reception/add_reservation_form.html', {
-                'reservation_type': reservation_type,
-                'reservation_form': reservation_form,
-                'available_rooms': available_rooms
-            })
         else:
             reservation_form = RestaurantReservationForm()
-            return render(request, 'reception/add_reservation_form.html', {
+    return render(request, 'reception/add_reservation_form.html', {
                 'reservation_type': reservation_type,
                 'reservation_form': reservation_form,
+                'available_rooms': available_rooms,
                 'available_tables': available_tables
             })
