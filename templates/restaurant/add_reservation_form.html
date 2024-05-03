@@ -10,10 +10,23 @@
             {% trans "New restaurant reservation" %}
         </h1>
         <form method="post" class="mt-4 form-control">
+        <h2 class="mt-3">Available Tables</h2>
+        <form id="reservation-form" method="post" class="mt-4">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-            <a href="{% url 'restaurant_home' %}" class="btn btn-secondary">{% trans "Back to Reservations" %}</a>
+            {% if available_tables %}
+                <label for="table-select">Select a table:</label>
+                <select class="form-select" id="table-select" name="table">
+                    {% for table in available_tables %}
+                        <option class="list-group-item" value="{{ table.id }}">{{ table }}</option>
+                    {% endfor %}
+                </select>
+                <h2 class="mt-3 mb-3">Reservation data</h2>
+                {{ reservation_form.as_p }}
+                <button type="submit" class="btn btn-primary mt-3">Complete Reservation</button>
+            {% else %}
+                <p>{% trans "No tables available for the selected date, time, and number of people" %}.</p>
+                <a href="{% url 'add_reservation' %}" class="mt-4 btn btn-primary">{% trans "Check other options" }</a>
+            {% endif %}
         </form>
     </div>
 {% endblock %}
