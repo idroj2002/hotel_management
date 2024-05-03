@@ -1,0 +1,12 @@
+{% extends 'reception/administration_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Reservation Confirmation" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Reservation Confirmation</h1>
+    <p>{% trans "Thank you for your reservation" %}. {% trans "Table ID" %}: {{ table_id }}</p>
+    <a href="{% url 'restaurant_home' %}" class="mt-4 btn btn-primary">{% trans "Back to reservations" %}</a>
+</div>
+{% endblock %}

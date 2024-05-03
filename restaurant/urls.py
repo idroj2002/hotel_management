@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.i18n import i18n_patterns
 from restaurant.views import restaurant_home, add_reservation, reservation_detail, edit_reservation, \
-    delete_reservation, cancelled_reservation_list, bill_list, edit_bill, add_to_cart
+    delete_reservation, cancelled_reservation_list, bill_list, edit_bill, add_to_cart, complete_reservation
 
 
 urlpatterns = [
@@ -31,4 +31,5 @@ urlpatterns = [
     path('bills/', bill_list, name='restaurant_bills'),
     path('bills/edit/<int:reservation_id>/', edit_bill, name='edit_bill'),
     path('bills/add_to_cart/', add_to_cart, name='add_to_cart'),
+    path('complete_reservation/', complete_reservation, name='complete_reservation'),
 ]
