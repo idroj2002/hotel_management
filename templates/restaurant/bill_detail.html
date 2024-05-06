@@ -5,6 +5,11 @@
 {% block title %}{% trans "Bill detail" %}{% endblock %}
 
 {% block content %}
+    <div class="btn-group mb-3">
+        <a href="#" class="btn btn-outline-success">{% trans "Total" %}</a>
+        <a href="#" class="btn btn-outline-success active"><span id="total-price">{{ total_price }}</span>€</a>
+    </div>
+
     {% for item in items %}
     <div class="card transparent" style="width: 18rem;">
         {% if item.image %}
@@ -21,7 +26,7 @@
             <p class="m-0" id="quantity-{{ item.id }}">0</p>
             <button type="button" class="btn btn-success increment" id="increment-item-{{ item.id }}">+</button>
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-            <button type="button" class="btn btn-primary add-to-cart" id="add-item-{{ item.id }}" data-reservation-id="{{ reservation_id }}">{% trans "Add to cart" %}</a>
+            <button type="button" class="btn btn-primary add-to-cart" id="add-item-{{ item.id }}" data-reservation-id="{{ reservation_id }}" data-price="{{ item.price }}">{% trans "Add to cart" %}</button>
         </div>
       </div>
     {% endfor %}

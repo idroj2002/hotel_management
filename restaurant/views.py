@@ -2,7 +2,7 @@ import json
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.db.models import QuerySet, Q
+from django.db.models import QuerySet, Q, Sum, ExpressionWrapper, F, DecimalField
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, time
 from django.http import HttpResponse
@@ -161,7 +161,17 @@ def edit_bill(request, reservation_id):
         return redirect(home)
 
     items = RestaurantItem.objects.all()
-    return render(request, 'restaurant/bill_detail.html', {'items': items, 'reservation_id': reservation_id})
+
+    # Calculate total cart cost
+    bill = RestaurantBill.objects.filter(reservation_id=reservation_id, paid=False).order_by('-id').first()
+    
+    if bill:
+        elementos_carrito = bill.shoppingcart_set.all()
+        total = sum(item.item.price * item.quantity for item in elementos_carrito)
+    else:
+        total = 0
+
+    return render(request, 'restaurant/bill_detail.html', {'items': items, 'reservation_id': reservation_id, 'total_price': total})
 
 
 @login_required
@@ -189,9 +199,9 @@ def add_to_cart(request):
             item_id=item_id,
             quantity=quantity
         )
-        return HttpResponse('Instancia creada exitosamente', status=201)
+        return HttpResponse('Item added without problems', status=201)
     else:
-        return HttpResponse('Método no permitido', status=405)
+        return HttpResponse('Methot not accepted', status=405)
 
 
 def get_available_tables(number_of_people, date, time):
