@@ -81,8 +81,6 @@ msgid "It is not possible to create a Check-In for a restaurant reservation."
 msgstr "No se puede crear un Check-In para una reserva de restaurante."
 
 #: administration/views.py:223
-#, fuzzy
-#| msgid "It is not possible to add a Check-In for a cancelled reservation."
 msgid "It is not possible to add a check-in for a cancelled reservation."
 msgstr "No se puede crear un Check-In para una reserva cancelada."
 
@@ -137,7 +135,7 @@ msgstr "Turno de noche"
 
 #: restaurant/views.py:195
 msgid "The specified values aren't a valid format"
-msgstr ""
+msgstr "Los valores especificados tienen un formato incorrecto"
 
 #: super_user/views.py:26
 msgid "SuperUser - Search results for"
@@ -347,8 +345,7 @@ msgstr "No se ha encontrado ninguna reserva cancelada."
 #: templates/reception/cancelled_reservations.html:67
 #: templates/restaurant/cancelled_reservations.html:32
 msgid "No cancelled reservations found matching the search"
-msgstr ""
-"No se ha encontrado ninguna reserva cancelada que coincida con la búsqueda"
+msgstr "No se ha encontrado ninguna reserva cancelada que coincida con la búsqueda"
 
 #: templates/reception/delete_check_in.html:6
 msgid "Cancel Check-in"
@@ -558,7 +555,7 @@ msgstr "Nueva reserva del restaurante"
 
 #: templates/restaurant/add_reservation_form.html:27
 msgid "No tables available for the selected date, time, and number of people"
-msgstr ""
+msgstr "No hay mesas disponibles para la fecha y hora seleccionadas"
 
 #: templates/restaurant/bill_detail.html:5
 msgid "Bill detail"
@@ -566,11 +563,11 @@ msgstr "Detalles de factura"
 
 #: templates/restaurant/bill_detail.html:9
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #: templates/restaurant/bill_detail.html:29
 msgid "Add to cart"
-msgstr ""
+msgstr "añadir a la cesta"
 
 #: templates/restaurant/bills_list.html:5
 #: templates/restaurant/bills_list.html:13
@@ -598,26 +595,18 @@ msgid "Other bills"
 msgstr "Otras facturas"
 
 #: templates/restaurant/reservation_confirmation.html:4
-#, fuzzy
-#| msgid "Reservation information"
 msgid "Reservation Confirmation"
-msgstr "Información de la reserva"
+msgstr "Confirmación de la reserva"
 
 #: templates/restaurant/reservation_confirmation.html:9
-#, fuzzy
-#| msgid "Room reservation"
 msgid "Thank you for your reservation"
-msgstr "Reserva de habitación"
+msgstr "Gracias por su reserva"
 
 #: templates/restaurant/reservation_confirmation.html:9
-#, fuzzy
-#| msgid "Table"
 msgid "Table ID"
-msgstr "Mesa"
+msgstr "Número de mesa"
 
 #: templates/restaurant/reservation_confirmation.html:10
-#, fuzzy
-#| msgid "Back to Reservations"
 msgid "Back to reservations"
 msgstr "Volver a reservas"
 
