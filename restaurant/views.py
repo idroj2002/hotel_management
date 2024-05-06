@@ -166,8 +166,8 @@ def edit_bill(request, reservation_id):
     bill = RestaurantBill.objects.filter(reservation_id=reservation_id, paid=False).order_by('-id').first()
     
     if bill:
-        elementos_carrito = bill.shoppingcart_set.all()
-        total = sum(item.item.price * item.quantity for item in elementos_carrito)
+        cart_items = bill.shoppingcart_set.all()
+        total = sum(item.item.price * item.quantity for item in cart_items)
     else:
         total = 0
 
@@ -202,6 +202,41 @@ def add_to_cart(request):
         return HttpResponse('Item added without problems', status=201)
     else:
         return HttpResponse('Methot not accepted', status=405)
+
+
+@login_required
+def cart_resume(request, reservation_id):
+    if not is_restaurant(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+
+    items = RestaurantItem.objects.all()
+
+    # Calculate total cart cost
+    bill = RestaurantBill.objects.filter(reservation_id=reservation_id, paid=False).order_by('-id').first()
+    
+    if bill:
+        cart_items = bill.shoppingcart_set.all()
+        total = sum(item.item.price * item.quantity for item in cart_items)
+    else:
+        total = 0
+
+    # Get items
+    bill = RestaurantBill.objects.filter(reservation_id=reservation_id, paid=False).order_by('-id').first()
+    
+    if bill:
+        cart_items = bill.shoppingcart_set.all()
+        resume_dict = {}
+        for item in cart_items:
+            if item.item in resume_dict:
+                resume_dict[item.item] += item.quantity
+            else:
+                resume_dict[item.item] = item.quantity
+        resume = [(item, quantity) for item, quantity in resume_dict.items()]
+    else:
+        resume = []
+
+    return render(request, 'restaurant/cart_resume.html', {'items': resume, 'reservation_id': reservation_id, 'total_price': total})
 
 
 def get_available_tables(number_of_people, date, time):

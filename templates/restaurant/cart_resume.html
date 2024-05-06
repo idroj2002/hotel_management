@@ -1,0 +1,24 @@
+{% extends './restaurant_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Shopping cart" %}{% endblock %}
+
+{% block content %}
+    <a href="{% url 'edit_bill' reservation_id=reservation_id %}" class="btn btn-primary mb-3">
+        <i class="fas fa-plus"></i> {% trans "Return to bill" %}
+    </a>
+
+    <ul class="list-group">
+        {% for item, quantity in items %}
+            <li class="list-group-item"><b>{{ item.name }}</b> - {% trans "Quantity:" %}&nbsp;{{ quantity }}</li>
+        {% endfor %}
+        <li class="list-group-item list-group-item-secondary"><b>{% trans "Total" %}:&nbsp;{{ total_price }}€</b></li>
+    </ul>
+    
+{% endblock %}
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/restaurant-items.js' %}"></script>
+{% endblock %}
