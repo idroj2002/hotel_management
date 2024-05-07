@@ -194,12 +194,54 @@ def add_to_cart(request):
         except ValueError:
             return HttpResponse(_("The specified values aren't a valid format"), status=400)
 
-        shoppingCart = ShoppingCart.objects.create(
-            bill=bill,
-            item_id=item_id,
-            quantity=quantity
-        )
+        shopping_cart = ShoppingCart.objects.filter(bill=bill, item_id=item_id).first()
+
+        if shopping_cart:
+            shopping_cart.quantity += quantity
+            shopping_cart.save()
+        else:
+            shoppingCart = ShoppingCart.objects.create(
+                bill=bill,
+                item_id=item_id,
+                quantity=quantity
+            )
         return HttpResponse('Item added without problems', status=201)
+    else:
+        return HttpResponse('Methot not accepted', status=405)
+
+
+@login_required
+def modify_cart(request):
+    if not is_restaurant(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+        
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        item_id = data.get('item_id')
+        quantity = data.get('quantity')
+        reservation_id = data.get('reservation_id')
+
+        bill, created = RestaurantBill.objects.get_or_create(reservation_id=reservation_id)
+
+        try:
+            quantity = int(quantity)
+        except ValueError:
+            return HttpResponse(_("The specified values aren't a valid format"), status=400)
+
+        shopping_cart = ShoppingCart.objects.filter(bill=bill, item_id=item_id).first()
+
+        if shopping_cart:
+            shopping_cart.quantity = quantity
+            shopping_cart.save()
+        else:
+            shoppingCart = ShoppingCart.objects.create(
+                bill=bill,
+                item_id=item_id,
+                quantity=quantity
+            )
+        return HttpResponse('Item quantity has been setted correctly', status=201)
     else:
         return HttpResponse('Methot not accepted', status=405)
 
@@ -221,22 +263,20 @@ def cart_resume(request, reservation_id):
     else:
         total = 0
 
-    # Get items
+    # Get cart resume
     bill = RestaurantBill.objects.filter(reservation_id=reservation_id, paid=False).order_by('-id').first()
     
     if bill:
         cart_items = bill.shoppingcart_set.all()
-        resume_dict = {}
-        for item in cart_items:
-            if item.item in resume_dict:
-                resume_dict[item.item] += item.quantity
-            else:
-                resume_dict[item.item] = item.quantity
-        resume = [(item, quantity) for item, quantity in resume_dict.items()]
+        resume = [(item.item, item.quantity, item.item.price * item.quantity) for item in cart_items]
     else:
         resume = []
 
-    return render(request, 'restaurant/cart_resume.html', {'items': resume, 'reservation_id': reservation_id, 'total_price': total})
+    return render(request, 'restaurant/cart_resume.html', {
+        'items': resume, 
+        'reservation_id': reservation_id, 
+        'total_price': total
+    })
 
 
 def get_available_tables(number_of_people, date, time):

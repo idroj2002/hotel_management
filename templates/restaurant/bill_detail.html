@@ -6,8 +6,8 @@
 
 {% block content %}
     <div class="btn-group mb-3">
-        <a href="#" class="btn btn-outline-success">{% trans "Total" %}</a>
-        <a href="#" class="btn btn-outline-success active"><span id="total-price">{{ total_price }}</span>€</a>
+        <a href="{% url 'cart_resume' reservation_id=reservation_id %}" class="btn btn-outline-success">{% trans "Total" %}</a>
+        <a href="{% url 'cart_resume' reservation_id=reservation_id %}" class="btn btn-outline-success active"><span id="total-price">{{ total_price }}</span>€</a>
     </div>
 
     {% for item in items %}
