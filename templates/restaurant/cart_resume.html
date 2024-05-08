@@ -10,15 +10,44 @@
     </a>
 
     <ul class="list-group">
-        {% for item, quantity in items %}
-            <li class="list-group-item"><b>{{ item.name }}</b> - {% trans "Quantity:" %}&nbsp;{{ quantity }}</li>
+        {% for item, quantity, price in items %}
+            <li class="list-group-item">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <p>
+                        <b>{{ item.name }}</b> - 
+                        <span id="complete-price-{{ item.id }}">
+                            <span id="price-{{ item.id }}">{{ price }}</span>€
+                        </span>
+                    </p>
+            
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn btn-danger decrement mx-2" id="decrement-item-{{ item.id }}">-</button>
+                        <p class="mx-2" id="quantity-{{ item.id }}" data-real-quantity="{{ quantity }}">{{ quantity }}</p>
+                        <button type="button" class="btn btn-success increment mx-2" id="increment-item-{{ item.id }}">+</button>
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        <button type="button" class="btn btn-primary modify-cart" id="modify-cart-{{ item.id }}" data-reservation-id="{{ reservation_id }}" data-price="{{ item.price }}">
+                            {% trans "Confirm modification" %}
+                        </button>
+                    </div>
+                </div>
+            </li>
         {% endfor %}
         <li class="list-group-item list-group-item-secondary"><b>{% trans "Total" %}:&nbsp;{{ total_price }}€</b></li>
     </ul>
+
+    {% if is_paid %}
+        <a href="{% url 'set_paid_false' reservation_id=reservation_id %}" class="btn btn-primary mt-3">
+            {% trans "Mark as no paid" %}
+        </a>
+    {% else %}
+        <a href="{% url 'set_paid_true' reservation_id=reservation_id %}" class="btn btn-primary mt-3">
+            {% trans "Mark as paid" %}
+        </a>
+    {% endif %}
     
 {% endblock %}
 
 {% block js %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'js/restaurant-items.js' %}"></script>
+    <script src="{% static 'js/restaurant-cart.js' %}"></script>
 {% endblock %}
