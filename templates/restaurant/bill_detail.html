@@ -5,9 +5,15 @@
 {% block title %}{% trans "Bill detail" %}{% endblock %}
 
 {% block content %}
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {% trans "You can't mark as paid an empty bill" %}
+        </div>          
+    {% endif %}
+
     <div class="btn-group mb-3">
-        <a href="{% url 'cart_resume' reservation_id=reservation_id %}" class="btn btn-outline-success">{% trans "Total" %}</a>
-        <a href="{% url 'cart_resume' reservation_id=reservation_id %}" class="btn btn-outline-success active"><span id="total-price">{{ total_price }}</span>€</a>
+        <a href="{% url 'cart_resume' reservation_id=reservation_id %}" class="price-button btn btn-outline-success {% if total_price == 0 %} disabled {% endif %}">{% trans "Total" %}</a>
+        <a href="{% url 'cart_resume' reservation_id=reservation_id %}" class="price-button btn btn-outline-success active {% if total_price == 0 %} disabled {% endif %}"><span id="total-price">{{ total_price }}</span>€</a>
     </div>
 
     {% for item in items %}
@@ -22,7 +28,7 @@
             <p class="card-text">{{ item.price }}€</p>
         </div>
         <div class="card-body d-flex justify-content-between align-items-center">
-            <button type="button" class="btn btn-danger decrement" id="decrement-item-{{ item.id }}">-</button>
+            <button type="button" class="btn btn-danger decrement" id="decrement-item-{{ item.id }}" {% if not is_paid %} disabled {% endif %}>-</button>
             <p class="m-0" id="quantity-{{ item.id }}">0</p>
             <button type="button" class="btn btn-success increment" id="increment-item-{{ item.id }}">+</button>
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">

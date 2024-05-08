@@ -1,6 +1,6 @@
 import json
 
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet, Q, Sum, ExpressionWrapper, F, DecimalField
 from django.utils.translation import gettext_lazy as _
@@ -156,6 +156,8 @@ def bill_list(request):
 
 @login_required
 def edit_bill(request, reservation_id):
+    error = request.GET.get('error', False)
+    print(error)
     if not is_restaurant(request.user):
         from hotel_management.views import home
         return redirect(home)
@@ -163,15 +165,22 @@ def edit_bill(request, reservation_id):
     items = RestaurantItem.objects.all()
 
     # Calculate total cart cost
-    bill = RestaurantBill.objects.filter(reservation_id=reservation_id, paid=False).order_by('-id').first()
-    
-    if bill:
-        cart_items = bill.shoppingcart_set.all()
-        total = sum(item.item.price * item.quantity for item in cart_items)
-    else:
-        total = 0
+    bill = RestaurantBill.objects.filter(reservation_id=reservation_id).order_by('-id').first()
 
-    return render(request, 'restaurant/bill_detail.html', {'items': items, 'reservation_id': reservation_id, 'total_price': total})
+    if not bill:
+        bill = RestaurantBill.objects.create(reservation_id=reservation_id)
+    
+    cart_items = bill.shoppingcart_set.all()
+    total = sum(item.item.price * item.quantity for item in cart_items)
+
+    return render(request, 'restaurant/bill_detail.html', 
+        {
+            'items': items, 
+            'reservation_id': reservation_id, 
+            'total_price': total, 
+            'is_paid': bill.paid,
+            'error': error
+        })
 
 
 @login_required
@@ -252,31 +261,47 @@ def cart_resume(request, reservation_id):
         from hotel_management.views import home
         return redirect(home)
 
-    items = RestaurantItem.objects.all()
-
-    # Calculate total cart cost
-    bill = RestaurantBill.objects.filter(reservation_id=reservation_id, paid=False).order_by('-id').first()
+    bill = RestaurantBill.objects.filter(reservation_id=reservation_id).order_by('-id').first()
     
     if bill:
+        # Calculate total cart cost
         cart_items = bill.shoppingcart_set.all()
         total = sum(item.item.price * item.quantity for item in cart_items)
-    else:
-        total = 0
 
-    # Get cart resume
-    bill = RestaurantBill.objects.filter(reservation_id=reservation_id, paid=False).order_by('-id').first()
-    
-    if bill:
+        # Get cart resume
         cart_items = bill.shoppingcart_set.all()
         resume = [(item.item, item.quantity, item.item.price * item.quantity) for item in cart_items]
     else:
-        resume = []
+        return HttpResponseBadRequest
 
     return render(request, 'restaurant/cart_resume.html', {
         'items': resume, 
         'reservation_id': reservation_id, 
-        'total_price': total
+        'total_price': total,
+        'is_paid': bill.paid
     })
+
+
+@login_required
+def set_paid(request, reservation_id, paid):
+    if not is_restaurant(request.user):
+        from hotel_management.views import home
+        return redirect(home)
+
+    bill = RestaurantBill.objects.filter(reservation_id=reservation_id).order_by('-id').first()
+
+    # Check price different to zero
+    cart_items = bill.shoppingcart_set.all()
+    total = sum(item.item.price * item.quantity for item in cart_items)
+    if total == 0:
+        url = reverse('edit_bill', kwargs={'reservation_id':reservation_id})
+        url += '?error=True'
+        return redirect(url)
+
+    bill.paid = paid
+    bill.save()
+
+    return redirect(edit_bill, reservation_id=reservation_id)
 
 
 def get_available_tables(number_of_people, date, time):

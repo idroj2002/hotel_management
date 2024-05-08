@@ -34,6 +34,16 @@
         {% endfor %}
         <li class="list-group-item list-group-item-secondary"><b>{% trans "Total" %}:&nbsp;{{ total_price }}€</b></li>
     </ul>
+
+    {% if is_paid %}
+        <a href="{% url 'set_paid_false' reservation_id=reservation_id %}" class="btn btn-primary mt-3">
+            {% trans "Mark as no paid" %}
+        </a>
+    {% else %}
+        <a href="{% url 'set_paid_true' reservation_id=reservation_id %}" class="btn btn-primary mt-3">
+            {% trans "Mark as paid" %}
+        </a>
+    {% endif %}
     
 {% endblock %}
 
