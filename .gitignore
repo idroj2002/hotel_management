@@ -10,7 +10,6 @@ administration/migrations/
 cleaning/migrations/
 restaurant/migrations/
 clients/migrations/
-static/
 media
 
 # Backup files # 
