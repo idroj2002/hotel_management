@@ -10,6 +10,7 @@ administration/migrations/
 cleaning/migrations/
 restaurant/migrations/
 clients/migrations/
+accounting/migrations/
 media
 
 # Backup files # 
