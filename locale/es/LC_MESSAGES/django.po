@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-06 15:20+0200\n"
+"POT-Creation-Date: 2024-05-09 17:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -149,6 +149,22 @@ msgstr "SuperUsuario"
 msgid "Invalid group. Please, select a valid group."
 msgstr "Grupo no válido. Por favor, seleccione un grupo válido."
 
+#: templates/base.html:31 templates/home.html:34
+msgid "Home"
+msgstr "Inicio"
+
+#: templates/base.html:38
+msgid "Log out"
+msgstr "Cerrar sesión"
+
+#: templates/base.html:40
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+#: templates/base.html:41
+msgid "Sign in"
+msgstr "Registrarse"
+
 #: templates/cleaning/cleaning_home.html:4 templates/home.html:19
 msgid "Cleaning"
 msgstr "Limpieza"
@@ -223,6 +239,10 @@ msgstr "Restaurante"
 #: templates/home.html:24
 msgid "Administration"
 msgstr "Administración"
+
+#: templates/home.html:33
+msgid "Las Palmeras hotel"
+msgstr "Hotel Las Palmeras"
 
 #: templates/reception/add_check_in_form.html:7
 msgid "Create Check-In"
@@ -345,7 +365,8 @@ msgstr "No se ha encontrado ninguna reserva cancelada."
 #: templates/reception/cancelled_reservations.html:67
 #: templates/restaurant/cancelled_reservations.html:32
 msgid "No cancelled reservations found matching the search"
-msgstr "No se ha encontrado ninguna reserva cancelada que coincida con la búsqueda"
+msgstr ""
+"No se ha encontrado ninguna reserva cancelada que coincida con la búsqueda"
 
 #: templates/reception/delete_check_in.html:6
 msgid "Cancel Check-in"
@@ -665,21 +686,6 @@ msgstr "Asignar grupo"
 #: templates/super_user/user_detail.html:28
 msgid "Clear groups"
 msgstr "Quitar grupos"
-
-#~ msgid "Las Palmeras hotel"
-#~ msgstr "Hotel Las Palmeras"
-
-#~ msgid "Home"
-#~ msgstr "Inicio"
-
-#~ msgid "Log out"
-#~ msgstr "Cerrar sesión"
-
-#~ msgid "Log in"
-#~ msgstr "Iniciar sesión"
-
-#~ msgid "Sign in"
-#~ msgstr "Registrarse"
 
 #~ msgid "Reservation check-in:"
 #~ msgstr "Check in de la reserva:"
