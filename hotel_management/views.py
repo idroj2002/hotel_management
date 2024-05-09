@@ -22,5 +22,11 @@ def home(request):
     is_receptionistuser = is_receptionist(request.user)
     is_restaurantuser = is_restaurant(request.user)
     is_cleaneruser = is_cleaner(request.user)
-    return render(request, 'home.html', {'is_receptionist':is_receptionistuser, 'is_restaurant':is_restaurantuser, 'is_cleaner':is_cleaneruser, 'is_superuser':is_superuser})
+    is_worker = False
+    if is_superuser or is_receptionistuser or is_restaurantuser or is_cleaneruser:
+        is_worker = True
+    if is_worker:
+        return render(request, 'home.html', {'is_worker':is_worker, 'is_receptionist':is_receptionistuser, 'is_restaurant':is_restaurantuser, 'is_cleaner':is_cleaneruser, 'is_superuser':is_superuser})
+    else:
+        return render(request, 'clients/clients_home.html')
 

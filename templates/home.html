@@ -4,6 +4,11 @@
 {% block title %}Inicio{% endblock %}
 
 {% block navbar-list %}
+{% if is_worker %}
+<li class="nav-item">
+    <a class="nav-link mx-lg-2" href="{% url 'clients_home' %}">{% trans "Client's view" %}</a>
+</li>
+{% endif %}
 {% if is_receptionist %}
 <li class="nav-item">
     <a class="nav-link mx-lg-2" href="{% url 'reservations_list' reservation_type='hotel' %}">{% trans "Reception" %}</a>
