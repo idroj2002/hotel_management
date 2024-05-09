@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.decorators import login_required
 
 
-GROUPS_NAMES = ['Receptionist', 'Restaurant', 'Cleaning', 'All']
+GROUPS_NAMES = ['Receptionist', 'Restaurant', 'Cleaning', 'Accountant', 'All']
 
 
 @login_required

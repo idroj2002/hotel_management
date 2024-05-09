@@ -33,4 +33,5 @@ urlpatterns = i18n_patterns(
     path('cleaning/', include('cleaning.urls'), name='cleaning'),
     path('superuser/', include('super_user.urls'), name='superuser'),
     path('clients/', include('clients.urls'), name='clients'),
+    path('accounting/', include('accounting.urls'), name='accounting'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

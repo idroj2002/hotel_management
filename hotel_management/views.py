@@ -17,16 +17,27 @@ def is_cleaner(user):
     return user.groups.filter(name='Cleaning').exists()
 
 
+def is_accountant(user):
+    return user.groups.filter(name='Accountant').exists()
+
+
 def home(request):
     is_superuser = request.user.is_superuser
     is_receptionistuser = is_receptionist(request.user)
     is_restaurantuser = is_restaurant(request.user)
     is_cleaneruser = is_cleaner(request.user)
-    is_worker = False
-    if is_superuser or is_receptionistuser or is_restaurantuser or is_cleaneruser:
-        is_worker = True
+    is_accountantuser = is_accountant(request.user)
+    is_worker = is_superuser or is_receptionistuser or is_restaurantuser or is_cleaneruser or is_accountantuser
     if is_worker:
-        return render(request, 'home.html', {'is_worker':is_worker, 'is_receptionist':is_receptionistuser, 'is_restaurant':is_restaurantuser, 'is_cleaner':is_cleaneruser, 'is_superuser':is_superuser})
+        return render(request, 'home.html', 
+        {
+            'is_worker':is_worker, 
+            'is_receptionist':is_receptionistuser, 
+            'is_restaurant':is_restaurantuser, 
+            'is_cleaner':is_cleaneruser, 
+            'is_superuser':is_superuser,
+            'is_accountant':is_accountantuser
+            })
     else:
         return render(request, 'clients/clients_home.html')
 

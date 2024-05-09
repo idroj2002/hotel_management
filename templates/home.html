@@ -24,9 +24,14 @@
     <a class="nav-link mx-lg-2" href="{% url 'cleaning_home'%}">{% trans "Cleaning" %}</a>
 </li>
 {% endif %}
+{% if is_accountant %}
+<li class="nav-item">
+    <a class="nav-link mx-lg-2" href="{% url 'accounting_home' %}">{% trans "Administration" %}</a>
+</li>
+{% endif %}
 {% if is_superuser %}
 <li class="nav-item">
-    <a class="nav-link mx-lg-2" href="{% url 'superuser_home' %}">{% trans "Administration" %}</a>
+    <a class="nav-link mx-lg-2" href="{% url 'superuser_home' %}">{% trans "Superuser" %}</a>
 </li>
 {% endif %}
 {% endblock %}
