@@ -157,7 +157,6 @@ def bill_list(request):
 @login_required
 def edit_bill(request, reservation_id):
     error = request.GET.get('error', False)
-    print(error)
     if not is_restaurant(request.user):
         from hotel_management.views import home
         return redirect(home)
@@ -170,6 +169,9 @@ def edit_bill(request, reservation_id):
     if not bill:
         bill = RestaurantBill.objects.create(reservation_id=reservation_id)
     
+    if bill.paid:
+        return redirect(cart_resume, reservation_id=reservation_id)
+
     cart_items = bill.shoppingcart_set.all()
     total = sum(item.item.price * item.quantity for item in cart_items)
 
