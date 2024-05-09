@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-06 15:20+0200\n"
+"POT-Creation-Date: 2024-05-09 17:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,6 +148,22 @@ msgstr ""
 msgid "Invalid group. Please, select a valid group."
 msgstr ""
 
+#: templates/base.html:31 templates/home.html:34
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:38
+msgid "Log out"
+msgstr ""
+
+#: templates/base.html:40
+msgid "Log in"
+msgstr ""
+
+#: templates/base.html:41
+msgid "Sign in"
+msgstr ""
+
 #: templates/cleaning/cleaning_home.html:4 templates/home.html:19
 msgid "Cleaning"
 msgstr ""
@@ -221,6 +237,10 @@ msgstr ""
 
 #: templates/home.html:24
 msgid "Administration"
+msgstr ""
+
+#: templates/home.html:33
+msgid "Las Palmeras hotel"
 msgstr ""
 
 #: templates/reception/add_check_in_form.html:7
