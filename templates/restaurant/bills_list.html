@@ -28,7 +28,7 @@
                     {% for bill in bills %}
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading{{ bill.id }}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ bill.id }}" aria-expanded="true" aria-controls="collapse{{ bill.id }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ bill.id }}" aria-expanded="false" aria-controls="collapse{{ bill.id }}">
                                     {{ bill }}
                                 </button>
                             </h2>
@@ -60,7 +60,7 @@
                     {% for bill in other_bills %}
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading{{ bill.id }}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ bill.id }}" aria-expanded="true" aria-controls="collapse{{ bill.id }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ bill.id }}" aria-expanded="false" aria-controls="collapse{{ bill.id }}">
                                     {{ bill }}
                                 </button>
                             </h2>

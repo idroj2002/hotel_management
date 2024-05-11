@@ -5,9 +5,11 @@
 {% block title %}{% trans "Shopping cart" %}{% endblock %}
 
 {% block content %}
-    <a href="{% url 'edit_bill' reservation_id=reservation_id %}" class="btn btn-primary mb-3">
-        <i class="fas fa-plus"></i> {% trans "Return to bill" %}
-    </a>
+    {% if not is_paid %}
+        <a href="{% url 'edit_bill' reservation_id=reservation_id %}" class="btn btn-primary mb-3">
+            <i class="fas fa-plus"></i> {% trans "Return to bill" %}
+        </a>
+    {% endif %}
 
     <ul class="list-group">
         {% for item, quantity, price in items %}
