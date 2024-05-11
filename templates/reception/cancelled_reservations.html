@@ -31,7 +31,7 @@
                     {% for reservation in reservations %}
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading{{ reservation.id }}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ reservation.id }}" aria-expanded="true" aria-controls="collapse{{ reservation.id }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ reservation.id }}" aria-expanded="false" aria-controls="collapse{{ reservation.id }}">
                                     {{ reservation }}
                                 </button>
                             </h2>

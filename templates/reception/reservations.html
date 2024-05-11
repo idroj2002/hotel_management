@@ -36,7 +36,7 @@
                         {% for reservation in check_outs %}
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="checkOutHeading{{ reservation.id }}">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#checkOutCollapse{{ reservation.id }}" aria-expanded="true" aria-controls="checkOutCollapse{{ reservation.id }}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#checkOutCollapse{{ reservation.id }}" aria-expanded="false" aria-controls="checkOutCollapse{{ reservation.id }}">
                                         {{ reservation }}
                                     </button>
                                 </h2>
@@ -71,7 +71,7 @@
                         {% for reservation in check_ins %}
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="checkInHeading{{ reservation.id }}">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#checkInCollapse{{ reservation.id }}" aria-expanded="true" aria-controls="checkInCollapse{{ reservation.id }}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#checkInCollapse{{ reservation.id }}" aria-expanded="false" aria-controls="checkInCollapse{{ reservation.id }}">
                                         {{ reservation }}
                                     </button>
                                 </h2>
@@ -107,7 +107,7 @@
                     {% for reservation in reservations %}
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading{{ reservation.id }}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ reservation.id }}" aria-expanded="true" aria-controls="collapse{{ reservation.id }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ reservation.id }}" aria-expanded="false" aria-controls="collapse{{ reservation.id }}">
                                     {{ reservation }}
                                 </button>
                             </h2>
