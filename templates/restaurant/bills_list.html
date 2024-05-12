@@ -14,10 +14,10 @@
                     </h1>
                 </div>
 
-                <form method="post" class="input-group mb-4">
+                <form method="post" class="search-bar align-items-center">
                     {% csrf_token %}
-                    <input type="search" name="query" class="form-control" placeholder="{% trans 'Search' %}" required>
-                    <button type="submit" class="btn btn-primary search-btn">
+                    <input type="search" name="query" placeholder="{% trans 'Search' %}" required>
+                    <button type="submit">
                         <img src="{% static 'img/search-icon.png' %}" alt="search" width="40" height="30">
                     </button>
                 </form>

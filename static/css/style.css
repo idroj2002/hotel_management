@@ -26,7 +26,6 @@
 
 body{
     background-image: url('/staticfiles/admin/img/Palm_Forest.jpg');
-    background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     width: 100%;
@@ -36,7 +35,7 @@ body{
 
     position: relative;
     &::before{
-        background-color: rgba(0, 0, 0, 0.6);
+        background-color: rgba(0, 0, 0, 0.75);
         content: "";
         position: fixed;
         top: 0;
@@ -48,6 +47,10 @@ body{
 }
 
 div{
+    z-index: 1;
+}
+
+.btn {
     z-index: 1;
 }
 
@@ -239,4 +242,15 @@ h4{
 .floating-restaurant-card{
     float: left;
     max-width: 400px;
+}
+
+.itembox {
+    font-size: 0;
+}
+
+.itemframes {
+    width: 150px;
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 16px;
 }
