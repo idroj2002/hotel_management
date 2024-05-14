@@ -139,7 +139,6 @@ STATIC_URL = 'staticfiles/admin/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     BASE_DIR / "static",
-
 ]
 
 # Media files
