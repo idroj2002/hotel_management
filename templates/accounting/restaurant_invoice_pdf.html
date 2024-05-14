@@ -1,0 +1,43 @@
+{% extends './invoice_pdf_base.html' %}
+{% load i18n %}
+
+{% block from %}
+    Hotel Las Palmeras
+    26 {% trans "calle Martínez Catena" %}
+    69640 Fuengirola, Málaga
+    {% trans "España" %}
+{% endblock %}
+
+{% block information %}
+    <dt>Invoice number</dt>
+    <dd>12345</dd>
+    <dt>Date</dt>
+    <dd>March 31, 2018</dd>
+{% endblock %}
+
+{% block expenditures_body %}
+    <tr>
+        <td>Website design</td>
+        <td>€34.20</td>
+        <td>100</td>
+        <td>€3,420.00</td>
+    </tr>
+    <tr>
+        <td>Website development</td>
+        <td>€45.50</td>
+        <td>100</td>
+        <td>€4,550.00</td>
+    </tr>
+    <tr>
+        <td>Website integration</td>
+        <td>€25.75</td>
+        <td>100</td>
+        <td>€2,575.00</td>
+    </tr>
+{% endblock %}
+
+{% block total_body %}
+    <td>May 10, 2018</td>
+    <td>132 456 789 012</td>
+    <td>€10,545.00</td>
+{% endblock %}
