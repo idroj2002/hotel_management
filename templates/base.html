@@ -1,8 +1,9 @@
 {% load static %} 
 <!DOCTYPE html>
 {% load i18n %}
-  
-<html lang="es">
+
+{% get_current_language as current_language %}
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %} - Hotel Las Palmeras</title>
@@ -44,9 +45,19 @@
             <span class="navbar-toggler-icon"></span>
           </button>
         </div>
+       <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+            <select name="language" id="language-select">
+                <option value="es" {% if request.LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
+                <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+            </select>
+            <button type="submit" class="mt-4 btn btn-primary">{% trans "Change Language" %}</button>
+       </form>
+
     </nav>
 
-      <div class="container mainbody">
+    <div class="container mainbody">
         {% if messages  %}
             {% for message in messages %}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -55,13 +66,13 @@
               </div>
             {% endfor %}
         {% endif %}
-        
-          {% block content %}
-          {% endblock %}
-        
-        </div>
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     {% block js %}{% endblock %}
 </body>
-
