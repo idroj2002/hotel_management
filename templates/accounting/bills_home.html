@@ -29,7 +29,15 @@
                         </button>
                     </h2>
                     <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo">
-                        <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body.</div>
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                {% for bill in bills %}
+                                <a href="{% url 'invoice_pdf' %}" target="_blank" class="link-dark"><li class="list-group-item">{{ bill }}</li></a>
+                                {% empty %}
+                                    <p>{% trans "There are not any restaurant invoice" %}</p>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
