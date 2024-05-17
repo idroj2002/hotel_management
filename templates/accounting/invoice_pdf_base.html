@@ -9,58 +9,58 @@
 {% endblock %}
 
 {% block content %}
-<h1>{% trans "Invoice" %}</h1>
+  <h1>{% trans "Invoice" %}</h1>
 
-    <aside>
-      <address id="from">
-        {% block from %}
-          Hotel Las Palmeras
-          26 {% trans "calle Martínez Catena" %}
-          69640 Fuengirola, Málaga
-          {% trans "España" %}
+  <aside>
+    <address id="from">
+      {% block from %}
+        Hotel Las Palmeras
+        26 {% trans "calle Martínez Catena" %}
+        69640 Fuengirola, Málaga
+        {% trans "España" %}
+      {% endblock %}
+    </address>
+
+    <address id="to">
+      {% block to %}{% endblock %}
+    </address>
+  </aside>
+
+  <dl id="informations">
+    {% block information %}{% endblock %}
+  </dl>
+
+  <table>
+    <thead>
+      <tr>
+        {% block expenditures_thead %}
+          <th>Description</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
         {% endblock %}
-      </address>
+      </tr>
+    </thead>
+    <tbody>
+      {% block expenditures_body %}{% endblock %}
+    </tbody>
+  </table>
 
-      <address id="to">
-        {% block to %}{% endblock %}
-      </address>
-    </aside>
-
-    <dl id="informations">
-      {% block information %}{% endblock %}
-    </dl>
-
-    <table>
+  <footer>
+    <table id="total">
       <thead>
         <tr>
-          {% block expenditures_thead %}
-            <th>Description</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
+          {% block total_thead %}
+            <th>Due by</th>
+            <th>Total due</th>
           {% endblock %}
         </tr>
       </thead>
       <tbody>
-        {% block expenditures_body %}{% endblock %}
+        <tr>
+          {% block total_body %}{% endblock %}
+        </tr>
       </tbody>
     </table>
-
-    <footer>
-      <table id="total">
-        <thead>
-          <tr>
-            {% block total_thead %}
-              <th>Due by</th>
-              <th>Total due</th>
-            {% endblock %}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {% block total_body %}{% endblock %}
-          </tr>
-        </tbody>
-      </table>
-    </footer>
+  </footer>
 {% endblock %}
