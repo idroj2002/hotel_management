@@ -1,4 +1,5 @@
 {% extends 'reception/administration_base.html' %}
+{% load i18n %}
 
 {% block title %}Reservation Confirmation{% endblock %}
 
@@ -7,10 +8,14 @@
     <h1 class="mt-5">Reservation Confirmation</h1>
     {% if reservation_type == 'hotel' %}
         <p>Thank you for your reservation. Room ID: {{ room_id }}</p>
-
+        <a class="btn btn-primary mt-3" aria-current="page" href="{% url 'reservations_list' reservation_type='hotel' %}">
+            {% trans "Your Reservations" %}
+        </a>
     {% else %}
         <p>Thank you for your reservation. Table ID: {{ table_id }}</p>
-
+        <a class="btn btn-primary mt-3" aria-current="page" href="{% url 'reservations_list' reservation_type='restaurant' %}">
+            {% trans "Your Reservations" %}
+        </a>
     {% endif %}
 </div>
 {% endblock %}

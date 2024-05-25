@@ -18,6 +18,7 @@
                         <option class="list-group-item" value="{{ room.number }}">{{ room }}</option>
                     {% endfor %}
                 </select>
+                <p>Price: <span id="room.type">value="{{ room.price }}"</span></p>
                 <h2 class="mt-3 mb-3">Reservation data</h2>
                 {{ reservation_form.as_p }}
                 <button type="submit" class="btn btn-primary mt-3">Complete Reservation</button>
@@ -56,12 +57,33 @@
 </head>
 
 <script>
-$(document).ready(function() {
   $('.datepicker').datepicker({
     format: 'yyyy-mm-dd',
     autoclose: true
   });
-});
+
+  $(document).ready(function() {
+        $('#room-select').change(function() {
+            var roomType = $(this).val();
+            var roomPrice = calculateRoomPrice(roomType);
+            $('#price-value').text(roomPrice + ' €');
+        });
+
+        function calculateRoomPrice(roomType) {
+            var roomPrices = {
+                'Ind': 45,
+                'Dob': 75,
+                'Sui': 125,
+                'Del': 100,
+                'Individual': 45,
+                'Doble': 75,
+                'Suite': 125,
+                'Deluxe': 100,
+            };
+            return roomPrices[roomType];
+        }
+    });
 </script>
+
 
 {% endblock %}
