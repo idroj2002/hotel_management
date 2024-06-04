@@ -28,13 +28,26 @@
                             {% trans "Restaurant invoices" %}
                         </button>
                     </h2>
+                    <form method="post" class="input-group mb-4">
+                        {% csrf_token %}
+                        <input type="search" name="query" class="form-control" placeholder="{% trans 'Search' %}">
+                        <button type="submit" class="btn btn-primary search-btn">
+                            <img src="{% static 'img/search-icon.png' %}" alt="search" width="40" height="30">
+                        </button>
+                    </form>
+                    <h3>{{ header }}</h3>
                     <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo">
                         <div class="accordion-body">
                             <ul class="list-group">
                                 {% for bill in bills %}
-                                <a href="{% url 'invoice_pdf' %}" target="_blank" class="link-dark"><li class="list-group-item">{{ bill }}</li></a>
+                                <a href="{% url 'invoice_pdf' reservation_id=bill.reservation.id %}" target="_blank" class="link-dark"><li class="list-group-item">{{ bill }}</li></a>
                                 {% empty %}
                                     <p>{% trans "There are not any restaurant invoice" %}</p>
+                                    {% if query == '-1' %}
+                                        <p>{% trans "There are not any restaurant invoice" %}</p>
+                                    {% else %}
+                                        <p>{% trans "No invoices found matching the search" %} "{{ query }}".</p>
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>

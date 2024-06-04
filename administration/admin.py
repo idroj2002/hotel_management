@@ -1,6 +1,7 @@
 from django.contrib import admin
 from administration.models import Room, Table, HotelReservation, RestaurantReservation, CheckIn, CheckOut
 from cleaning.models import Cleaning_data
+from accounting.models import Offer
 
 
 # Custom admin classes
@@ -23,3 +24,5 @@ admin.site.register(CheckIn)
 admin.site.register(CheckOut)
 
 admin.site.register(Cleaning_data)
+
+admin.site.register(Offer)

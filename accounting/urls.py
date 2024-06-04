@@ -6,7 +6,7 @@ from accounting.views import accounting_home, bills_home, taxes_home, offers_hom
 urlpatterns = [
     path('', accounting_home, name='accounting_home'),
     path('bills/', bills_home, name='bills'),
-    path('bills/pdf', invoice_pdf, name="invoice_pdf"),
+    path('bills/pdf/<int:reservation_id>/', invoice_pdf, name="invoice_pdf"),
     path('taxes/', taxes_home, name='taxes'),
     path('offers/', offers_home, name='offers'),
 ]
