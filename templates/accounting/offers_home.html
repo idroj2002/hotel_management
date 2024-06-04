@@ -1,7 +1,39 @@
 {% extends './accounting_base.html' %}
 {% load i18n %}
-{% load static %}
 
 {% block content %}
-    <h1>se pueden hacer, modificar y cancelar ofertas en las fechas deseadas, por el valor deseado</h1>
+<h1 class="mt-5">{% trans "Current offers" %}</h1>
+<hr>
+<div class="accordion shadow" id="checkOutAccordion">
+    {% for offer in offers %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="checkOutHeading{{ offer.id }}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#checkOutCollapse{{ offer.id }}" aria-expanded="false" aria-controls="checkOutCollapse{{ offer.id }}">
+                    {{ offer }}
+                </button>
+            </h2>
+            <div id="checkOutCollapse{{ offer.id }}" class="accordion-collapse collapse" aria-labelledby="checkOutHeading{{ offer.id }}" data-bs-parent="#checkOutAccordion">
+                <div class="accordion-body">
+                    <p><strong>{% trans "Type" %}:</strong> {{ offer.type }}</p>
+                    <p><strong>{% trans "Discount rate" %}:</strong> {{ offer.percentage }}%</p>
+                    <div class="mt-3">
+                        <a href="{% url 'home' %}" class="btn btn-primary me-2">
+                            <i class="fas fa-eye"></i> {% trans "Details" %}
+                        </a>
+                        <!--
+                        <a href="{% url 'home' %}" class="btn btn-warning me-2">
+                            <i class="fas fa-edit"></i> {% trans "Edit" %}
+                        </a>
+                        <a href="{% url 'home' %}" class="btn btn-danger">
+                            <i class="fas fa-trash-alt"></i> {% trans "Delete" %}
+                        </a>
+                        -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>{% trans "There are not any active promotion" %}</p>
+    {% endfor %}
+</div>
 {% endblock %}

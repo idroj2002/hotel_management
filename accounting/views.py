@@ -6,6 +6,7 @@ from django.template.loader import render_to_string
 from weasyprint import HTML
 from django.db.models import QuerySet, Q
 from django.utils.translation import gettext_lazy as _
+from accounting.models import Offer
 from restaurant.models import RestaurantBill, RestaurantItem, ShoppingCart
 from administration.models import RestaurantReservation
 
@@ -57,7 +58,9 @@ def offers_home(request):
         from hotel_management.views import home
         return redirect(home)
 
-    return render(request, 'accounting/offers_home.html')
+    offers = Offer.objects.all()
+
+    return render(request, 'accounting/offers_home.html', {'offers': offers})
 
 
 @login_required

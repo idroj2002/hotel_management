@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'administration',
     'restaurant',
     'cleaning',
+    'accounting',
     'clients',
     'super_user',
 ]
