@@ -55,7 +55,7 @@ class HotelReservationForm(forms.ModelForm):
     class Meta:
         model = HotelReservation
         fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone',
-                  'number_of_guests']
+                  'number_of_guests', 'number_of_nights']
 
         widgets = {
             'dni': forms.TextInput(
@@ -100,6 +100,12 @@ class HotelReservationForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
+            'number_of_nights': forms.NumberInput(
+                attrs={
+                    'placeholder': 'Número de noches',
+                    'class': 'form-control'
+                }
+            ),
         }
         labels = {
             'dni': 'Documento de Identidad',
@@ -111,6 +117,7 @@ class HotelReservationForm(forms.ModelForm):
             'check_in_date': 'Fecha de Entrada',
             'check_out_date': 'Fecha de Salida',
             'number_of_guests': 'Número de Huéspedes',
+            'number_of_nights': 'Número de Noches',
             'room_number': 'Número de Habitación',
         }
 
