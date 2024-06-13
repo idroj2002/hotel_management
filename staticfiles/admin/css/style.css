@@ -179,3 +179,22 @@ h4{
     position: relative;
     right: 7px;
 }
+
+#carteles{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 60%;
+    margin: 5%;
+    grid-gap: 30px;
+}
+
+#carteles img{
+    width: 100%;
+    transition: all 300ms;
+    position: relative;
+}
+
+#carteles img:hover{
+    transform: scale(1.15);
+
+}

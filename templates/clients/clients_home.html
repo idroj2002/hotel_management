@@ -3,5 +3,13 @@
 {% load static %}
 
 {% block content %}
-    <h1>CLIENT</h1>
+    
+    <div class="flex-center">
+        <h1>Seleccionar Reserva</h1>
+    </div>
+    <div id="carteles">
+        <a href="{% url 'clients_hotel' %}"><img src="{% static 'img/habitacionhotel.jpeg' %}"></a>
+        <a href="{% url 'clients_restaurant' %}"><img src="{% static 'img/restaurante.jpg'%}"></a>
+        
+    </div>
 {% endblock %}
