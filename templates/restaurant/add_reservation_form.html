@@ -25,7 +25,7 @@
                 <button type="submit" class="btn btn-primary mt-3">Complete Reservation</button>
             {% else %}
                 <p>{% trans "No tables available for the selected date, time, and number of people" %}.</p>
-                <a href="{% url 'add_reservation' %}" class="mt-4 btn btn-primary">{% trans "Check other options" }</a>
+                <a href="{% url 'add_reservation' %}" class="mt-4 btn btn-primary">{% trans "Check other options" %}</a>
             {% endif %}
         </form>
     </div>
