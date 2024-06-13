@@ -3,5 +3,12 @@
 {% load static %}
 
 {% block navbar-list %}
-    
+    {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{% url 'clients_reservations' %}">{% trans "Manage Reservations" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{% url 'clients_profile' %}">{% trans "Profile" %}</a>
+        </li>
+    {% endif %}
 {% endblock %}
