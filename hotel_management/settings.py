@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from django.utils.translation import gettext_noop
+from django.utils.translation import gettext_lazy as _
 
 import os
 
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'hotel_management.urls'
@@ -116,9 +118,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+LANGUAGE_COOKIE_NAME = 'django_language'
+
 LANGUAGES = [
-    ('en', gettext_noop('English')),
-    ('es', gettext_noop('Spanish')),
+    ('en', _('English')),
+    ('es', _('Spanish')),
 ]
 
 LOCALE_PATHS = [

@@ -55,7 +55,7 @@ class HotelReservationForm(forms.ModelForm):
     class Meta:
         model = HotelReservation
         fields = ['dni', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone',
-                  'number_of_guests', 'price']
+                  'number_of_guests']
 
         widgets = {
             'dni': forms.TextInput(
@@ -100,12 +100,6 @@ class HotelReservationForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
-            'price': forms.NumberInput(
-                attrs={
-                    'value': 45,
-                    'class': 'form-control'
-                }
-            ),
         }
         labels = {
             'dni': 'Documento de Identidad',
@@ -117,9 +111,39 @@ class HotelReservationForm(forms.ModelForm):
             'check_in_date': 'Fecha de Entrada',
             'check_out_date': 'Fecha de Salida',
             'number_of_guests': 'Número de Huéspedes',
-            'price': 'Precio',
             'room_number': 'Número de Habitación',
         }
+
+
+class RestaurantReservationForm(forms.ModelForm):
+    class Meta:
+        model = RestaurantReservation
+        fields = ['name', 'room_number']
+
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'placeholder': 'Nombre de la reserva',
+                    'class': 'form-control'
+                }
+            ),
+            'room_number': forms.Select(
+                attrs={
+                    'class': 'form-select'
+                }
+            ),
+        }
+
+        labels = {
+            'name': 'Nombre',
+            'room_number': 'Número de habitación',
+            'number_of_people': 'Número de comensales',
+            'date': 'Fecha',
+            'time': 'Turno',
+            'table_id': 'Número de mesa',
+            'cancelled': 'Cancelada',
+        }
+
 
 
 class RestaurantReservationForm(forms.ModelForm):

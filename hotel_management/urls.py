@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
-from hotel_management.views import home
+from hotel_management.views import home, set_language
 from members.urls import *
 from restaurant.views import *
 from cleaning import urls
@@ -35,3 +35,10 @@ urlpatterns = i18n_patterns(
     path('clients/', include('clients.urls'), name='clients'),
     path('accounting/', include('accounting.urls'), name='accounting'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+extra_urlpatterns = [
+    path('i18n/setlang/', set_language, name='set_language'),
+]
+
+urlpatterns += extra_urlpatterns
+

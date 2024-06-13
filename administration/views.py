@@ -36,16 +36,6 @@ def reservation_list(request, reservation_type):
                 Q(last_name__icontains=query),
                 cancelled=False
             )
-            reservations = []
-            if query:
-                reservations = HotelReservation.objects.filter(
-                    Q(id__icontains=query) |
-                    Q(first_name__icontains=query) |
-                    Q(last_name__icontains=query),
-                    cancelled=False
-                )
-            else:
-                reservations = HotelReservation.objects.filter(cancelled=False)
             header = _('Room reservations - Search results for') + ' "' + query + '"'
         elif reservation_type == 'restaurant':
             query = request.POST.get('query')
@@ -326,7 +316,8 @@ def add_reservation(request, reservation_type):
                 check_in_date = availability_form.cleaned_data['check_in_date']
                 check_out_date = availability_form.cleaned_data['check_out_date']
                 room_type = availability_form.cleaned_data['room_type']
-                data = {'check_in_date': check_in_date, 'check_out_date': check_out_date, 'room_type': room_type}
+                room_price = get_room_price(room_type)
+                data = {'check_in_date': check_in_date, 'check_out_date': check_out_date, 'room_type': room_type, 'room_price': room_price}
                 data_string = urlencode(data)
                 redirect_url = '/administration/reservations/complete_reservation/hotel/?{}'.format(data_string)
                 return redirect(redirect_url, reservation_type=reservation_type)
@@ -347,7 +338,8 @@ def add_reservation(request, reservation_type):
             availability_form = AvailabilityHotelCheckForm()
         else:
             availability_form = AvailabilityRestaurantCheckForm()
-        return render(request, 'reception/availability_form.html', {'reservation_type': reservation_type, 'availability_form': availability_form})
+        return render(request, 'reception/availability_form.html',
+                      {'reservation_type': reservation_type, 'availability_form': availability_form})
 
 
 def get_available_rooms(check_in_date, check_out_date, room_type):
@@ -392,6 +384,7 @@ def complete_reservation(request, reservation_type):
             room_id = request.POST.get('room')
             room = get_object_or_404(Room, pk=room_id)
             new_available_rooms = get_available_rooms(check_in_date, check_out_date, room_type)
+            room_price = get_room_price(room.type)
             if room not in new_available_rooms:
                 messages.error(request, 'The room you choose has been reserved')
                 return redirect(add_reservation, reservation_type=reservation_type)
@@ -401,8 +394,10 @@ def complete_reservation(request, reservation_type):
                 reservation.room_number = room
                 reservation.check_in_date = check_in_date
                 reservation.check_out_date = check_out_date
+                reservation.price = room_price
                 reservation.save()
-                return render(request, 'reception/reservation_confirmation.html', {'reservation_type': reservation_type, 'room_id': room.number})
+                return render(request, 'reception/reservation_confirmation.html',
+                              {'reservation_type': reservation_type, 'room_id': room.number, 'room_price': room_price})
         else:
             table_id = request.POST.get('table')
             table = get_object_or_404(Table, pk=table_id)
@@ -414,15 +409,26 @@ def complete_reservation(request, reservation_type):
                 reservation.number_of_people = number_of_people
                 reservation.time = time
                 reservation.save()
-                return render(request, 'reception/reservation_confirmation.html', {'reservation_type': reservation_type, 'table_id': table.id})
+                return render(request, 'reception/reservation_confirmation.html',
+                              {'reservation_type': reservation_type, 'table_id': table.id})
     else:
         if reservation_type == 'hotel':
             reservation_form = HotelReservationForm()
         else:
             reservation_form = RestaurantReservationForm()
     return render(request, 'reception/add_reservation_form.html', {
-                'reservation_type': reservation_type,
-                'reservation_form': reservation_form,
-                'available_rooms': available_rooms,
-                'available_tables': available_tables
-            })
+        'reservation_type': reservation_type,
+        'reservation_form': reservation_form,
+        'available_rooms': available_rooms,
+        'available_tables': available_tables
+    })
+
+
+def get_room_price(room_type):
+    room_prices = {
+        'Ind': 45,
+        'Dob': 75,
+        'Sui': 125,
+        'Del': 100,
+    }
+    return room_prices.get(room_type)
