@@ -14,17 +14,13 @@ src: url(sourcesanspro-bold.otf);
 }
 
 @page {
-font-family: Pacifico;
-margin: 3cm;
-@bottom-left {
-  color: #1ee494;
-  content: '♥ Thank you!';
-}
-@bottom-right {
-  color: #a9a;
-  content: 'contact@courtbouillon.org | courtbouillon.org';
-  font-size: 9pt;
-}
+  font-family: Pacifico;
+  margin: 3cm;
+  @bottom-right {
+    color: #a9a;
+    content: 'contact@hotellaspalmeras.com | hotellaspalmeras.com';
+    font-size: 9pt;
+  }
 }
 
 html {
