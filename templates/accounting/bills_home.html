@@ -13,8 +13,29 @@
                             {% trans "Room invoices" %}
                         </button>
                     </h2>
+                    <form method="post" class="input-group mb-4">
+                        {% csrf_token %}
+                        <input type="search" name="room_query" class="form-control" placeholder="{% trans 'Search' %}">
+                        <button type="submit" class="btn btn-primary search-btn">
+                            <img src="{% static 'img/search-icon.png' %}" alt="search" width="40" height="30">
+                        </button>
+                    </form>
+                    <h3>{{ room_header }}</h3>
                     <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne">
-                        <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                {% for bill in room_bills %}
+                                <a href="{% url 'invoice_pdf' reservation_id=bill.id %}" target="_blank" class="link-dark"><li class="list-group-item">{{ bill }}</li></a>
+                                {% empty %}
+                                    <p>{% trans "There are not any room invoice" %}</p>
+                                    {% if query == '-1' %}
+                                        <p>{% trans "There are not any room invoice" %}</p>
+                                    {% else %}
+                                        <p>{% trans "No invoices found matching the search" %} "{{ query }}".</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -30,16 +51,16 @@
                     </h2>
                     <form method="post" class="input-group mb-4">
                         {% csrf_token %}
-                        <input type="search" name="query" class="form-control" placeholder="{% trans 'Search' %}">
+                        <input type="search" name="restaurant_query" class="form-control" placeholder="{% trans 'Search' %}">
                         <button type="submit" class="btn btn-primary search-btn">
                             <img src="{% static 'img/search-icon.png' %}" alt="search" width="40" height="30">
                         </button>
                     </form>
-                    <h3>{{ header }}</h3>
+                    <h3>{{ restaurant_header }}</h3>
                     <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo">
                         <div class="accordion-body">
                             <ul class="list-group">
-                                {% for bill in bills %}
+                                {% for bill in restaurant_bills %}
                                 <a href="{% url 'invoice_pdf' reservation_id=bill.reservation.id %}" target="_blank" class="link-dark"><li class="list-group-item">{{ bill }}</li></a>
                                 {% empty %}
                                     <p>{% trans "There are not any restaurant invoice" %}</p>
