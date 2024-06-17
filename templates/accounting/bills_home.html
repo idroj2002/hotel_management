@@ -25,7 +25,7 @@
                         <div class="accordion-body">
                             <ul class="list-group">
                                 {% for bill in room_bills %}
-                                <a href="{% url 'invoice_pdf' reservation_id=bill.id %}" target="_blank" class="link-dark"><li class="list-group-item">{{ bill }}</li></a>
+                                <a href="{% url 'room_invoice_pdf' reservation_id=bill.id %}" target="_blank" class="link-dark"><li class="list-group-item">{{ bill }}</li></a>
                                 {% empty %}
                                     <p>{% trans "There are not any room invoice" %}</p>
                                     {% if query == '-1' %}

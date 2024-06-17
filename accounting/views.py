@@ -89,6 +89,26 @@ def taxes_home(request):
 
 
 @login_required
+def room_invoice_pdf(request, reservation_id):
+    reservation = HotelReservation.objects.get(id=reservation_id)
+
+    if reservation:
+        total = reservation.price - reservation.discount
+    else:
+        return HttpResponseBadRequest
+
+    context = {'reservation':reservation, 'total':total}
+    html = render_to_string("accounting/room_invoice_pdf.html", context)
+
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = "inline; invoice.pdf"
+
+    #font_config = FontConfiguration()
+    HTML(string=html).write_pdf(response)
+
+    return response
+
+@login_required
 def invoice_pdf(request, reservation_id):
     bill = RestaurantBill.objects.get(reservation_id=reservation_id)
 

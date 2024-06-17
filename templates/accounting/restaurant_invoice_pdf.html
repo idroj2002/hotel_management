@@ -1,14 +1,6 @@
 {% extends './invoice_pdf_base.html' %}
 {% load i18n %}
 
-{% block from %}
-    Hotel Las Palmeras
-    ISBN 0-7645-2641-3
-    26 {% trans "calle Martínez Catena" %}
-    69640 Fuengirola, Málaga
-    {% trans "España" %}
-{% endblock %}
-
 {% block information %}
     <dt>Invoice number</dt>
     <dd>{{ bill.id }}</dd>
