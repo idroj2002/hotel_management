@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from datetime import date, timedelta
+
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from restaurant.models import RestaurantBill
 from django.http import HttpResponse
@@ -9,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from accounting.models import Offer
 from restaurant.models import RestaurantBill, RestaurantItem, ShoppingCart
 from administration.models import RestaurantReservation, HotelReservation
-
+from django.utils import timezone
 
 def is_accountant(user):
     return user.groups.filter(name='Accountant').exists()
@@ -110,3 +112,25 @@ def invoice_pdf(request, reservation_id):
     HTML(string=html).write_pdf(response)
 
     return response
+
+@login_required()
+def calculate_tourist_tax(request):
+    today = date.today()
+    first_day_of_month = today.replace(day=1)
+    last_day_of_month = (today.replace(month=today.month + 1, day=1) - timedelta(days=1))
+
+    reservations = HotelReservation.objects.filter(
+        check_in_date__lte=last_day_of_month,
+        check_out_date__gte=first_day_of_month
+    ).filter(cancelled=False)
+
+    total_tax = sum(reservation.number_of_nights * reservation.number_of_guests for reservation in reservations)
+
+    context = {
+        'total_tax': total_tax,
+        'reservations': reservations,
+        'today' : today,
+    }
+
+    return render(request, 'accounting/tourist_tax.html', context)
+

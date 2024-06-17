@@ -1,5 +1,5 @@
 from django.utils import timezone
-import datetime
+from datetime import timedelta
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -45,6 +45,7 @@ class HotelReservation(models.Model):
     phone = models.CharField(max_length=20, blank=True, null=True)
     check_in_date = models.DateField()
     check_out_date = models.DateField()
+    number_of_nights = models.IntegerField(default=1)
     number_of_guests = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     ROOM_TYPE_OPTIONS = [
         ('Ind', 'Individual'),
@@ -58,10 +59,11 @@ class HotelReservation(models.Model):
     room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
     cancelled = models.BooleanField(default=False)
 
+
+
     def __str__(self):
         return f"ID: {self.id} - Nombre: {self.first_name} {self.last_name} - Entrada: {self.check_in_date}" \
                f" - Saldia: {self.check_out_date}"
-
 
 class RestaurantReservation(models.Model):
     id = models.AutoField(primary_key=True)
@@ -90,9 +92,16 @@ class RestaurantReservation(models.Model):
 class CheckIn(models.Model):
     id = models.OneToOneField(HotelReservation, on_delete=models.CASCADE, primary_key=True)
     guests_data = models.TextField(max_length=1000)
+    number_of_guests = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    number_of_nights = models.PositiveIntegerField(default=0)
     keys = models.BooleanField(default=False)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     cancelled = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        self.number_of_nights = self.id.number_of_nights
+        self.number_of_guests = self.id.number_of_guests
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Check-In    of reservation: {self.id}"

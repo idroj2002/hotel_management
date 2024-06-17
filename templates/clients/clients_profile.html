@@ -1,0 +1,13 @@
+{% extends './clients_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <h2 class="mt-3 mb-3">Profile data</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ profile_form.as_p }}
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+    
+{% endblock %}

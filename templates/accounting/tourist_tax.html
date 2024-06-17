@@ -1,0 +1,33 @@
+{% extends './accounting_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+  <h1>Tourist Tax Calculation for {{ today }}</h1> <p><b>Total Tax to Pay:</b> {{ total_tax }} €</p>
+
+  <h2>Reservations</h2>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Guest Name</th>
+        <th>Check-In</th>
+        <th>Check-Out</th>
+        <th>Nights</th>
+        <th>Guests</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reservation in reservations %}
+      <tr>
+        <td>{{ reservation.id }}</td>
+        <td>{{ reservation.first_name }} {{ reservation.last_name }}</td>
+        <td>{{ reservation.check_in_date }}</td>
+        <td>{{ reservation.check_out_date }}</td>
+        <td>{{ reservation.number_of_nights }}</td>
+        <td>{{ reservation.number_of_guests }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

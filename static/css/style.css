@@ -240,3 +240,28 @@ h4{
     float: left;
     max-width: 400px;
 }
+
+#carteles{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(2, 1fr);
+    width: 60%;
+    margin: auto;
+    margin-top: 5%;
+    grid-gap: 10%;
+}
+
+#carteles img{
+    height: 70vh;
+    width: 40vh;
+    transition: all 300ms;
+    position: relative;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+#carteles img:hover{
+    transform: scale(1.15);
+
+}
