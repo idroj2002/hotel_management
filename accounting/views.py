@@ -32,26 +32,40 @@ def bills_home(request):
         from hotel_management.views import home
         return redirect(home)
 
-    bills = RestaurantBill.objects.filter(paid=True).order_by('-id')[:20]
-    
-    query = '-1'
+    restaurant_bills = RestaurantBill.objects.filter(paid=True).order_by('-id')[:20]
+    room_bills = HotelReservation.objects.filter(
+        Q(checkout__isnull=False) & Q(cancelled=False)
+    )[:20]
+
+    room_query = ''
     if request.method == 'POST':
-        query = request.POST.get('query')
-        if query == "":
-            bills = RestaurantBill.objects.filter(paid=True).order_by('-id')
-            header = _('Restaurant invoices')
-        else:
-            bills = RestaurantBill.objects.filter(
-                Q(id__icontains=query) |
-                Q(reservation__name__icontains=query),
+        room_query = request.POST.get('room_query')
+        if room_query:
+            room_bills = HotelReservation.objects.filter(
+                Q(id__icontains=room_query) |
+                Q(first_name__icontains=room_query) |
+                Q(last_name__icontains=room_query),
+                Q(checkout__isnull=False),
+                Q(cancelled=False)
+            )
+            room_header = _('Room invoices - Search results for') + ' "' + room_query + '"'
+    if not room_query:
+        room_header = _('Room invoices')
+    
+    restaurant_query = ''
+    if request.method == 'POST':
+        restaurant_query = request.POST.get('restaurant_query')
+        if restaurant_query:
+            restaurant_bills = RestaurantBill.objects.filter(
+                Q(id__icontains=restaurant_query) |
+                Q(reservation__name__icontains=restaurant_query),
                 paid=True
             )
-            header = _('Restaurant invoices - Search results for') + ' "' + query + '"'
-    else:
-        bills = RestaurantBill.objects.filter(paid=True).order_by('-id')
-        header = _('Restaurant invoices')
+            restaurant_header = _('Restaurant invoices - Search results for') + ' "' + restaurant_query + '"'
+    if not restaurant_query:
+        restaurant_header = _('Restaurant invoices')
 
-    return render(request, 'accounting/bills_home.html', {'bills':bills, 'header':header})
+    return render(request, 'accounting/bills_home.html', {'restaurant_bills':restaurant_bills, 'room_bills':room_bills, 'room_header':room_header, 'restaurant_header':restaurant_header})
 
 
 @login_required
@@ -73,6 +87,26 @@ def taxes_home(request):
 
     return render(request, 'accounting/taxes_home.html')
 
+
+@login_required
+def room_invoice_pdf(request, reservation_id):
+    reservation = HotelReservation.objects.get(id=reservation_id)
+
+    if reservation:
+        total = reservation.price - reservation.discount
+    else:
+        return HttpResponseBadRequest
+
+    context = {'reservation':reservation, 'total':total}
+    html = render_to_string("accounting/room_invoice_pdf.html", context)
+
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = "inline; invoice.pdf"
+
+    #font_config = FontConfiguration()
+    HTML(string=html).write_pdf(response)
+
+    return response
 
 @login_required
 def invoice_pdf(request, reservation_id):

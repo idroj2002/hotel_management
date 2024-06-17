@@ -55,6 +55,7 @@ class HotelReservation(models.Model):
     ]
     room_type = models.CharField(max_length=100, choices=ROOM_TYPE_OPTIONS, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     room_number = models.ForeignKey(Room, on_delete=models.CASCADE)
     cancelled = models.BooleanField(default=False)
 

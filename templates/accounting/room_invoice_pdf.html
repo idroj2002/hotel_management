@@ -1,0 +1,33 @@
+{% extends './invoice_pdf_base.html' %}
+{% load i18n %}
+
+{% block information %}
+    <dt>Invoice number</dt>
+    <dd>{{ reservation.id }}</dd>
+    <dt>Date</dt>
+    <dd>{{ reservation.check_out_date }}</dd>
+{% endblock %}
+
+{% block expenditures_thead %}
+    <th>Concept</th>
+    <th>Price</th>
+{% endblock %}
+
+{% block expenditures_body %}
+    <tr>
+        <td>{{ reservation.room_type }} room</td>
+        <td>{{ reservation.price }}€</td>
+    </tr>
+
+    {% if reservation.discount > 0 %}
+    <tr>
+        <td>Discount</td>
+        <td>-{{ reservation.discount }}€</td>
+    </tr>
+    {% endif %}
+{% endblock %}
+
+{% block total_body %}
+    <td>May 10, 2018</td>
+    <td>{{ total }}€</td>
+{% endblock %}
