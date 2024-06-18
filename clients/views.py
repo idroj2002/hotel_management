@@ -151,8 +151,11 @@ def complete_reservation_restaurant(request, data):
     messages.error(request, "Your reservation has been completed!")
     
 def clients_reservations(request):
-    profile = ProfileClient.objects.get(user=request.user)
-    reservation = HotelReservation.objects.filter(dni=profile.dni).first()
-    hotel_reservations = HotelReservation.objects.filter(dni=profile.dni)
-    restaurant_reservations = RestaurantReservation.objects.filter(room_number=reservation.room_number)
-    return render(request, 'clients/clients_reservations.html', {'hotel_reservations':hotel_reservations, 'restaurant_reservations':restaurant_reservations})
+    if ProfileClient.objects.filter(user=request.user).exists():
+        profile = ProfileClient.objects.get(user=request.user)
+        reservation = HotelReservation.objects.filter(dni=profile.dni).first()
+        hotel_reservations = HotelReservation.objects.filter(dni=profile.dni)
+        restaurant_reservations = RestaurantReservation.objects.filter(room_number=reservation.room_number)
+        return render(request, 'clients/clients_reservations.html', {'hotel_reservations':hotel_reservations, 'restaurant_reservations':restaurant_reservations})
+    else:
+        return redirect('clients_profile')
