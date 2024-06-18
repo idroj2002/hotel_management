@@ -3,5 +3,57 @@
 {% load static %}
 
 {% block content %}
-    
+    <div class="container-fluid">
+        <h1 class="mt-5">{% trans "Hotel reservations" %}</h1>
+        <hr>
+        <div class="accordion shadow" id="reservationAccordion">
+            {% for reservation in hotel_reservations %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{ reservation.id }}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ reservation.id }}" aria-expanded="false" aria-controls="collapse{{ reservation.id }}">
+                            {{ reservation }}
+                        </button>
+                    </h2>
+                    <div id="collapse{{ reservation.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ reservation.id }}" data-bs-parent="#checkInAccordion">
+                        <div class="accordion-body">
+                                <p><strong>{% trans "DNI" %}:</strong> {{ reservation.dni }}</p>
+                                <p><strong>{% trans "Room number" %}:</strong> {{ reservation.room_number }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                {% if query == '-1' %}
+                <p>{% trans "No reservations found." %}</p>
+                {% else %}
+                <p>{% trans "No reservations found matching the search" %} "{{ query }}".</p>
+                {% endif %}
+            {% endfor %}
+        </div>  
+        
+                <h1 class="mt-5">{% trans "Restaurant reservations" %}</h1>
+                <hr>
+                <div class="accordion shadow" id="reservationAccordion">
+                    {% for reservation in restaurant_reservations %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ reservation.id }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ reservation.id }}" aria-expanded="false" aria-controls="collapse{{ reservation.id }}">
+                                    {{ reservation }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ reservation.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ reservation.id }}" data-bs-parent="#checkInAccordion">
+                                <div class="accordion-body">
+                                    <p><strong>{% trans "Name" %}:</strong> {{ reservation.name }}</p>
+                                    <p><strong>{% trans "People" %}:</strong> {{ reservation.number_of_people }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        {% if query == '-1' %}
+                        <p>{% trans "No reservations found." %}</p>
+                        {% else %}
+                        <p>{% trans "No reservations found matching the search" %} "{{ query }}".</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+    </div>
 {% endblock %}

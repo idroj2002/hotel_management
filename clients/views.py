@@ -39,6 +39,13 @@ def clients_hotel(request):
             availability_form = AvailabilityHotelClientsCheckForm()
             return render(request, 'clients/clients_hotel.html',
                       {'availability_form': availability_form})
+    elif request.user.is_authenticated == False:
+        messages.error(request, "Please first log in and complete the profile")
+        availability_form = AvailabilityHotelClientsCheckForm()
+        return render(request, 'clients/clients_hotel.html',
+                      {'availability_form': availability_form})
+    elif ProfileClient.objects.filter(user=request.user).exists() == False:
+        return redirect('clients_profile')
     else:
         availability_form = AvailabilityHotelClientsCheckForm()
         return render(request, 'clients/clients_hotel.html',
@@ -56,6 +63,12 @@ def clients_restaurant(request):
             availability_form = AvailabilityRestaurantClientCheckForm()
             return render(request, 'clients/clients_restaurant.html',
                       {'availability_form': availability_form})
+    elif request.user.is_authenticated == False:
+        messages.error(request, "Please first log in and complete the profile")
+        availability_form = AvailabilityRestaurantClientCheckForm()
+        return render(request, 'clients/clients_restaurant.html',  {'availability_form': availability_form})
+    elif ProfileClient.objects.filter(user=request.user).exists() == False:
+        return redirect('clients_profile')
     else:
         availability_form = AvailabilityRestaurantClientCheckForm()
     return render(request, 'clients/clients_restaurant.html',  {'availability_form': availability_form})
@@ -139,7 +152,7 @@ def complete_reservation_restaurant(request, data):
     
 def clients_reservations(request):
     profile = ProfileClient.objects.get(user=request.user)
-    reservation = HotelReservation.objects.get(dni=profile.dni)
+    reservation = HotelReservation.objects.filter(dni=profile.dni).first()
     hotel_reservations = HotelReservation.objects.filter(dni=profile.dni)
     restaurant_reservations = RestaurantReservation.objects.filter(room_number=reservation.room_number)
     return render(request, 'clients/clients_reservations.html', {'hotel_reservations':hotel_reservations, 'restaurant_reservations':restaurant_reservations})
