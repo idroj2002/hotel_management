@@ -265,3 +265,13 @@ h4{
     transform: scale(1.15);
 
 }
+
+.language{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 5px;
+}
+
+.item{
+    
+}

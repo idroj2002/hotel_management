@@ -45,15 +45,21 @@
             <span class="navbar-toggler-icon"></span>
           </button>
         </div>
-       <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ request.get_full_path }}" />
-            <select name="language" id="language-select">
-                <option value="es" {% if request.LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
-                <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
-            </select>
-            <button type="submit" class="mt-4 btn btn-primary">{% trans "Change Language" %}</button>
-       </form>
+      <div class="language">
+        <form action="{% url 'set_language' %}" method="post">
+              {% csrf_token %}
+              <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+            <div class="item">
+              <select class="form-select" name="language" id="language-select">
+                  <option value="es" {% if request.LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
+                  <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+              </select>
+            </div>
+            <div class="item">
+              <button type="submit" class="btn btn-primary">{% trans "Change Language" %}</button>
+            </div>
+        </form>
+      </div> 
 
     </nav>
 
